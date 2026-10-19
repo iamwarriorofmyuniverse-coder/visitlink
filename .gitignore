@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+/coverage
+/playwright-report
+/test-results
+
+# Next.js
+/.next/
+/out/
+
+# Production
+/build
+
+# Environment variables
+.env*.local
+.env
+!.env.example
+
+# Supabase
+.branches
+.temp
+supabase/.branches
+supabase/.temp
+
+# Python / AI Service
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+.pytest_cache/
+
+# OS Files
+.DS_Store
+*.pem
+Thumbs.db

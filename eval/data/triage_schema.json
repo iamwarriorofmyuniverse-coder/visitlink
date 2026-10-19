@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VisitLinkTriageEvaluationDataset",
+  "description": "Ground-truth labeled evaluation dataset schema for testing VisitLink AI Triage service. Use this schema to author your synthetic triage test cases.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "case_id",
+      "description",
+      "industry_rules",
+      "request_payload",
+      "expected_verdict",
+      "expected_flags"
+    ],
+    "properties": {
+      "case_id": {
+        "type": "string",
+        "description": "Unique identifier for the test case (e.g. 'triage-case-01')"
+      },
+      "description": {
+        "type": "string",
+        "description": "Human-readable summary of the scenario (e.g. 'Engineering college request exceeding max capacity without sufficient teachers')"
+      },
+      "industry_rules": {
+        "type": "object",
+        "required": [
+          "max_group_size",
+          "min_group_size",
+          "student_to_teacher_ratio",
+          "minors_allowed",
+          "min_education_level",
+          "ppe_requirements"
+        ],
+        "properties": {
+          "max_group_size": { "type": "integer", "minimum": 1 },
+          "min_group_size": { "type": "integer", "minimum": 1 },
+          "student_to_teacher_ratio": { "type": "integer", "minimum": 1, "description": "e.g. 15 for 1 teacher per 15 students" },
+          "minors_allowed": { "type": "boolean" },
+          "min_education_level": { 
+            "type": "string", 
+            "enum": ["middle_school", "high_school", "undergraduate", "postgraduate"] 
+          },
+          "ppe_requirements": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      },
+      "request_payload": {
+        "type": "object",
+        "required": [
+          "student_count",
+          "teacher_count",
+          "has_minors",
+          "education_level",
+          "course_or_subject",
+          "visit_objectives"
+        ],
+        "properties": {
+          "student_count": { "type": "integer", "minimum": 1 },
+          "teacher_count": { "type": "integer", "minimum": 0 },
+          "has_minors": { "type": "boolean" },
+          "education_level": { 
+            "type": "string", 
+            "enum": ["middle_school", "high_school", "undergraduate", "postgraduate"] 
+          },
+          "course_or_subject": { "type": "string" },
+          "department_or_grade": { "type": "string" },
+          "visit_objectives": { "type": "string" },
+          "special_requests": { "type": ["string", "null"] }
+        }
+      },
+      "expected_verdict": {
+        "type": "string",
+        "enum": ["pass", "flagged", "fail"],
+        "description": "'pass': safe to proceed, 'flagged': requires special attention, 'fail': hard safety/policy violation"
+      },
+      "expected_flags": {
+        "type": "array",
+        "description": "List of expected risk flags that the triage engine must trigger",
+        "items": {
+          "type": "string",
+          "enum": [
+            "group_size_exceeded",
+            "group_size_below_minimum",
+            "teacher_ratio_insufficient",
+            "minors_not_allowed",
+            "education_level_mismatch",
+            "ppe_non_compliance_risk",
+            "unauthorized_recording_request",
+            "hazardous_zone_access_request"
+          ]
+        }
+      }
+    }
+  }
+}
