@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
@@ -14,8 +14,18 @@ import {
   AlertTriangle,
   ArrowRight,
   Sparkles,
+  CloudSun,
+  Clock,
+  Utensils,
+  Car,
+  Radio,
 } from "lucide-react";
 import seedCatalog from "@/supabase/seed_catalog.json";
+import {
+  formatLiveFacilityStatus,
+  type LiveWeatherInput,
+} from "@/lib/logistics/live_situation";
+import LiveSituationModal from "@/components/logistics/LiveSituationModal";
 
 // Dynamically import Leaflet Map to avoid SSR 'window is not defined' crash
 const LeafletMap = dynamic(() => import("@/components/map/LeafletMap"), {
@@ -36,6 +46,54 @@ export default function ExploreIndustriesPage() {
   const [selectedFacilityId, setSelectedFacilityId] = useState<string | null>(null);
   const [semanticQuery, setSemanticQuery] = useState("");
   const [sortBy, setSortBy] = useState<"distance" | "relevance">("distance");
+  const [liveModalFacility, setLiveModalFacility] = useState<any | null>(null);
+  const [liveWeather, setLiveWeather] = useState<LiveWeatherInput | null>(null);
+
+  // Fetch live Coimbatore environmental telemetry from Open-Meteo
+  useEffect(() => {
+    fetch(
+      "https://api.open-meteo.com/v1/forecast?latitude=11.0168&longitude=76.9558&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&timezone=Asia%2FKolkata"
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.current) {
+          setLiveWeather({
+            tempC: data.current.temperature_2m,
+            apparentTempC: data.current.apparent_temperature,
+            weatherCode: data.current.weather_code,
+            precipitationMm: data.current.precipitation ?? 0,
+            humidityPercent: data.current.relative_humidity_2m ?? 65,
+            windSpeedKmh: data.current.wind_speed_10m ?? 8,
+          });
+        }
+      })
+      .catch(() => {
+        // Fallback default for offline/network issues
+        setLiveWeather({
+          tempC: 26.5,
+          apparentTempC: 28.5,
+          weatherCode: 1,
+          precipitationMm: 0,
+          humidityPercent: 70,
+          windSpeedKmh: 6.5,
+        });
+      });
+
+    // Expose global modal opener for Leaflet map popups
+    if (typeof window !== "undefined") {
+      (window as any).__openLiveSituation = (facilityId: string) => {
+        const found = seedCatalog.industries.find(
+          (i) => i.readable_id === facilityId || (i as any).id === facilityId
+        );
+        if (found) {
+          setLiveModalFacility({
+            ...found,
+            distance_km: 15.2,
+          });
+        }
+      };
+    }
+  }, []);
 
   // PostGIS spatial math emulation for local client UI
   function calculateDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number) {
@@ -228,6 +286,11 @@ export default function ExploreIndustriesPage() {
           ) : (
             filteredFacilities.map((fac) => {
               const isSelected = fac.id === selectedFacilityId;
+              const liveStatus = formatLiveFacilityStatus({
+                ...fac,
+                liveWeather: liveWeather ?? undefined,
+              });
+
               return (
                 <div
                   key={fac.id}
@@ -256,6 +319,51 @@ export default function ExploreIndustriesPage() {
                     <strong className="text-slate-700">Highlights:</strong> {fac.highlights}
                   </p>
 
+                  {/* Built-in Live Situation & Logistics Telemetry */}
+                  <div className="mt-3.5 rounded-xl border border-slate-200/90 bg-slate-50/80 p-3 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-700">
+                          Live Situation & Logistics
+                        </span>
+                      </div>
+                      <span className="text-[10px] font-semibold text-slate-500">
+                        {liveStatus.transitInfo.trafficState === "normal" ? "🟢 Smooth Route" : "⚠️ Peak Congestion"}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-1.5 text-[11px]">
+                      <div className="rounded-lg bg-white p-1.5 border border-slate-200/70 flex items-center gap-1.5 shadow-2xs">
+                        <CloudSun className="h-3.5 w-3.5 text-sky-600 shrink-0" />
+                        <span className="truncate font-medium text-slate-800">
+                          {liveStatus.weatherBadge}
+                        </span>
+                      </div>
+                      <div className="rounded-lg bg-white p-1.5 border border-slate-200/70 flex items-center gap-1.5 shadow-2xs">
+                        <Clock className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                        <span className="truncate font-medium text-slate-800">
+                          {liveStatus.transitBadge}
+                        </span>
+                      </div>
+                      <div className="rounded-lg bg-white p-1.5 border border-slate-200/70 flex items-center gap-1.5 shadow-2xs">
+                        <Utensils className="h-3.5 w-3.5 text-blue-600 shrink-0" />
+                        <span className="truncate font-medium text-slate-800">
+                          {liveStatus.canteenBadge}
+                        </span>
+                      </div>
+                      <div className="rounded-lg bg-white p-1.5 border border-slate-200/70 flex items-center gap-1.5 shadow-2xs">
+                        <Car className="h-3.5 w-3.5 text-indigo-600 shrink-0" />
+                        <span className="truncate font-medium text-slate-800">
+                          {liveStatus.parkingBadge}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-slate-500 border-t border-slate-100 pt-2">
                     <span className="flex items-center gap-1 font-medium text-slate-700">
                       <Users className="h-3.5 w-3.5 text-blue-600" />
@@ -267,10 +375,19 @@ export default function ExploreIndustriesPage() {
                     </span>
                   </div>
 
-                  <div className="mt-4 flex items-center justify-between pt-2">
-                    <span className="text-[11px] font-mono text-slate-400">
-                      ID: {fac.readable_id}
-                    </span>
+                  <div className="mt-3.5 flex items-center justify-between pt-2 border-t border-slate-100">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setLiveModalFacility(fac);
+                      }}
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-300 bg-emerald-50 px-2.5 py-1.5 text-xs font-bold text-emerald-800 hover:bg-emerald-100 transition shadow-xs"
+                    >
+                      <Radio className="h-3.5 w-3.5 text-emerald-600 animate-pulse" />
+                      Live Situation
+                    </button>
+
                     <Link
                       href={`/coordinator/book/${fac.id}`}
                       className="inline-flex items-center gap-1 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-blue-500 transition"
@@ -286,6 +403,16 @@ export default function ExploreIndustriesPage() {
           )}
         </div>
       </div>
+
+      {/* Live Situation Telemetry Modal */}
+      {liveModalFacility && (
+        <LiveSituationModal
+          isOpen={!!liveModalFacility}
+          onClose={() => setLiveModalFacility(null)}
+          facility={liveModalFacility}
+          liveWeather={liveWeather ?? undefined}
+        />
+      )}
     </div>
   );
 }

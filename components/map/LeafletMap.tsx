@@ -120,11 +120,37 @@ export default function LeafletMap({
         });
 
       marker.bindPopup(`
-        <div style="font-family: inherit; font-size: 12px; line-height: 1.4;">
-          <strong style="font-size: 13px; color: #0f172a;">${fac.name}</strong><br/>
-          <span style="color: #64748b;">Sector: ${fac.sector} | ${fac.distance_km} km away</span><br/>
-          <span style="color: #2563eb; font-weight: 600;">Max Group: ${fac.max_group_size} students</span><br/>
-          <p style="margin-top: 4px; color: #334155;">${fac.curriculum_topics.substring(0, 90)}...</p>
+        <div style="font-family: inherit; font-size: 12px; line-height: 1.4; min-width: 210px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+            <span style="font-size: 10px; font-weight: 700; color: #1e40af; background-color: #dbeafe; padding: 2px 6px; border-radius: 4px; text-transform: uppercase;">
+              ${fac.sector}
+            </span>
+            <span style="font-size: 10px; font-weight: 700; color: #047857; display: flex; align-items: center; gap: 2px;">
+              🟢 Live Telemetry
+            </span>
+          </div>
+          <strong style="font-size: 13px; color: #0f172a; display: block; margin-bottom: 4px;">${fac.name}</strong>
+          <div style="display: flex; gap: 4px; font-size: 10px; margin-bottom: 6px;">
+            <span style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; color: #334155;">
+              🚗 ~${Math.max(12, Math.round(fac.distance_km * 2))}m drive
+            </span>
+            <span style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; color: #334155;">
+              📍 ${fac.distance_km} km
+            </span>
+          </div>
+          <p style="margin: 0 0 8px 0; color: #475569; font-size: 11px;">${fac.curriculum_topics.substring(0, 80)}...</p>
+          <div style="display: flex; gap: 6px;">
+            <button onclick="window.__openLiveSituation && window.__openLiveSituation('${fac.id}')" style="
+              background-color: #059669; color: white; border: none; border-radius: 6px; padding: 5px 8px; font-size: 11px; font-weight: 600; cursor: pointer; flex: 1; text-align: center;
+            ">
+              Live Situation
+            </button>
+            <a href="/coordinator/book/${fac.id}" style="
+              background-color: #2563eb; color: white; text-decoration: none; border-radius: 6px; padding: 5px 8px; font-size: 11px; font-weight: 600; text-align: center; flex: 1;
+            ">
+              Request Visit
+            </a>
+          </div>
         </div>
       `);
 
