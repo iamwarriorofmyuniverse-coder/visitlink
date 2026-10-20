@@ -10,6 +10,8 @@ import {
   ArrowRight,
   MapPin,
   Bot,
+  Utensils,
+  CloudSun,
 } from "lucide-react";
 
 export default function HomePage() {
@@ -31,9 +33,19 @@ export default function HomePage() {
       <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/50 via-white to-slate-50 py-16 sm:py-24">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800">
-              <span className="h-2 w-2 rounded-full bg-blue-600 animate-pulse"></span>
-              Live in Coimbatore Industrial Hub (20+ Facilities Verified)
+            <div className="mb-4 flex flex-wrap items-center justify-center gap-2">
+              <span className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800">
+                <span className="h-2 w-2 rounded-full bg-blue-600 animate-pulse"></span>
+                Live in Coimbatore Industrial Hub (20+ Facilities Verified)
+              </span>
+              <Link
+                href="/coordinator/requests/req-cbe-01"
+                className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800 border border-emerald-200 hover:bg-emerald-200 transition"
+              >
+                <Utensils className="h-3 w-3 text-emerald-700" />
+                <span>New: Visit Logistics & Readiness Engine</span>
+                <ArrowRight className="h-3 w-3" />
+              </Link>
             </div>
             <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
               Connect Educational Institutions with{" "}
@@ -91,77 +103,144 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Card 1 */}
-            <div className="rounded-2xl border border-slate-200 p-8 shadow-sm hover:border-blue-300 transition bg-slate-50/50">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600 mb-6">
-                <MapPin className="h-6 w-6" />
+            <div className="rounded-2xl border border-slate-200 p-6 shadow-sm hover:border-blue-300 transition bg-slate-50/50 flex flex-col justify-between">
+              <div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600 mb-6">
+                  <MapPin className="h-6 w-6" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 mb-3">
+                  PostGIS Spatial Radius Search
+                </h3>
+                <p className="text-slate-600 text-xs leading-relaxed mb-4">
+                  Find manufacturing plants within 5km, 10km, 25km, or custom distance. Zero client-side
+                  Haversine math; queries are indexed with GiST geometry inside PostgreSQL.
+                </p>
+                <ul className="space-y-2 text-xs font-medium text-slate-600 mb-4">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                    Interactive Leaflet map & distance sort
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                    Filter by sector, education level, group size
+                  </li>
+                </ul>
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">
-                PostGIS Spatial Radius Search
-              </h3>
-              <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                Find manufacturing plants within 5km, 10km, 25km, or custom distance. Zero client-side
-                Haversine math; queries are indexed with GiST geometry inside PostgreSQL.
-              </p>
-              <ul className="space-y-2 text-xs font-medium text-slate-600">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                  Interactive Leaflet map & distance sort
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                  Filter by sector, education level, group size
-                </li>
-              </ul>
+              <Link
+                href="/coordinator/explore"
+                className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 pt-3 border-t border-slate-200"
+              >
+                Explore Map & Facilities <ArrowRight className="h-3 w-3" />
+              </Link>
             </div>
 
             {/* Card 2 */}
-            <div className="rounded-2xl border border-slate-200 p-8 shadow-sm hover:border-blue-300 transition bg-slate-50/50">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-100 text-purple-600 mb-6">
-                <Bot className="h-6 w-6" />
+            <div className="rounded-2xl border border-slate-200 p-6 shadow-sm hover:border-blue-300 transition bg-slate-50/50 flex flex-col justify-between">
+              <div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-100 text-purple-600 mb-6">
+                  <Bot className="h-6 w-6" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 mb-3">
+                  AI Matching & Pre-screening
+                </h3>
+                <p className="text-slate-600 text-xs leading-relaxed mb-4">
+                  Semantic retrieval embeds academic syllabi and match requests. LLM pre-screens
+                  requests against host safety policies, group limits, and PPE requirements.
+                </p>
+                <ul className="space-y-2 text-xs font-medium text-slate-600 mb-4">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                    pgvector HNSW cosine ranking
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                    Human review enforced (zero auto-approval)
+                  </li>
+                </ul>
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">
-                AI Matching & Pre-screening
-              </h3>
-              <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                Semantic retrieval embeds academic syllabi and match requests. LLM pre-screens
-                requests against host safety policies, group limits, and PPE requirements.
-              </p>
-              <ul className="space-y-2 text-xs font-medium text-slate-600">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                  pgvector HNSW cosine ranking
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                  Human review enforced (zero auto-approval for minors)
-                </li>
-              </ul>
+              <span className="text-xs font-semibold text-purple-600 flex items-center gap-1 pt-3 border-t border-slate-200">
+                Pydantic Strict JSON Validation
+              </span>
             </div>
 
             {/* Card 3 */}
-            <div className="rounded-2xl border border-slate-200 p-8 shadow-sm hover:border-blue-300 transition bg-slate-50/50">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 mb-6">
-                <CalendarCheck2 className="h-6 w-6" />
+            <div className="rounded-2xl border border-slate-200 p-6 shadow-sm hover:border-blue-300 transition bg-slate-50/50 flex flex-col justify-between">
+              <div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600 mb-6">
+                  <CalendarCheck2 className="h-6 w-6" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 mb-3">
+                  Atomic Capacity & Safety
+                </h3>
+                <p className="text-slate-600 text-xs leading-relaxed mb-4">
+                  Database row-level locks prevent overbooking during concurrent approvals. Built-in
+                  teacher ratio checks and private consent upload for minors.
+                </p>
+                <ul className="space-y-2 text-xs font-medium text-slate-600 mb-4">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                    Transactional slot approval (no race conditions)
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                    Private encrypted bucket with 5-min signed URLs
+                  </li>
+                </ul>
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">
-                Atomic Capacity Engine & Safety
-              </h3>
-              <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                Database row-level locks prevent overbooking during concurrent approvals. Built-in
-                teacher ratio checks and private consent upload for minors.
-              </p>
-              <ul className="space-y-2 text-xs font-medium text-slate-600">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                  Transactional slot approval (no race conditions)
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                  Private encrypted bucket with 5-min signed URLs
-                </li>
-              </ul>
+              <span className="text-xs font-semibold text-blue-600 flex items-center gap-1 pt-3 border-t border-slate-200">
+                100% Anti-Overbooking Lock
+              </span>
+            </div>
+
+            {/* Card 4: Visit Logistics & Weather Advisory */}
+            <div className="rounded-2xl border-2 border-emerald-300 bg-emerald-50/30 p-6 shadow-sm hover:border-emerald-400 transition flex flex-col justify-between">
+              <div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 mb-6">
+                  <CloudSun className="h-6 w-6" />
+                </div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="rounded bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 uppercase tracking-wide">
+                    New Feature
+                  </span>
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 mb-3">
+                  Visit Logistics & Weather Advisory
+                </h3>
+                <p className="text-slate-600 text-xs leading-relaxed mb-4">
+                  Canteen & dietary checks, coach parking capacity with height limits, estimated travel time with peak-hour alerts, and Open-Meteo 16-day weather risk flags.
+                </p>
+                <ul className="space-y-2 text-xs font-medium text-slate-600 mb-4">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                    Food & bus bay capacity validation
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                    Peak-hour transit & departure suggestions
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                    Weather advisory & reschedule proposal
+                  </li>
+                </ul>
+              </div>
+              <div className="flex flex-col gap-2 pt-3 border-t border-emerald-200">
+                <Link
+                  href="/coordinator/requests/req-cbe-01"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-3.5 py-2 text-xs font-semibold text-white hover:bg-emerald-500 transition shadow-sm"
+                >
+                  Inspect Readiness Card Demo
+                  <ArrowRight className="h-3 w-3" />
+                </Link>
+                <Link
+                  href="/coordinator/book/foundry-cbe-01"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition"
+                >
+                  Test Booking Form Warnings
+                </Link>
+              </div>
             </div>
           </div>
         </div>

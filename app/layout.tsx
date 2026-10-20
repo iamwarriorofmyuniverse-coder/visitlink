@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
-import { Compass, Building2, School, ShieldCheck, LogIn } from "lucide-react";
+import { Compass, Building2, School, ShieldCheck, LogIn, Utensils } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "VisitLink | Industrial Visit Coordination & Intelligence Platform",
@@ -54,6 +54,13 @@ export default function RootLayout({
               >
                 <Building2 className="h-4 w-4" />
                 Industry Portal
+              </Link>
+              <Link
+                href="/coordinator/requests/req-cbe-01"
+                className="flex items-center gap-1.5 hover:text-emerald-600 text-emerald-700 font-semibold transition-colors"
+              >
+                <Utensils className="h-4 w-4 text-emerald-600" />
+                Visit Logistics
               </Link>
               <Link
                 href="/admin"
