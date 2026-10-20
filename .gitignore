@@ -39,3 +39,6 @@ ENV/
 .DS_Store
 *.pem
 Thumbs.db
+
+cloudflared.exe
+
