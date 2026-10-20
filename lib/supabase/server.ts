@@ -1,12 +1,18 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
+const fallbackUrl =
+  process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder-visitlink.supabase.co";
+const fallbackAnonKey =
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJvbGUiOiJhbm9uIn0.placeholder";
+
 export function createClient() {
   const cookieStore = cookies();
 
   return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    fallbackUrl,
+    fallbackAnonKey,
     {
       cookies: {
         getAll() {
@@ -28,9 +34,10 @@ export function createClient() {
 }
 
 export function createAdminClient() {
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || fallbackAnonKey;
   return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    fallbackUrl,
+    serviceKey,
     {
       cookies: {
         getAll() {
