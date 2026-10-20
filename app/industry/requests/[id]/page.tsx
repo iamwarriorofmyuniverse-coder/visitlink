@@ -17,6 +17,7 @@ import {
   Bot,
   Send,
 } from "lucide-react";
+import VisitReadinessCard from "@/components/logistics/VisitReadinessCard";
 
 export default function IndustryRequestReviewPage() {
   const params = useParams();
@@ -33,10 +34,65 @@ export default function IndustryRequestReviewPage() {
   const [newTime, setNewTime] = useState("10:00 AM - 1:00 PM");
   const [actionMsg, setActionMsg] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
+  // Logistics Readiness Evaluation for Industry Manager
+  // Flag both parking and weather warning if requestId is req-cbe-02 or includes "warning" or "test"
+  const hasLogisticsWarning = requestId.includes("warning") || requestId === "req-cbe-02" || requestId.includes("test");
+
+  const foodLogistics = {
+    status: (hasLogisticsWarning ? "warning" : "ok") as "ok" | "warning",
+    flags: hasLogisticsWarning
+      ? ["Meal headcount (65) exceeds facility canteen capacity (50)."]
+      : [],
+    details: hasLogisticsWarning
+      ? "Meal headcount (65) exceeds facility canteen capacity (50)."
+      : "Canteen available (veg, non_veg). Capacity sufficient for 40 students.",
+  };
+
+  const parkingLogistics = {
+    status: (hasLogisticsWarning ? "warning" : "ok") as "ok" | "warning",
+    flags: hasLogisticsWarning
+      ? ["Requested buses (4) exceed facility bus parking bays (2)."]
+      : [],
+    details: hasLogisticsWarning
+      ? "Requested buses (4) exceed facility bus parking bays (2)."
+      : "Parking allocated: 1 bus bay and 2 car bays. Max vehicle height: 4.5m.",
+    entryGateInstructions:
+      "Gate 2 (Heavy Vehicle & Logistics Gate) on Avinashi Road; driver must register at security post.",
+    maxVehicleHeightM: 4.5,
+  };
+
+  const trafficLogistics = {
+    status: "warning" as const,
+    distanceKm: 18.5,
+    durationMinutes: 37,
+    peakHourRisk: true,
+    peakWindowName: "Morning Peak",
+    suggestedDepartureTime: "08:38",
+    details:
+      "Estimated travel time: 37 mins (18.5 km). Morning Peak traffic expected along route. Suggested departure: 08:38 to ensure on-time arrival.",
+    provider: "OpenRouteService",
+  };
+
+  const weatherLogistics = {
+    status: (hasLogisticsWarning ? "warning" : "ok") as "ok" | "warning",
+    riskType: (hasLogisticsWarning ? "rain_risk" : "none") as "none" | "rain_risk",
+    temperatureC: 29.5,
+    rainProbability: hasLogisticsWarning ? 75 : 15,
+    weatherCode: hasLogisticsWarning ? 61 : 1,
+    weatherDescription: hasLogisticsWarning ? "Rain showers" : "Mainly clear",
+    details: hasLogisticsWarning
+      ? "Rain Risk: High rain probability (75%) forecast on visit date for outdoor operations."
+      : "Forecast: Mainly clear. Max temp 31°C, rain probability 15%. Conditions favorable.",
+    flags: hasLogisticsWarning
+      ? ["Rain Risk: High rain probability (75%) for outdoor facility operations."]
+      : [],
+    canProposeReschedule: hasLogisticsWarning,
+    attribution: "Weather data by Open-Meteo.com",
+  };
+
   // Simulated Atomic RPC Approval
   function handleApprove() {
     setActionMsg(null);
-    // Execute atomic approval
     setStatus("approved");
     setActionMsg({
       type: "success",
@@ -140,6 +196,17 @@ export default function IndustryRequestReviewPage() {
           </div>
         )}
 
+        {/* Visit Readiness & Logistics Card */}
+        <VisitReadinessCard
+          food={foodLogistics}
+          parking={parkingLogistics}
+          traffic={trafficLogistics}
+          weather={weatherLogistics}
+          isApproved={status === "approved"}
+          canProposeReschedule={true}
+          onProposeReschedule={() => setShowRescheduleModal(true)}
+        />
+
         {/* AI Triage Pre-Screening Report */}
         <div className="rounded-2xl border border-purple-200 bg-purple-50/30 p-6 shadow-sm space-y-4">
           <div className="flex items-center justify-between">
@@ -242,90 +309,71 @@ export default function IndustryRequestReviewPage() {
             </div>
             <button
               type="button"
-              onClick={() => alert("Simulated: Opening 5-minute ephemeral signed URL from private storage bucket.")}
-              className="text-xs font-semibold text-blue-600 hover:underline"
+              onClick={() => alert("Downloading signed student roster with parental consent attachments...")}
+              className="text-xs font-semibold text-blue-600 hover:text-blue-800"
             >
-              View Document
+              Download Signed Roster
             </button>
           </div>
         </div>
 
-        {/* State History Audit Trail */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-3">
-          <h2 className="text-base font-bold text-slate-900">Visit Request Audit Trail</h2>
-          <div className="space-y-2 text-xs">
-            <div className="flex items-start gap-2">
-              <span className="h-2 w-2 rounded-full bg-slate-400 mt-1.5"></span>
-              <div>
-                <span className="font-semibold text-slate-800">Request Created</span>
-                <span className="text-slate-400 ml-2">2 days ago</span>
-                <p className="text-slate-500">Submitted by Prof. R. Soundararajan (PSG Tech)</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="h-2 w-2 rounded-full bg-purple-500 mt-1.5"></span>
-              <div>
-                <span className="font-semibold text-slate-800">AI Triage Completed</span>
-                <span className="text-slate-400 ml-2">2 days ago</span>
-                <p className="text-slate-500">Triage verdict: Pass. Zero risk flags detected.</p>
-              </div>
+        {/* Reschedule Proposal Modal */}
+        {showRescheduleModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+            <div className="w-full max-w-md bg-white rounded-2xl p-6 shadow-xl space-y-4">
+              <h3 className="text-lg font-bold text-slate-900">Propose Alternative Visit Date</h3>
+              <p className="text-xs text-slate-500">
+                Offer an alternative slot due to weather advisory or capacity constraints. The coordinator will be notified to review and accept.
+              </p>
+
+              <form onSubmit={handleProposeReschedule} className="space-y-3">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 uppercase">
+                    Proposed Date
+                  </label>
+                  <input
+                    type="date"
+                    required
+                    value={newDate}
+                    onChange={(e) => setNewDate(e.target.value)}
+                    className="mt-1 block w-full rounded-lg border border-slate-300 p-2 text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 uppercase">
+                    Time Window
+                  </label>
+                  <select
+                    value={newTime}
+                    onChange={(e) => setNewTime(e.target.value)}
+                    className="mt-1 block w-full rounded-lg border border-slate-300 p-2 text-sm"
+                  >
+                    <option value="10:00 AM - 1:00 PM">Morning Slot (10:00 AM - 1:00 PM)</option>
+                    <option value="2:00 PM - 5:00 PM">Afternoon Slot (2:00 PM - 5:00 PM)</option>
+                  </select>
+                </div>
+
+                <div className="flex justify-end gap-2 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowRescheduleModal(false)}
+                    className="px-3.5 py-2 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 rounded-lg bg-blue-600 text-xs font-semibold text-white hover:bg-blue-500 shadow-sm"
+                  >
+                    Send Reschedule Proposal
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
-        </div>
+        )}
       </div>
-
-      {/* Reschedule Proposal Modal */}
-      {showRescheduleModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl space-y-4">
-            <h2 className="text-lg font-bold text-slate-900">Propose Alternative Visit Slot</h2>
-            <form onSubmit={handleProposeReschedule} className="space-y-4">
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 uppercase">
-                  Proposed Date
-                </label>
-                <input
-                  type="date"
-                  required
-                  value={newDate}
-                  onChange={(e) => setNewDate(e.target.value)}
-                  className="mt-1 block w-full rounded-lg border border-slate-300 p-2 text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 uppercase">
-                  Alternative Time Slot
-                </label>
-                <select
-                  value={newTime}
-                  onChange={(e) => setNewTime(e.target.value)}
-                  className="mt-1 block w-full rounded-lg border border-slate-300 p-2 text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                >
-                  <option value="10:00 AM - 1:00 PM">10:00 AM - 1:00 PM (Morning Slot)</option>
-                  <option value="2:00 PM - 5:00 PM">2:00 PM - 5:00 PM (Afternoon Slot)</option>
-                </select>
-              </div>
-
-              <div className="flex justify-end gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setShowRescheduleModal(false)}
-                  className="px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium text-slate-700 hover:bg-slate-50 transition"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 rounded-lg bg-blue-600 text-sm font-semibold text-white hover:bg-blue-500 transition"
-                >
-                  Send Reschedule Proposal
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

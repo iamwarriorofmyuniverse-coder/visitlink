@@ -89,10 +89,33 @@ export default function RootLayout({
             <p>
               &copy; {new Date().getFullYear()} VisitLink Platform. All rights reserved. Industrial Visit Coordination Layer.
             </p>
-            <div className="flex gap-6 text-xs text-slate-400">
+            <div className="flex flex-wrap gap-4 text-xs text-slate-400">
               <span>Safety & Compliance First</span>
               <span>Parental Minor Consent Protected</span>
-              <span>PostGIS Spatial & pgvector Semantic Retrieval</span>
+              <a
+                href="https://www.openstreetmap.org/copyright"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue-600 transition"
+              >
+                &copy; OpenStreetMap contributors
+              </a>
+              <a
+                href="https://openrouteservice.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue-600 transition"
+              >
+                Routing: OpenRouteService
+              </a>
+              <a
+                href="https://open-meteo.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue-600 transition"
+              >
+                Weather: Open-Meteo.com (CC BY 4.0)
+              </a>
             </div>
           </div>
         </footer>
