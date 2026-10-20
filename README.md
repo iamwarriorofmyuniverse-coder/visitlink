@@ -7,6 +7,7 @@ It features:
 - **AI Semantic Matching**: Syllabus-to-facility capability retrieval using `pgvector` HNSW cosine indexing with configurable hybrid scoring ($0.7 \times \text{semantic similarity} + 0.3 \times \text{distance score}$).
 - **AI Triage Pre-Screening**: Pydantic-validated rule checker evaluating supervision ratios, group caps, minor eligibility, and generating draft host replies.
 - **Zero-Overbooking Capacity Engine**: Atomic PostgreSQL transactions with `SELECT ... FOR UPDATE` row-level locks preventing race-condition overbooking.
+- **Educational Intent & Anti-Abuse System**: Mandatory syllabus alignment, minimum 2 technical learning objectives, designated faculty sponsorship, consumer freemail blocking, post-visit attendance & purpose auditing, 7-day report lifecycle, deterministic institution trust tiers (`New`, `Verified`, `Trusted`, `Restricted`), and human-in-the-loop strike reviews with appeal safeguards.
 - **Visit Logistics & Readiness**: Declarative food & parking capacity validation, estimated travel time with peak-hour risk warnings via OpenRouteService (24h cached), and advisory weather forecasting via Open-Meteo with T-48h/T-24h delta re-checks.
 - **Child Safety & DPDP Privacy Compliance**: Parental consent forms and student rosters stored in private buckets with 5-minute signed URLs; absolute ban on auto-approving minors.
 - **Zero-Fabrication Evaluation Harness**: Reproducible benchmarks for Recall@5, NDCG@5, Precision, and Recall on user-provided datasets.
@@ -56,7 +57,57 @@ VisitLink includes an operational logistics layer ensuring industrial visits run
 
 ---
 
-## 3. Tech Stack
+## 3. Educational Intent & Anti-Abuse System
+
+To prevent institutions from treating industrial visits as leisure trips or tourist excursions (which wastes engineering time and drives factories off the platform), VisitLink implements a comprehensive intent validation and reputation framework:
+
+### 1. Mandatory Intent Validation (Request Wizard)
+- **Concrete Learning Objectives**: At least 2 objectives required ($\ge 30$ characters each) detailing specific engineering/scientific concepts.
+- **Academic Anchoring**: Mandatory `course_name` ($\ge 3$ chars), `semester_class`, and `syllabus_topic` ($\ge 10$ chars).
+- **Plant Observation Agenda**: Detailed step-by-step observation timeline ($\ge 40$ chars).
+- **Expected Deliverable**: Selection from formal `report`, `quiz`, `project`, or `case_study`.
+- **Anti-Leisure Keyword & Placeholder Blocker**: Rejects superficial or evasive language (e.g. *"visit"*, *"exposure"*, *"general exposure"*, *"picnic"*, *"fun"*, *"tour"*, *"sightseeing"*, *"outing"*, *"n/a"*).
+- **Faculty-in-Charge Sponsorship**: Designated faculty name, mobile, and official institutional email. Consumer free-mail domains (`@gmail.com`, `@yahoo.com`, etc.) are rejected by default.
+  - *Tradeoff / Rural Inclusivity*: State and rural colleges lacking `.edu.in` domains can be granted a documented `allow_freemail_domain` override by a platform administrator.
+
+### 2. Post-Visit Verification & Expiry Lifecycle
+- **Industry Post-Visit Confirmation**: Facility managers confirm:
+  - `attended` (Yes / No)
+  - `actual_headcount`
+  - `industry_engagement_rating` (1 to 5 stars)
+  - `purpose_observed`: `educational` (genuine), `mixed`, or `not_educational` (leisure/picnic abuse)
+- **10-Day Expiry**: Request status remains `pending_industry_verification` for 10 days post-visit. If unconfirmed after 10 days, status transitions to `unverified`. Status `completed` is reached **only after industry confirmation**.
+- **7-Day Report Submission**: Institutions must upload a visit report or learning summary within 7 days. Automated reminder alerts are scheduled at Day 3 and Day 6.
+
+### 3. Institution Trust Score & Tier Hierarchy
+- **Deterministic Trust Score** in $[0.0, 100.0]$:
+  $$\text{Score} = \left(\frac{\text{On-Time Reports}}{\text{Completed}}\right) \times 50 + \left(\frac{\text{Avg Rating} - 1.0}{4.0}\right) \times 50 - \text{Penalties}$$
+  - Severe penalties: Confirmed Not Educational report ($-25$ pts), No-show ($-20$ pts), Late cancellation ($-10$ pts).
+- **Tier Hierarchy**:
+  - `New`: 0–2 completed visits. Restricted to a maximum of 2 pending requests at a time.
+  - `Verified`: $\ge 3$ visits, score $\ge 60.0$, $\le 1$ active strike.
+  - `Trusted`: $\ge 8$ visits, score $\ge 85.0$, 0 active strikes.
+  - `Restricted`: 3 active strikes within 12 months or score $< 30.0$.
+- **Facility Gatekeeper (`min_trust_tier`)**: Advanced industrial plants can enforce a minimum institution trust tier.
+- **Configurable Settings Table**: All weights, penalties, and tier thresholds are defined in `trust_settings` (zero magic numbers).
+
+### 4. Human-in-the-Loop Strike Audits & Appeal Safeguards
+- **Zero Unilateral Penalties**: An industry manager's "Not Educational" or "No-Show" report enters `pending_admin_review` with submitted evidence (gate logs, CCTV notes, coordinator absence). It **never** auto-penalizes an institution.
+- **Admin Review Actions**: Admins independently review evidence and either approve the strike or dismiss frivolous/disputed complaints.
+- **Restricted Institution Appeals**: Restricted institutions have a formal appeal path to submit remedial undertakings from college deans, which platform admins can review to lift restrictions.
+- **Transparent Notice**: Whenever an institution's booking privilege is restricted, the exact violation reason and evidence are displayed.
+
+### 5. AI Triage Intent-Quality Extension
+- Pydantic-validated assessment measuring **Objective Specificity** ($[0.0, 1.0]$), **Syllabus Alignment** ($[0.0, 1.0]$), and **Agenda Realism**.
+- **Strict Advisory Policy**: Intent scoring is flag-only and **never** auto-rejects. The human industry manager retains decision authority.
+- Evaluated on user-supplied labels (`ai_service/eval_intent_triage.py`) optimizing to minimize false positives against genuine institutions.
+
+### 6. Strict Scope Guard
+- Zero sightseeing, tourism, or leisure features; no group travel booking or leisure marketing.
+
+---
+
+## 4. Tech Stack
 
 - **Frontend & Web API**: Next.js 14+ (App Router), TypeScript, Tailwind CSS, Lucide Icons
 - **Data & Auth**: Supabase (PostgreSQL 15+, PostGIS, pgvector, GoTrue Auth, Private Storage, RLS)

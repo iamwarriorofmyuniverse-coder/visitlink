@@ -102,10 +102,18 @@ class RuleEvaluation(BaseModel):
         "teacher_student_ratio",
         "minors_eligibility",
         "education_level",
-        "ppe_and_safety"
+        "ppe_and_safety",
+        "educational_intent"
     ]
     passed: bool
     details: str
+
+class IntentAssessment(BaseModel):
+    intent_score: float = Field(ge=0.0, le=1.0, description="Overall educational intent quality score (0.0 to 1.0)")
+    objective_specificity: int = Field(ge=1, le=5, description="1-5 rating on technical precision of objectives")
+    syllabus_alignment: int = Field(ge=1, le=5, description="1-5 rating on alignment with facility processes")
+    agenda_realism: int = Field(ge=1, le=5, description="1-5 rating on operational feasibility of itinerary")
+    intent_flags: List[str] = Field(default=[], description="Advisory flags detailing vagueness or leisure risks")
 
 class RiskFlag(BaseModel):
     severity: Literal["low", "medium", "critical"]
@@ -129,6 +137,10 @@ class RequestPayload(BaseModel):
     department_or_grade: Optional[str] = ""
     visit_objectives: str
     special_requests: Optional[str] = None
+    learning_objectives: Optional[List[str]] = None
+    syllabus_topic: Optional[str] = None
+    pre_visit_agenda: Optional[str] = None
+    expected_deliverable: Optional[str] = None
 
 class TriageRequest(BaseModel):
     industry_rules: IndustryRules
@@ -138,6 +150,7 @@ class TriageResponse(BaseModel):
     overall_verdict: Literal["pass", "flagged", "fail"]
     rule_evaluations: List[RuleEvaluation]
     risk_flags: List[RiskFlag]
+    intent_assessment: Optional[IntentAssessment] = None
     has_minors: bool
     draft_reply: str
     requires_human_review: bool = Field(default=True, description="Strict rule: Human approval always required.")
@@ -382,6 +395,59 @@ def triage_visit_request(req: TriageRequest, user=Depends(verify_supabase_jwt)):
         details=f"Mandatory PPE required: {', '.join(rules.ppe_requirements)}."
     ))
 
+    # 6. Educational Intent Quality Assessment (Flag only, never auto-reject)
+    intent_flags: List[str] = []
+    intent_score = 0.90
+    specificity = 4
+    alignment = 4
+    realism = 4
+
+    objectives = payload.learning_objectives or ([payload.visit_objectives] if payload.visit_objectives else [])
+    agenda = (payload.pre_visit_agenda or "").lower()
+
+    # Check for leisure/tourism keywords
+    leisure_keywords = ["sightseeing", "tour", "picnic", "fun", "chill", "shopping", "outing", "resort", "exposure"]
+    found_leisure = [k for k in leisure_keywords if k in agenda or any(k in o.lower() for o in objectives)]
+
+    if found_leisure:
+        intent_flags.append(
+            f"Advisory: Potential leisure or generic phrasing detected ('{', '.join(found_leisure)}'). Host manager may request technical clarification."
+        )
+        intent_score -= 0.35
+        specificity = min(specificity, 2)
+        realism = min(realism, 2)
+
+    # Check objectives length and technical substance
+    short_objectives = [o for o in objectives if len(o.strip()) < 30]
+    if short_objectives or len(objectives) < 2:
+        intent_flags.append("Advisory: Learning objectives are concise or under recommended length. Host verification advised.")
+        intent_score -= 0.20
+        specificity = min(specificity, 2)
+
+    intent_score = max(0.1, min(1.0, round(intent_score, 2)))
+    intent_passed = (intent_score >= 0.50)
+
+    evaluations.append(RuleEvaluation(
+        rule_name="educational_intent",
+        passed=intent_passed,
+        details=f"Educational intent quality score: {intent_score * 100:.0f}%. Specificity: {specificity}/5, Syllabus Alignment: {alignment}/5, Agenda Realism: {realism}/5."
+    ))
+
+    if not intent_passed or intent_flags:
+        flags.append(RiskFlag(
+            severity="medium",
+            category="educational_intent",
+            message=f"Intent Quality Advisory: {intent_flags[0] if intent_flags else 'Curriculum clarification recommended'}"
+        ))
+
+    intent_assessment = IntentAssessment(
+        intent_score=intent_score,
+        objective_specificity=specificity,
+        syllabus_alignment=alignment,
+        agenda_realism=realism,
+        intent_flags=intent_flags
+    )
+
     # Determine Verdict
     has_critical = any(f.severity == "critical" for f in flags)
     has_medium = any(f.severity == "medium" for f in flags)
@@ -419,6 +485,7 @@ def triage_visit_request(req: TriageRequest, user=Depends(verify_supabase_jwt)):
         overall_verdict=verdict,
         rule_evaluations=evaluations,
         risk_flags=flags,
+        intent_assessment=intent_assessment,
         has_minors=payload.has_minors,
         draft_reply=reply,
         requires_human_review=True,

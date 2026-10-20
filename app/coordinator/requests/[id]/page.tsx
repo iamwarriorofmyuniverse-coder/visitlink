@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -13,6 +13,12 @@ import {
   FileText,
   Star,
   ArrowLeft,
+  GraduationCap,
+  Upload,
+  UserCheck,
+  ShieldCheck,
+  AlertTriangle,
+  BookOpen,
 } from "lucide-react";
 import VisitReadinessCard from "@/components/logistics/VisitReadinessCard";
 
@@ -20,8 +26,48 @@ export default function CoordinatorRequestDetailsPage() {
   const params = useParams();
   const requestId = params.id as string;
 
-  const [status, setStatus] = useState<"pending" | "approved" | "reschedule_proposed" | "completed">("approved");
+  const [status, setStatus] = useState<"pending" | "approved" | "reschedule_proposed" | "completed" | "unverified" | "no_show">("approved");
   const [rescheduleAccepted, setRescheduleAccepted] = useState(false);
+  const [reportFile, setReportFile] = useState<string | null>(null);
+  const [reportUploaded, setReportUploaded] = useState(false);
+  const [uploadMsg, setUploadMsg] = useState<string | null>(null);
+
+  // Intent State from session storage if available
+  const [intent, setIntent] = useState({
+    course_name: "Manufacturing Technology & Machine Tools",
+    semester_class: "4th Sem B.E. Mechanical Engineering",
+    syllabus_topic: "Unit 3: Metal Casting Processes & High-Pressure Die Casting",
+    learning_objectives: [
+      "Study automated green sand moulding lines, cupola furnace melting, and non-destructive casting flaw inspections.",
+      "Observe CNC precision machining operations and coordinate measuring machine (CMM) quality metrology workflows.",
+    ],
+    pre_visit_agenda:
+      "Detailed 3-hour plant walkthrough: 45m cupola furnace & casting floor, 45m CNC machining shop, 45m metrology inspection lab, 45m Q&A with chief metallurgist.",
+    expected_deliverable: "report",
+    faculty_name: "Dr. R. Karthikeyan",
+    faculty_email: "karthikeyan.mech@psgtech.edu",
+    faculty_phone: "+91 94432 18920",
+    faculty_email_verified: true,
+  });
+
+  useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem("last_visit_intent");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        setIntent((prev) => ({ ...prev, ...parsed }));
+      }
+    } catch {}
+  }, []);
+
+  function handleReportUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file) {
+      setReportFile(file.name);
+      setReportUploaded(true);
+      setUploadMsg("Visit report submitted successfully! Institutional trust score updated (+50 pts on-time bonus).");
+    }
+  }
 
   // Logistics Readiness Evaluation for Coordinator
   const hasLogisticsWarning = requestId.includes("warning") || requestId === "req-cbe-02";
@@ -102,6 +148,10 @@ export default function CoordinatorRequestDetailsPage() {
                     ? "bg-blue-100 text-blue-800"
                     : status === "reschedule_proposed"
                     ? "bg-amber-100 text-amber-800"
+                    : status === "unverified"
+                    ? "bg-purple-100 text-purple-800"
+                    : status === "no_show"
+                    ? "bg-red-100 text-red-800"
                     : "bg-slate-100 text-slate-800"
                 }`}
               >
@@ -123,7 +173,7 @@ export default function CoordinatorRequestDetailsPage() {
                 onClick={() => setStatus("completed")}
                 className="px-3.5 py-2 rounded-lg bg-blue-600 text-xs font-semibold text-white shadow-sm hover:bg-blue-500 transition"
               >
-                Mark Visit Completed
+                Simulate Post-Visit Completion
               </button>
             )}
             {status === "completed" && (
@@ -181,6 +231,128 @@ export default function CoordinatorRequestDetailsPage() {
           weather={weatherLogistics}
           isApproved={status === "approved" || status === "completed"}
         />
+
+        {/* Mandatory Educational Intent Card (Phase m1) */}
+        <div className="p-6 rounded-2xl bg-white border border-purple-200 shadow-sm space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <GraduationCap className="h-5 w-5 text-purple-600" />
+              Verified Educational Intent & Academic Sponsoring
+            </h2>
+            <span className="inline-flex items-center gap-1 rounded-full bg-purple-50 px-2.5 py-0.5 text-xs font-semibold text-purple-700 border border-purple-200">
+              <ShieldCheck className="h-3.5 w-3.5" />
+              Academic Anti-Abuse Pass
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+              <span className="text-[10px] uppercase font-bold text-slate-500">Course & Class</span>
+              <p className="font-semibold text-slate-900">{intent.course_name}</p>
+              <p className="text-slate-600">{intent.semester_class}</p>
+            </div>
+
+            <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+              <span className="text-[10px] uppercase font-bold text-slate-500">Syllabus Topic</span>
+              <p className="font-semibold text-slate-900">{intent.syllabus_topic}</p>
+              <p className="text-slate-600">Expected Deliverable: <strong className="capitalize">{intent.expected_deliverable}</strong></p>
+            </div>
+          </div>
+
+          <div className="p-4 bg-purple-50/40 rounded-xl border border-purple-100 space-y-2">
+            <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+              <BookOpen className="h-3.5 w-3.5 text-purple-600" />
+              Declared Learning Objectives
+            </span>
+            <ul className="list-disc pl-4 space-y-1 text-xs text-slate-700">
+              {intent.learning_objectives.map((obj, i) => (
+                <li key={i}>{obj}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1">
+            <span className="text-[10px] uppercase font-bold text-slate-500">Plant Observation Agenda</span>
+            <p className="text-slate-700 leading-relaxed">{intent.pre_visit_agenda}</p>
+          </div>
+
+          <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-t border-slate-100 text-xs">
+            <div className="flex items-center gap-2">
+              <UserCheck className="h-4 w-4 text-blue-600" />
+              <span>
+                Faculty-In-Charge: <strong>{intent.faculty_name}</strong> ({intent.faculty_phone})
+              </span>
+            </div>
+            <span className="inline-flex items-center gap-1 rounded bg-emerald-50 px-2 py-0.5 text-[11px] font-medium text-emerald-800 border border-emerald-200">
+              <CheckCircle2 className="h-3 w-3" />
+              Verified Email: {intent.faculty_email}
+            </span>
+          </div>
+        </div>
+
+        {/* Post-Visit Report Upload & Verification Card (Phase m2) */}
+        {(status === "completed" || status === "approved") && (
+          <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <FileText className="h-5 w-5 text-blue-600" />
+                  Post-Visit Report & Learning Summary (7-Day Requirement)
+                </h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Institutions must submit a technical visit report or learning summary within 7 days of visit completion to maintain Verified/Trusted status.
+                </p>
+              </div>
+              <span className={`px-2.5 py-1 text-xs font-semibold rounded-full ${
+                reportUploaded ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"
+              }`}>
+                {reportUploaded ? "Report Submitted" : "Pending Submission (Day 2 of 7)"}
+              </span>
+            </div>
+
+            {uploadMsg && (
+              <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-medium text-emerald-900 flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                <span>{uploadMsg}</span>
+              </div>
+            )}
+
+            {!reportUploaded ? (
+              <div className="p-4 rounded-xl border border-dashed border-slate-300 bg-slate-50/50 space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <span className="text-xs font-bold text-slate-800 block">
+                      Upload Student Visit Report (PDF / DOCX, Max 10MB)
+                    </span>
+                    <span className="text-[11px] text-slate-500">
+                      System automatically schedules reminder alerts at Day 3 and Day 6 if unsubmitted.
+                    </span>
+                  </div>
+                  <label className="cursor-pointer inline-flex items-center gap-2 rounded-lg bg-blue-600 px-3.5 py-2 text-xs font-semibold text-white shadow-sm hover:bg-blue-500 transition">
+                    <Upload className="h-3.5 w-3.5" />
+                    Upload Report
+                    <input
+                      type="file"
+                      accept=".pdf,.docx,.doc"
+                      onChange={handleReportUpload}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+              </div>
+            ) : (
+              <div className="p-3.5 bg-emerald-50/50 rounded-xl border border-emerald-200 flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <FileText className="h-4 w-4 text-emerald-700" />
+                  <span className="font-semibold text-emerald-900">
+                    {reportFile || "PSG_Mechanical_Industrial_Visit_Report.pdf"}
+                  </span>
+                </div>
+                <span className="text-emerald-700 font-medium">On-Time Submission Confirmed</span>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Visit Parameters Card */}
         <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">

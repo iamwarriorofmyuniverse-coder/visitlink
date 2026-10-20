@@ -474,7 +474,8 @@
       "entry_gate_instructions": "Security Gate 1 (Avinashi Road Aerodrome bypass). Security clearance checks performed.",
       "parking_notes": "Designated visitor bus staging lane.",
       "outdoor_component": false,
-      "heat_sensitive": true
+      "heat_sensitive": true,
+      "min_trust_tier": "trusted"
     },
     {
       "readable_id": "datacenter-cbe-01",
