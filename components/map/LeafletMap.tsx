@@ -90,27 +90,18 @@ export default function LeafletMap({
     facilities.forEach((fac) => {
       const isSelected = fac.id === selectedId;
       const markerHtml = `
-        <div style="
-          background-color: ${isSelected ? "#dc2626" : "#1e40af"};
-          color: white;
-          padding: 4px 8px;
-          border-radius: 8px;
-          font-size: 11px;
-          font-weight: 700;
-          white-space: nowrap;
-          border: 2px solid white;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.35);
-          cursor: pointer;
-        ">
-          ${fac.name.split(" ")[0]} (${fac.distance_km}km)
+        <div class="vl-pin-badge ${isSelected ? "is-selected" : ""}">
+          <span class="vl-pin-dot"></span>
+          <span class="vl-pin-name">${fac.name.split(" ")[0]}</span>
+          <span class="vl-pin-dist">${fac.distance_km}km</span>
         </div>
       `;
 
       const icon = L.divIcon({
         className: "custom-leaflet-icon",
         html: markerHtml,
-        iconSize: [80, 24],
-        iconAnchor: [40, 12],
+        iconSize: [100, 28],
+        iconAnchor: [50, 14],
       });
 
       const marker = L.marker([fac.lat, fac.lng], { icon })
@@ -119,40 +110,46 @@ export default function LeafletMap({
           onSelectFacility(fac.id);
         });
 
+      const driveMins = Math.max(12, Math.round(fac.distance_km * 2));
+
       marker.bindPopup(`
-        <div class="vl-leaflet-popup" style="font-family: inherit; font-size: 12px; line-height: 1.4; min-width: 220px;">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-            <span class="vl-popup-sector" style="font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; text-transform: uppercase;">
-              ${fac.sector}
-            </span>
-            <span class="vl-popup-live" style="font-size: 10px; font-weight: 700; display: flex; align-items: center; gap: 4px;">
-              🟢 Live Telemetry
-            </span>
-          </div>
-          <strong class="vl-popup-title" style="font-size: 13px; font-weight: 800; display: block; margin-bottom: 6px; line-height: 1.3;">${fac.name}</strong>
-          <div style="display: flex; gap: 6px; font-size: 10px; margin-bottom: 8px;">
-            <span class="vl-popup-pill" style="padding: 2px 8px; border-radius: 6px; font-weight: 600;">
-              🚗 ~${Math.max(12, Math.round(fac.distance_km * 2))}m drive
-            </span>
-            <span class="vl-popup-pill" style="padding: 2px 8px; border-radius: 6px; font-weight: 600;">
-              📍 ${fac.distance_km} km
+        <div class="vl-popup-card">
+          <div class="vl-popup-header">
+            <span class="vl-popup-sector-tag">${fac.sector}</span>
+            <span class="vl-popup-status-pill">
+              <span class="vl-status-beacon"></span>
+              Live Available
             </span>
           </div>
-          <p class="vl-popup-desc" style="margin: 0 0 10px 0; font-size: 11px; line-height: 1.4;">${fac.curriculum_topics.substring(0, 80)}...</p>
-          <div style="display: flex; gap: 6px;">
-            <button onclick="window.__openLiveSituation && window.__openLiveSituation('${fac.id}')" style="
-              background-color: #059669; color: white; border: none; border-radius: 8px; padding: 6px 10px; font-size: 11px; font-weight: 700; cursor: pointer; flex: 1; text-align: center;
-            ">
-              Live Situation
+
+          <h3 class="vl-popup-heading">${fac.name}</h3>
+
+          <div class="vl-popup-meta-row">
+            <span class="vl-popup-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+              ~${driveMins} mins
+            </span>
+            <span class="vl-popup-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+              ${fac.distance_km} km away
+            </span>
+          </div>
+
+          <p class="vl-popup-snippet">${fac.curriculum_topics.substring(0, 95)}...</p>
+
+          <div class="vl-popup-actions">
+            <button onclick="window.__openLiveSituation && window.__openLiveSituation('${fac.id}')" class="vl-popup-btn-secondary" title="View live weather, transit and logistics">
+              Live Telemetry
             </button>
-            <a href="/coordinator/book/${fac.id}" style="
-              background-color: #2563eb; color: white; text-decoration: none; border-radius: 8px; padding: 6px 10px; font-size: 11px; font-weight: 700; text-align: center; flex: 1;
-            ">
-              Request Visit
+            <a href="/coordinator/book/${fac.id}" class="vl-popup-btn-primary">
+              Book Visit &rarr;
             </a>
           </div>
         </div>
-      `);
+      `, {
+        maxWidth: 290,
+        className: "vl-custom-leaflet-popup"
+      });
 
       markersRef.current[fac.id] = marker;
     });
