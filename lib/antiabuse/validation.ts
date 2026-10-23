@@ -112,11 +112,18 @@ export function containsPlaceholderText(text: string): boolean {
   // If text is extremely short or exact match with placeholder
   if (PLACEHOLDER_KEYWORDS.includes(cleaned)) return true;
 
-  // If text is primarily composed of placeholder words without substantial academic explanation
-  // e.g. "Just an industrial visit for exposure and general knowledge"
+  // Check multi-word phrases
+  for (const phrase of PLACEHOLDER_KEYWORDS) {
+    if (phrase.includes(" ") && cleaned.includes(phrase)) {
+      return true;
+    }
+  }
+
+  // If text has multiple placeholder words
   const words = cleaned.replace(/[^a-z0-9\s]/g, "").split(/\s+/);
   const placeholderHits = words.filter((w) => PLACEHOLDER_KEYWORDS.includes(w)).length;
-  if (placeholderHits >= 2 && words.length <= 10) return true;
+  if (placeholderHits >= 2) return true;
+  if (placeholderHits >= 1 && words.length <= 5) return true;
 
   return false;
 }

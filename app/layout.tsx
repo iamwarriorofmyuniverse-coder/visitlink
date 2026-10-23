@@ -48,21 +48,21 @@ export default function RootLayout({
                   Find Industries
                 </Link>
                 <Link
-                  href="/coordinator"
+                  href="/portal?tab=coordinator"
                   className="flex items-center gap-1.5 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
                   <School className="h-4 w-4" />
                   Schools &amp; Colleges
                 </Link>
                 <Link
-                  href="/industry"
+                  href="/portal?tab=industry"
                   className="flex items-center gap-1.5 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
                   <Building2 className="h-4 w-4" />
                   Industry Portal
                 </Link>
                 <Link
-                  href="/coordinator/requests/req-cbe-01"
+                  href="/portal?tab=logistics"
                   className="flex items-center gap-1.5 hover:text-emerald-600 dark:hover:text-emerald-400 text-emerald-700 dark:text-emerald-400 font-semibold transition-colors"
                 >
                   <Utensils className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
