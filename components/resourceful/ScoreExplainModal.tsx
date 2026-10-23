@@ -168,24 +168,24 @@ export default function ScoreExplainModal({
       aria-labelledby="score-explain-title"
       className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs animate-in fade-in duration-200"
     >
-      <div className="relative w-full max-w-2xl max-h-[90vh] flex flex-col rounded-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden">
+      <div className="relative w-full max-w-2xl max-h-[90vh] flex flex-col rounded-2xl bg-white dark:bg-slate-900 shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4 bg-slate-50/70">
+        <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 px-6 py-4 bg-slate-50/70 dark:bg-slate-900/70">
           <div>
             <div className="flex items-center gap-2">
-              <span className="rounded-md bg-blue-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-blue-700">
+              <span className="rounded-md bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-transparent dark:border-blue-800 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider">
                 Transparent Explain View
               </span>
-              <span className="text-xs text-slate-500">• {facility.sector}</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">• {facility.sector}</span>
             </div>
-            <h2 id="score-explain-title" className="text-lg font-bold text-slate-900 mt-1">
+            <h2 id="score-explain-title" className="text-lg font-bold text-slate-900 dark:text-slate-100 mt-1">
               {facility.name}
             </h2>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-2 text-slate-400 hover:bg-slate-200/60 hover:text-slate-700 transition"
+            className="rounded-lg p-2 text-slate-400 dark:text-slate-500 hover:bg-slate-200/60 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 transition"
             aria-label="Close dialog"
           >
             <X className="h-5 w-5" />
@@ -193,22 +193,22 @@ export default function ScoreExplainModal({
         </div>
 
         {/* Anti-Bias Invariant Guarantee Banner */}
-        <div className="bg-amber-50/80 border-b border-amber-200/60 px-6 py-2.5 flex items-start gap-2.5">
-          <ShieldCheck className="h-4 w-4 text-amber-700 shrink-0 mt-0.5" />
-          <p className="text-xs text-amber-900 leading-relaxed">
+        <div className="bg-amber-50/80 dark:bg-amber-950/40 border-b border-amber-200/60 dark:border-amber-900/60 px-6 py-2.5 flex items-start gap-2.5">
+          <ShieldCheck className="h-4 w-4 text-amber-700 dark:text-amber-400 shrink-0 mt-0.5" />
+          <p className="text-xs text-amber-900 dark:text-amber-200 leading-relaxed">
             <strong>Strict Zero-Bias Guarantee:</strong> Scores are calculated using transparent, deterministic weighted sums of declared and verified capabilities. Facility age, company turnover, and photo aesthetics are <em>strictly forbidden inputs</em> in VisitLink algorithms.
           </p>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-slate-200 px-6 bg-white gap-4 text-xs font-semibold">
+        <div className="flex border-b border-slate-200 dark:border-slate-800 px-6 bg-white dark:bg-slate-900 gap-4 text-xs font-semibold">
           <button
             type="button"
             onClick={() => setActiveTab("learning")}
             className={`py-3 flex items-center gap-2 border-b-2 transition ${
               activeTab === "learning"
-                ? "border-blue-600 text-blue-600"
-                : "border-transparent text-slate-500 hover:text-slate-800"
+                ? "border-blue-600 text-blue-600 dark:text-blue-400"
+                : "border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200"
             }`}
           >
             <BookOpen className="h-4 w-4" />
@@ -219,8 +219,8 @@ export default function ScoreExplainModal({
             onClick={() => setActiveTab("hosting")}
             className={`py-3 flex items-center gap-2 border-b-2 transition ${
               activeTab === "hosting"
-                ? "border-emerald-600 text-emerald-600"
-                : "border-transparent text-slate-500 hover:text-slate-800"
+                ? "border-emerald-600 text-emerald-600 dark:text-emerald-400"
+                : "border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200"
             }`}
           >
             <Building className="h-4 w-4" />
@@ -231,8 +231,8 @@ export default function ScoreExplainModal({
             onClick={() => setActiveTab("reviews")}
             className={`py-3 flex items-center gap-2 border-b-2 transition ${
               activeTab === "reviews"
-                ? "border-amber-600 text-amber-600"
-                : "border-transparent text-slate-500 hover:text-slate-800"
+                ? "border-amber-600 text-amber-600 dark:text-amber-400"
+                : "border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200"
             }`}
           >
             <Star className="h-4 w-4" />
@@ -245,21 +245,21 @@ export default function ScoreExplainModal({
           {/* TAB 1: LEARNING VALUE SCORE */}
           {activeTab === "learning" && (
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 rounded-xl bg-blue-50/50 border border-blue-200/60">
+              <div className="flex items-center justify-between p-4 rounded-xl bg-blue-50/50 dark:bg-blue-950/30 border border-blue-200/60 dark:border-blue-900/50">
                 <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-blue-700">Learning Value Score</span>
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-blue-700 dark:text-blue-300">Learning Value Score</span>
                   <div className="flex items-baseline gap-2 mt-0.5">
-                    <span className="text-3xl font-extrabold text-blue-900">{learningResult.score}</span>
-                    <span className="text-xs text-blue-700 font-medium">/ 100 max</span>
+                    <span className="text-3xl font-extrabold text-blue-900 dark:text-blue-100">{learningResult.score}</span>
+                    <span className="text-xs text-blue-700 dark:text-blue-300 font-medium">/ 100 max</span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600 bg-white px-2.5 py-1 rounded-md border border-slate-200">
-                    <Info className="h-3 w-3 text-blue-600" />
+                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-700">
+                    <Info className="h-3 w-3 text-blue-600 dark:text-blue-400" />
                     Unverified weight: 50%
                   </span>
                   {learningResult.penaltyPoints > 0 && (
-                    <div className="text-[11px] text-red-600 font-semibold mt-1">
+                    <div className="text-[11px] text-red-600 dark:text-red-400 font-semibold mt-1">
                       -{learningResult.penaltyPoints} penalty applied
                     </div>
                   )}
@@ -267,8 +267,8 @@ export default function ScoreExplainModal({
               </div>
 
               {learningResult.penaltyPoints > 0 && (
-                <div className="p-3 rounded-lg bg-red-50 border border-red-200 flex items-start gap-2 text-red-800 text-xs">
-                  <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-red-600" />
+                <div className="p-3 rounded-lg bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-900 text-red-800 dark:text-red-200 flex items-start gap-2 text-xs">
+                  <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-red-600 dark:text-red-400" />
                   <div>
                     <strong>Listing Corrected Note:</strong> {learningResult.penaltyReason || "A previous coordinator report confirmed facility capabilities differed from listing."}
                   </div>
@@ -276,29 +276,29 @@ export default function ScoreExplainModal({
               )}
 
               <div className="space-y-2">
-                <h4 className="font-bold text-slate-800 uppercase tracking-wider text-[11px]">Itemized Learning Elements</h4>
+                <h4 className="font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider text-[11px]">Itemized Learning Elements</h4>
                 {learningResult.breakdown.map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-start justify-between p-3 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition"
+                    className="flex items-start justify-between p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/60 hover:border-slate-300 dark:hover:border-slate-700 transition"
                   >
                     <div className="space-y-1 pr-4">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-slate-900">{item.label}</span>
+                        <span className="font-semibold text-slate-900 dark:text-slate-100">{item.label}</span>
                         {item.isVerified ? (
-                          <span className="inline-flex items-center gap-0.5 rounded-full bg-emerald-100 px-1.5 py-0.2 text-[9px] font-bold text-emerald-800">
+                          <span className="inline-flex items-center gap-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 border border-transparent dark:border-emerald-800 px-1.5 py-0.2 text-[9px] font-bold text-emerald-800 dark:text-emerald-300">
                             <CheckCircle2 className="h-2.5 w-2.5" /> Verified
                           </span>
                         ) : item.pointsEarned > 0 ? (
-                          <span className="inline-flex items-center gap-0.5 rounded-full bg-amber-100 px-1.5 py-0.2 text-[9px] font-bold text-amber-800">
+                          <span className="inline-flex items-center gap-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 border border-transparent dark:border-amber-800 px-1.5 py-0.2 text-[9px] font-bold text-amber-800 dark:text-amber-300">
                             Unverified (50%)
                           </span>
                         ) : null}
                       </div>
-                      <p className="text-slate-500 text-[11px]">{item.notes}</p>
+                      <p className="text-slate-500 dark:text-slate-400 text-[11px]">{item.notes}</p>
                     </div>
                     <div className="text-right shrink-0">
-                      <span className="font-mono font-bold text-slate-900">
+                      <span className="font-mono font-bold text-slate-900 dark:text-slate-100">
                         {item.pointsEarned} / {item.maxPoints} pts
                       </span>
                     </div>
@@ -311,46 +311,46 @@ export default function ScoreExplainModal({
           {/* TAB 2: HOSTING READINESS SCORE */}
           {activeTab === "hosting" && (
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 rounded-xl bg-emerald-50/50 border border-emerald-200/60">
+              <div className="flex items-center justify-between p-4 rounded-xl bg-emerald-50/50 dark:bg-emerald-950/30 border border-emerald-200/60 dark:border-emerald-900/50">
                 <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700">Hosting Readiness Score</span>
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">Hosting Readiness Score</span>
                   <div className="flex items-baseline gap-2 mt-0.5">
-                    <span className="text-3xl font-extrabold text-emerald-900">{hostingResult.score}</span>
-                    <span className="text-xs text-emerald-700 font-medium">/ 100 max</span>
+                    <span className="text-3xl font-extrabold text-emerald-900 dark:text-emerald-100">{hostingResult.score}</span>
+                    <span className="text-xs text-emerald-700 dark:text-emerald-300 font-medium">/ 100 max</span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600 bg-white px-2.5 py-1 rounded-md border border-slate-200">
-                    <ShieldCheck className="h-3 w-3 text-emerald-600" />
+                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-700">
+                    <ShieldCheck className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
                     Physical safety & facilities
                   </span>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <h4 className="font-bold text-slate-800 uppercase tracking-wider text-[11px]">Safety & Facility Infrastructure</h4>
+                <h4 className="font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider text-[11px]">Safety & Facility Infrastructure</h4>
                 {hostingResult.breakdown.map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-start justify-between p-3 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition"
+                    className="flex items-start justify-between p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/60 hover:border-slate-300 dark:hover:border-slate-700 transition"
                   >
                     <div className="space-y-1 pr-4">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-slate-900">{item.label}</span>
+                        <span className="font-semibold text-slate-900 dark:text-slate-100">{item.label}</span>
                         {item.isVerified ? (
-                          <span className="inline-flex items-center gap-0.5 rounded-full bg-emerald-100 px-1.5 py-0.2 text-[9px] font-bold text-emerald-800">
+                          <span className="inline-flex items-center gap-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 border border-transparent dark:border-emerald-800 px-1.5 py-0.2 text-[9px] font-bold text-emerald-800 dark:text-emerald-300">
                             <CheckCircle2 className="h-2.5 w-2.5" /> Verified
                           </span>
                         ) : item.pointsEarned > 0 ? (
-                          <span className="inline-flex items-center gap-0.5 rounded-full bg-amber-100 px-1.5 py-0.2 text-[9px] font-bold text-amber-800">
+                          <span className="inline-flex items-center gap-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 border border-transparent dark:border-amber-800 px-1.5 py-0.2 text-[9px] font-bold text-amber-800 dark:text-amber-300">
                             Unverified (50%)
                           </span>
                         ) : null}
                       </div>
-                      <p className="text-slate-500 text-[11px]">{item.notes}</p>
+                      <p className="text-slate-500 dark:text-slate-400 text-[11px]">{item.notes}</p>
                     </div>
                     <div className="text-right shrink-0">
-                      <span className="font-mono font-bold text-slate-900">
+                      <span className="font-mono font-bold text-slate-900 dark:text-slate-100">
                         {item.pointsEarned} / {item.maxPoints} pts
                       </span>
                     </div>
@@ -365,66 +365,66 @@ export default function ScoreExplainModal({
             <div className="space-y-4">
               {bayesianResult.showPublicScore ? (
                 <div>
-                  <div className="flex items-center justify-between p-4 rounded-xl bg-amber-50/50 border border-amber-200/60 mb-4">
+                  <div className="flex items-center justify-between p-4 rounded-xl bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/50 mb-4">
                     <div>
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300">
                         Bayesian-Smoothed Average
                       </span>
                       <div className="flex items-baseline gap-2 mt-0.5">
-                        <span className="text-3xl font-extrabold text-amber-900">
+                        <span className="text-3xl font-extrabold text-amber-900 dark:text-amber-100">
                           {bayesianResult.bayesianAverage}★
                         </span>
-                        <span className="text-xs text-slate-600 font-medium">
+                        <span className="text-xs text-slate-600 dark:text-slate-300 font-medium">
                           ({bayesianResult.totalVerifiedVisits} verified visits)
                         </span>
                       </div>
                     </div>
-                    <div className="text-right text-[11px] text-slate-500 font-mono">
+                    <div className="text-right text-[11px] text-slate-500 dark:text-slate-400 font-mono">
                       <div>Prior Weight C = {bayesianResult.explain.priorWeightC}</div>
                       <div>Platform Mean m = {bayesianResult.explain.platformMeanM}</div>
                     </div>
                   </div>
 
-                  <h4 className="font-bold text-slate-800 uppercase tracking-wider text-[11px] mb-2">
+                  <h4 className="font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider text-[11px] mb-2">
                     5-Dimension Educational Breakdown
                   </h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <div className="p-3 rounded-lg border border-slate-200 bg-white flex justify-between items-center">
-                      <span className="text-slate-700 font-medium">Learning Value</span>
-                      <span className="font-bold text-slate-900">{bayesianResult.dimensionAverages?.learning_value} / 5★</span>
+                    <div className="p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/60 flex justify-between items-center">
+                      <span className="text-slate-700 dark:text-slate-300 font-medium">Learning Value</span>
+                      <span className="font-bold text-slate-900 dark:text-slate-100">{bayesianResult.dimensionAverages?.learning_value} / 5★</span>
                     </div>
-                    <div className="p-3 rounded-lg border border-slate-200 bg-white flex justify-between items-center">
-                      <span className="text-slate-700 font-medium">Hosting & Organisation</span>
-                      <span className="font-bold text-slate-900">{bayesianResult.dimensionAverages?.hosting_organisation} / 5★</span>
+                    <div className="p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/60 flex justify-between items-center">
+                      <span className="text-slate-700 dark:text-slate-300 font-medium">Hosting & Organisation</span>
+                      <span className="font-bold text-slate-900 dark:text-slate-100">{bayesianResult.dimensionAverages?.hosting_organisation} / 5★</span>
                     </div>
-                    <div className="p-3 rounded-lg border border-slate-200 bg-white flex justify-between items-center">
-                      <span className="text-slate-700 font-medium">Staff & Guide Quality</span>
-                      <span className="font-bold text-slate-900">{bayesianResult.dimensionAverages?.staff_guide_quality} / 5★</span>
+                    <div className="p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/60 flex justify-between items-center">
+                      <span className="text-slate-700 dark:text-slate-300 font-medium">Staff & Guide Quality</span>
+                      <span className="font-bold text-slate-900 dark:text-slate-100">{bayesianResult.dimensionAverages?.staff_guide_quality} / 5★</span>
                     </div>
-                    <div className="p-3 rounded-lg border border-slate-200 bg-white flex justify-between items-center">
-                      <span className="text-slate-700 font-medium">Plant Safety & PPE</span>
-                      <span className="font-bold text-slate-900">{bayesianResult.dimensionAverages?.safety} / 5★</span>
+                    <div className="p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/60 flex justify-between items-center">
+                      <span className="text-slate-700 dark:text-slate-300 font-medium">Plant Safety & PPE</span>
+                      <span className="font-bold text-slate-900 dark:text-slate-100">{bayesianResult.dimensionAverages?.safety} / 5★</span>
                     </div>
-                    <div className="p-3 rounded-lg border border-slate-200 bg-white flex justify-between items-center sm:col-span-2">
-                      <span className="text-slate-700 font-medium">Listing Accuracy</span>
-                      <span className="font-bold text-slate-900">{bayesianResult.dimensionAverages?.listing_accuracy} / 5★</span>
+                    <div className="p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/60 flex justify-between items-center sm:col-span-2">
+                      <span className="text-slate-700 dark:text-slate-300 font-medium">Listing Accuracy</span>
+                      <span className="font-bold text-slate-900 dark:text-slate-100">{bayesianResult.dimensionAverages?.listing_accuracy} / 5★</span>
                     </div>
                   </div>
 
-                  <div className="mt-3 p-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 text-[11px] flex items-start gap-2">
-                    <Clock className="h-4 w-4 shrink-0 text-slate-500 mt-0.5" />
+                  <div className="mt-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-[11px] flex items-start gap-2">
+                    <Clock className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400 mt-0.5" />
                     <span>
                       <strong>Recency Weighting Applied:</strong> Reviews older than 24 months receive a 50% discount factor to reflect current plant operations and staff.
                     </span>
                   </div>
                 </div>
               ) : (
-                <div className="p-6 rounded-xl border border-slate-200 bg-slate-50/70 text-center space-y-3">
-                  <span className="inline-block rounded-full bg-blue-100 text-blue-800 px-3 py-1 text-xs font-bold uppercase tracking-wider">
+                <div className="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 text-center space-y-3">
+                  <span className="inline-block rounded-full bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 border border-transparent dark:border-blue-800 px-3 py-1 text-xs font-bold uppercase tracking-wider">
                     New Host Facility
                   </span>
-                  <h3 className="text-sm font-bold text-slate-900">Numerical Rating Withheld</h3>
-                  <p className="text-xs text-slate-600 max-w-md mx-auto">
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Numerical Rating Withheld</h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 max-w-md mx-auto">
                     This facility has completed <strong>{bayesianResult.totalVerifiedVisits} verified visits</strong>. To avoid statistical noise and prevent premature bias against new host industries, VisitLink displays verified visit counts and withholds numerical score averages until at least <strong>5 verified visits</strong> are completed.
                   </p>
                 </div>
@@ -434,12 +434,12 @@ export default function ScoreExplainModal({
         </div>
 
         {/* Footer */}
-        <div className="border-t border-slate-100 px-6 py-3 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
+        <div className="border-t border-slate-100 dark:border-slate-800 px-6 py-3 bg-slate-50 dark:bg-slate-900/90 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
           <span>Formula: (C·m + ∑ w_i·R_i) / (C + ∑ w_i)</span>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg bg-slate-900 px-4 py-2 font-medium text-white hover:bg-slate-800 transition"
+            className="rounded-lg bg-slate-900 dark:bg-blue-600 px-4 py-2 font-medium text-white hover:bg-slate-800 dark:hover:bg-blue-500 transition"
           >
             Close Breakdown
           </button>

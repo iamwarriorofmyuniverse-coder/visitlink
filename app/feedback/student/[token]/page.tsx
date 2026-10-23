@@ -120,50 +120,50 @@ export default function StudentFeedbackSubmissionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50/70 py-10 px-4 sm:px-6">
+    <div className="min-h-screen bg-slate-50/70 dark:bg-slate-950/70 py-10 px-4 sm:px-6">
       <div className="max-w-xl mx-auto space-y-6">
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm space-y-6">
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6">
           <div>
             <div className="flex items-center gap-2">
-              <span className="rounded-md bg-blue-50 px-2.5 py-0.5 text-xs font-bold text-blue-700">
+              <span className="rounded-md bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-transparent dark:border-blue-800 px-2.5 py-0.5 text-xs font-bold">
                 Anonymous Student Feedback
               </span>
-              <span className="rounded-md bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-200 flex items-center gap-1">
+              <span className="rounded-md bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 px-2.5 py-0.5 text-xs font-semibold flex items-center gap-1">
                 <ShieldCheck className="h-3.5 w-3.5" />
                 No Personal Data Stored
               </span>
             </div>
-            <h1 className="text-xl font-bold text-slate-900 mt-2">
+            <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100 mt-2">
               How was your visit to {facility.name}?
             </h1>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
               Your feedback is completely anonymous. Responses are aggregated (minimum 5 required) to help the industry host improve future technical visits.
             </p>
           </div>
 
           {submitted ? (
-            <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-3">
-              <div className="h-12 w-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+            <div className="p-6 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-center space-y-3">
+              <div className="h-12 w-12 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-300 flex items-center justify-center mx-auto">
                 <CheckCircle2 className="h-6 w-6" />
               </div>
-              <h2 className="text-base font-bold text-emerald-900">
+              <h2 className="text-base font-bold text-emerald-900 dark:text-emerald-100">
                 Feedback Submitted Anonymously!
               </h2>
-              <p className="text-xs text-emerald-800 leading-relaxed">
+              <p className="text-xs text-emerald-800 dark:text-emerald-200 leading-relaxed">
                 Thank you for helping enhance engineering visit quality. Your ratings and suggestions will be combined into host aggregate reports.
               </p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               {errorMsg && (
-                <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-xs text-red-700">
+                <div className="p-3 rounded-lg bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-900 text-xs text-red-700 dark:text-red-300">
                   {errorMsg}
                 </div>
               )}
 
               {/* Usefulness Rating */}
               <div>
-                <label className="block text-xs font-semibold text-slate-700 uppercase mb-2">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-2">
                   1. Academic & Technical Usefulness (1-5) *
                 </label>
                 <div className="flex items-center gap-2">
@@ -174,8 +174,8 @@ export default function StudentFeedbackSubmissionPage() {
                       onClick={() => setUsefulness(star)}
                       className={`flex flex-col items-center p-2.5 rounded-xl border flex-1 transition ${
                         usefulness >= star
-                          ? "border-amber-400 bg-amber-50 text-amber-900 font-bold"
-                          : "border-slate-200 bg-slate-50 text-slate-400 hover:bg-slate-100"
+                          ? "border-amber-400 dark:border-amber-500 bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200 font-bold"
+                          : "border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-850 text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
                       }`}
                     >
                       <Star className={`h-5 w-5 ${usefulness >= star ? "fill-amber-400 text-amber-500" : ""}`} />
@@ -183,7 +183,7 @@ export default function StudentFeedbackSubmissionPage() {
                     </button>
                   ))}
                 </div>
-                <p className="text-[11px] text-slate-500 mt-1.5">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">
                   {usefulness === 5 && "5: Highly useful - directly aligned with engineering syllabus concepts."}
                   {usefulness === 4 && "4: Useful - helped visualize production machinery."}
                   {usefulness === 3 && "3: Moderate - learned some new concepts."}
@@ -194,7 +194,7 @@ export default function StudentFeedbackSubmissionPage() {
 
               {/* Engagement Rating */}
               <div>
-                <label className="block text-xs font-semibold text-slate-700 uppercase mb-2">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-2">
                   2. Student Engagement & Interaction Quality (1-5) *
                 </label>
                 <div className="flex items-center gap-2">
@@ -205,8 +205,8 @@ export default function StudentFeedbackSubmissionPage() {
                       onClick={() => setEngagement(star)}
                       className={`flex flex-col items-center p-2.5 rounded-xl border flex-1 transition ${
                         engagement >= star
-                          ? "border-blue-400 bg-blue-50 text-blue-900 font-bold"
-                          : "border-slate-200 bg-slate-50 text-slate-400 hover:bg-slate-100"
+                          ? "border-blue-400 dark:border-blue-500 bg-blue-50 dark:bg-blue-950/40 text-blue-900 dark:text-blue-200 font-bold"
+                          : "border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-850 text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
                       }`}
                     >
                       <Sparkles className={`h-5 w-5 ${engagement >= star ? "fill-blue-400 text-blue-500" : ""}`} />
@@ -214,7 +214,7 @@ export default function StudentFeedbackSubmissionPage() {
                     </button>
                   ))}
                 </div>
-                <p className="text-[11px] text-slate-500 mt-1.5">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">
                   {engagement === 5 && "5: Highly engaging - interactive demos, clear explanations, good Q&A."}
                   {engagement === 4 && "4: Good engagement - attentive engineers and clear walkthrough."}
                   {engagement === 3 && "3: Average engagement - mostly passive observation."}
@@ -226,10 +226,10 @@ export default function StudentFeedbackSubmissionPage() {
               {/* Most Interesting Highlight */}
               <div>
                 <div className="flex items-center justify-between">
-                  <label htmlFor="mostInteresting" className="block text-xs font-semibold text-slate-700 uppercase">
+                  <label htmlFor="mostInteresting" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase">
                     3. What was the most interesting machine, process, or test you observed?
                   </label>
-                  <span className={`text-[10px] font-mono ${mostInteresting.length > 300 ? "text-red-600 font-bold" : "text-slate-400"}`}>
+                  <span className={`text-[10px] font-mono ${mostInteresting.length > 300 ? "text-red-600 font-bold" : "text-slate-400 dark:text-slate-500"}`}>
                     {mostInteresting.length}/300
                   </span>
                 </div>
@@ -240,17 +240,17 @@ export default function StudentFeedbackSubmissionPage() {
                   placeholder="e.g. Watching the cupola furnace pouring and the automated CMM metrology inspection..."
                   value={mostInteresting}
                   onChange={(e) => setMostInteresting(e.target.value)}
-                  className="mt-1 block w-full rounded-xl border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-blue-500"
+                  className="mt-1 block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-2.5 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:border-blue-500"
                 />
               </div>
 
               {/* Suggestion */}
               <div>
                 <div className="flex items-center justify-between">
-                  <label htmlFor="suggestion" className="block text-xs font-semibold text-slate-700 uppercase">
+                  <label htmlFor="suggestion" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase">
                     4. Suggestion to improve future visits to this plant:
                   </label>
-                  <span className={`text-[10px] font-mono ${suggestion.length > 300 ? "text-red-600 font-bold" : "text-slate-400"}`}>
+                  <span className={`text-[10px] font-mono ${suggestion.length > 300 ? "text-red-600 font-bold" : "text-slate-400 dark:text-slate-500"}`}>
                     {suggestion.length}/300
                   </span>
                 </div>
@@ -261,11 +261,11 @@ export default function StudentFeedbackSubmissionPage() {
                   placeholder="e.g. Allow more time for Q&A with the design engineers or provide sample cross-sections..."
                   value={suggestion}
                   onChange={(e) => setSuggestion(e.target.value)}
-                  className="mt-1 block w-full rounded-xl border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-blue-500"
+                  className="mt-1 block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-2.5 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:border-blue-500"
                 />
               </div>
 
-              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-[11px] text-slate-500">
+              <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 text-[11px] text-slate-500 dark:text-slate-400">
                 <strong>Privacy Note:</strong> Your name, email, and IP address are never stored. Responses are protected by rotating salt hashing and server-side aggregation.
               </div>
 

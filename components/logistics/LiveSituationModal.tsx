@@ -107,9 +107,9 @@ export default function LiveSituationModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white shadow-2xl border border-slate-200 flex flex-col">
+      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white dark:bg-slate-900 shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col">
         {/* Top Header Bar */}
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 bg-white/95 px-6 py-4 backdrop-blur">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 px-6 py-4 backdrop-blur">
           <div className="flex items-center gap-2.5">
             <div className="relative flex h-3 w-3">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -117,21 +117,21 @@ export default function LiveSituationModal({
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Live Situation Telemetry
                 </span>
-                <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
+                <span className="rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-transparent dark:border-emerald-800 px-2 py-0.5 text-[10px] font-bold">
                   Real-Time IST
                 </span>
               </div>
-              <span className="text-[11px] font-mono text-slate-400">
+              <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500">
                 Coimbatore Hub • {currentTimeStr}
               </span>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="rounded-full p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
+            className="rounded-full p-1.5 text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 transition"
           >
             <X className="h-5 w-5" />
           </button>
@@ -140,22 +140,22 @@ export default function LiveSituationModal({
         {/* Modal Body */}
         <div className="p-6 space-y-6">
           {/* Facility Headline */}
-          <div className="rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50/50 p-4 border border-blue-100/80">
+          <div className="rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50/50 dark:from-slate-800/80 dark:to-slate-850/80 p-4 border border-blue-100/80 dark:border-slate-700">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <span className="inline-block rounded-md bg-blue-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-blue-800 mb-1">
+                <span className="inline-block rounded-md bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 border border-transparent dark:border-blue-800 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider mb-1">
                   {facility.sector} Sector
                 </span>
-                <h2 className="text-lg font-extrabold text-slate-900 leading-snug">
+                <h2 className="text-lg font-extrabold text-slate-900 dark:text-slate-100 leading-snug">
                   {facility.name}
                 </h2>
-                <div className="mt-1 flex items-center gap-3 text-xs text-slate-600">
+                <div className="mt-1 flex items-center gap-3 text-xs text-slate-600 dark:text-slate-300">
                   <span className="flex items-center gap-1">
-                    <MapPin className="h-3.5 w-3.5 text-blue-600" />
+                    <MapPin className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
                     {facility.distance_km} km from Central Hub
                   </span>
                   <span>•</span>
-                  <span className="font-semibold text-emerald-700">
+                  <span className="font-semibold text-emerald-700 dark:text-emerald-400">
                     🟢 Receiving College Visits
                   </span>
                 </div>
@@ -166,18 +166,18 @@ export default function LiveSituationModal({
           {/* 4 Quadrants of Live Situation */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* 1. Live Weather & Plant Conditions */}
-            <div className="rounded-2xl border border-slate-200 bg-slate-50/50 p-4 space-y-3">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                  <CloudSun className="h-4 w-4 text-sky-600" />
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+                  <CloudSun className="h-4 w-4 text-sky-600 dark:text-sky-400" />
                   Live Weather Situation
                 </span>
                 {weather?.outdoorRisk === "high" ? (
-                  <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-800">
+                  <span className="rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-transparent dark:border-amber-800 px-2 py-0.5 text-[10px] font-bold">
                     Advisory Active
                   </span>
                 ) : (
-                  <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
+                  <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-transparent dark:border-emerald-800 px-2 py-0.5 text-[10px] font-bold">
                     Optimal
                   </span>
                 )}
@@ -200,23 +200,23 @@ export default function LiveSituationModal({
                         <CloudLightning className="h-6 w-6 text-purple-600" />
                       )}
                       <div>
-                        <div className="text-xl font-extrabold text-slate-900">
+                        <div className="text-xl font-extrabold text-slate-900 dark:text-slate-100">
                           {Math.round(weather.temperatureC)}°C
                         </div>
-                        <div className="text-[11px] text-slate-500 capitalize">
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400 capitalize">
                           {weather.conditionLabel}
                         </div>
                       </div>
                     </div>
 
-                    <div className="text-right text-[11px] text-slate-500 space-y-0.5">
+                    <div className="text-right text-[11px] text-slate-500 dark:text-slate-400 space-y-0.5">
                       {facility.outdoor_component && (
-                        <span className="inline-block rounded bg-sky-100 px-1.5 py-0.5 text-[10px] font-bold text-sky-800">
+                        <span className="inline-block rounded bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300 border border-transparent dark:border-sky-800 px-1.5 py-0.5 text-[10px] font-bold">
                           Outdoor Plant Area
                         </span>
                       )}
                       {facility.heat_sensitive && (
-                        <span className="inline-block rounded bg-orange-100 px-1.5 py-0.5 text-[10px] font-bold text-orange-800">
+                        <span className="inline-block rounded bg-orange-100 dark:bg-orange-950 text-orange-800 dark:text-orange-300 border border-transparent dark:border-orange-800 px-1.5 py-0.5 text-[10px] font-bold">
                           Thermal Sensitive
                         </span>
                       )}
@@ -224,13 +224,13 @@ export default function LiveSituationModal({
                   </div>
 
                   {weather.riskReason ? (
-                    <div className="rounded-xl bg-amber-50 border border-amber-200 p-2.5 text-xs text-amber-900 flex items-start gap-1.5">
-                      <AlertTriangle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+                    <div className="rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 p-2.5 text-xs text-amber-900 dark:text-amber-200 flex items-start gap-1.5">
+                      <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
                       <span className="leading-snug">{weather.riskReason}</span>
                     </div>
                   ) : (
-                    <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-2 text-[11px] text-emerald-800 flex items-center gap-1.5">
-                      <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                    <div className="rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/60 p-2 text-[11px] text-emerald-800 dark:text-emerald-200 flex items-center gap-1.5">
+                      <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                       <span>Favorable outdoor & plant visit conditions right now.</span>
                     </div>
                   )}
@@ -239,17 +239,17 @@ export default function LiveSituationModal({
             </div>
 
             {/* 2. Live Transit & Route Situation */}
-            <div className="rounded-2xl border border-slate-200 bg-slate-50/50 p-4 space-y-3">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                  <Navigation className="h-4 w-4 text-emerald-600" />
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+                  <Navigation className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                   Live Transit Situation
                 </span>
                 <span
                   className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
                     traffic?.trafficState === "normal"
-                      ? "bg-emerald-100 text-emerald-800"
-                      : "bg-amber-100 text-amber-800"
+                      ? "bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-transparent dark:border-emerald-800"
+                      : "bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-transparent dark:border-amber-800"
                   }`}
                 >
                   {traffic?.trafficState === "normal" ? "Smooth" : "Peak Delay"}
@@ -260,21 +260,21 @@ export default function LiveSituationModal({
                 <div className="space-y-2">
                   <div className="flex items-baseline justify-between">
                     <div>
-                      <span className="text-2xl font-extrabold text-slate-900">
+                      <span className="text-2xl font-extrabold text-slate-900 dark:text-slate-100">
                         ~{traffic.estimatedMinutes}
                       </span>
-                      <span className="text-xs font-semibold text-slate-500 ml-1">mins</span>
+                      <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 ml-1">mins</span>
                     </div>
-                    <span className="text-xs font-bold text-slate-700">
+                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
                       {traffic.distanceKm} km route
                     </span>
                   </div>
 
-                  <p className="text-xs text-slate-600 leading-snug">
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-snug">
                     {traffic.suggestedDepartureText}
                   </p>
 
-                  <div className="pt-1 text-[10px] text-slate-400 italic">
+                  <div className="pt-1 text-[10px] text-slate-400 dark:text-slate-500 italic">
                     * Estimated travel time from PSG Tech / Central Hub. Checked against active Coimbatore peak windows.
                   </div>
                 </div>
@@ -282,34 +282,34 @@ export default function LiveSituationModal({
             </div>
 
             {/* 3. Canteen & Meal Availability */}
-            <div className="rounded-2xl border border-slate-200 bg-slate-50/50 p-4 space-y-2.5">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                <Utensils className="h-4 w-4 text-blue-600" />
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 p-4 space-y-2.5">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+                <Utensils className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                 Canteen & Meal Requisition
               </span>
 
-              <div className="space-y-1.5 text-xs text-slate-700">
-                <div className="flex items-center justify-between py-1 border-b border-slate-200/60">
-                  <span className="text-slate-500">On-site Canteen:</span>
-                  <span className="font-semibold">
+              <div className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
+                <div className="flex items-center justify-between py-1 border-b border-slate-200/60 dark:border-slate-700/60">
+                  <span className="text-slate-500 dark:text-slate-400">On-site Canteen:</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">
                     {facility.canteen_available ? "Available" : "Not Available"}
                   </span>
                 </div>
-                <div className="flex items-center justify-between py-1 border-b border-slate-200/60">
-                  <span className="text-slate-500">Meal Types:</span>
-                  <span className="font-semibold capitalize">
+                <div className="flex items-center justify-between py-1 border-b border-slate-200/60 dark:border-slate-700/60">
+                  <span className="text-slate-500 dark:text-slate-400">Meal Types:</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-100 capitalize">
                     {facility.meal_options?.join(", ") || "None"}
                   </span>
                 </div>
-                <div className="flex items-center justify-between py-1 border-b border-slate-200/60">
-                  <span className="text-slate-500">Max Seating Capacity:</span>
-                  <span className="font-semibold">
+                <div className="flex items-center justify-between py-1 border-b border-slate-200/60 dark:border-slate-700/60">
+                  <span className="text-slate-500 dark:text-slate-400">Max Seating Capacity:</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">
                     {facility.max_meal_capacity ?? 0} students
                   </span>
                 </div>
                 <div className="flex items-center justify-between py-1">
-                  <span className="text-slate-500">Outside Packed Food:</span>
-                  <span className="font-semibold">
+                  <span className="text-slate-500 dark:text-slate-400">Outside Packed Food:</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">
                     {facility.outside_food_allowed ? "Allowed in dining area" : "Prohibited"}
                   </span>
                 </div>
@@ -317,33 +317,33 @@ export default function LiveSituationModal({
             </div>
 
             {/* 4. Parking & Gate Clearance */}
-            <div className="rounded-2xl border border-slate-200 bg-slate-50/50 p-4 space-y-2.5">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                <Car className="h-4 w-4 text-indigo-600" />
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 p-4 space-y-2.5">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+                <Car className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
                 Parking & Gate Access
               </span>
 
-              <div className="space-y-1.5 text-xs text-slate-700">
-                <div className="flex items-center justify-between py-1 border-b border-slate-200/60">
-                  <span className="text-slate-500">Institution Bus Bays:</span>
-                  <span className="font-semibold">
+              <div className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
+                <div className="flex items-center justify-between py-1 border-b border-slate-200/60 dark:border-slate-700/60">
+                  <span className="text-slate-500 dark:text-slate-400">Institution Bus Bays:</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">
                     {facility.bus_parking_slots ?? 1} Bays Available
                   </span>
                 </div>
-                <div className="flex items-center justify-between py-1 border-b border-slate-200/60">
-                  <span className="text-slate-500">Faculty Car Slots:</span>
-                  <span className="font-semibold">
+                <div className="flex items-center justify-between py-1 border-b border-slate-200/60 dark:border-slate-700/60">
+                  <span className="text-slate-500 dark:text-slate-400">Faculty Car Slots:</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">
                     {facility.car_parking_slots ?? 4} Slots Available
                   </span>
                 </div>
-                <div className="flex items-center justify-between py-1 border-b border-slate-200/60">
-                  <span className="text-slate-500">Max Height Clearance:</span>
-                  <span className="font-semibold">
+                <div className="flex items-center justify-between py-1 border-b border-slate-200/60 dark:border-slate-700/60">
+                  <span className="text-slate-500 dark:text-slate-400">Max Height Clearance:</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">
                     {facility.max_vehicle_height_m ?? 4.2} meters
                   </span>
                 </div>
                 {facility.entry_gate_instructions && (
-                  <p className="text-[11px] text-blue-900 bg-blue-50/70 p-2 rounded-lg border border-blue-100">
+                  <p className="text-[11px] text-blue-900 dark:text-blue-200 bg-blue-50/70 dark:bg-blue-950/40 p-2 rounded-lg border border-blue-100 dark:border-blue-900/60">
                     <strong>Gate Routing:</strong> {facility.entry_gate_instructions}
                   </p>
                 )}
@@ -353,11 +353,11 @@ export default function LiveSituationModal({
         </div>
 
         {/* Modal Footer with Direct Booking Action */}
-        <div className="sticky bottom-0 z-10 flex items-center justify-between gap-3 border-t border-slate-100 bg-white px-6 py-4">
+        <div className="sticky bottom-0 z-10 flex items-center justify-between gap-3 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-4">
           <button
             type="button"
             onClick={onClose}
-            className="rounded-xl border border-slate-300 px-4 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition"
+            className="rounded-xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition"
           >
             Close View
           </button>
