@@ -26,6 +26,11 @@ import {
   type LiveWeatherInput,
 } from "@/lib/logistics/live_situation";
 import LiveSituationModal from "@/components/logistics/LiveSituationModal";
+import {
+  matchesEngagementFilter,
+  formatEngagementBadge,
+  type InteractiveElement,
+} from "@/lib/engagement/profile";
 
 // Dynamically import Leaflet Map to avoid SSR 'window is not defined' crash
 const LeafletMap = dynamic(() => import("@/components/map/LeafletMap"), {
@@ -42,6 +47,7 @@ export default function ExploreIndustriesPage() {
   const [userLng] = useState(76.9558);
   const [radiusKm, setRadiusKm] = useState(25);
   const [selectedSector, setSelectedSector] = useState("all");
+  const [selectedEngagement, setSelectedEngagement] = useState<string>("all");
   const [groupSize, setGroupSize] = useState<number>(30);
   const [selectedFacilityId, setSelectedFacilityId] = useState<string | null>(null);
   const [semanticQuery, setSemanticQuery] = useState("");
@@ -135,6 +141,13 @@ export default function ExploreIndustriesPage() {
         if (ind.distance_km > radiusKm) return false;
         // Sector Filter
         if (selectedSector !== "all" && ind.sector !== selectedSector) return false;
+        // Engagement Filter (Phase p1)
+        if (
+          selectedEngagement !== "all" &&
+          !matchesEngagementFilter((ind as any).interactive_elements || [], selectedEngagement)
+        ) {
+          return false;
+        }
         // Capacity Filter
         if (groupSize && ind.max_group_size < groupSize) return false;
         return true;
@@ -145,7 +158,7 @@ export default function ExploreIndustriesPage() {
         }
         return a.distance_km - b.distance_km;
       });
-  }, [userLat, userLng, radiusKm, selectedSector, groupSize, semanticQuery, sortBy]);
+  }, [userLat, userLng, radiusKm, selectedSector, selectedEngagement, groupSize, semanticQuery, sortBy]);
 
   return (
     <div className="container mx-auto px-4 py-6 sm:px-6">
@@ -179,7 +192,7 @@ export default function ExploreIndustriesPage() {
         </div>
 
         {/* Filters Row */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t border-slate-100">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-2 border-t border-slate-100">
           <div>
             <label className="block text-[11px] font-semibold text-slate-600 uppercase">
               Radius: {radiusKm} km
@@ -219,6 +232,24 @@ export default function ExploreIndustriesPage() {
               <option value="manufacturing">Industrial Compressors</option>
               <option value="research_lab">Robotics & 3D Lab</option>
               <option value="renewable_energy">Renewable Energy</option>
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="engagementFilter" className="block text-[11px] font-semibold text-slate-600 uppercase">
+              Engagement
+            </label>
+            <select
+              id="engagementFilter"
+              value={selectedEngagement}
+              onChange={(e) => setSelectedEngagement(e.target.value)}
+              className="mt-1 block w-full rounded-lg border border-slate-300 p-1.5 text-xs text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            >
+              <option value="all">All Engagement</option>
+              <option value="hands_on_activity">Hands-on Activity</option>
+              <option value="live_demo">Live Demonstration</option>
+              <option value="q_and_a_engineers">Q&A with Engineers</option>
+              <option value="product_showcase">Product Showcase</option>
             </select>
           </div>
 
@@ -318,6 +349,39 @@ export default function ExploreIndustriesPage() {
                   <p className="mt-2 text-xs text-slate-600 line-clamp-2">
                     <strong className="text-slate-700">Highlights:</strong> {fac.highlights}
                   </p>
+
+                  {/* Student Engagement Badges (Phase p1) */}
+                  {(fac as any).interactive_elements && (fac as any).interactive_elements.length > 0 && (
+                    <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
+                      {((fac as any).interactive_elements as InteractiveElement[]).map((elem) => {
+                        const badge = formatEngagementBadge(elem);
+                        return (
+                          <span
+                            key={elem}
+                            className={`rounded-md px-2 py-0.5 text-[10px] font-semibold border ${
+                              elem === "hands_on_activity"
+                                ? "bg-amber-50 text-amber-800 border-amber-200"
+                                : elem === "live_demo"
+                                ? "bg-blue-50 text-blue-800 border-blue-200"
+                                : elem === "q_and_a_engineers"
+                                ? "bg-purple-50 text-purple-800 border-purple-200"
+                                : "bg-emerald-50 text-emerald-800 border-emerald-200"
+                            }`}
+                            title={badge.description}
+                          >
+                            {elem === "hands_on_activity" && "🛠️ "}
+                            {elem === "live_demo" && "⚡ "}
+                            {elem === "q_and_a_engineers" && "💬 "}
+                            {elem === "product_showcase" && "📦 "}
+                            {badge.shortLabel}
+                            {elem === "hands_on_activity" && (fac as any).estimated_interactive_minutes > 0
+                              ? ` (${(fac as any).estimated_interactive_minutes}m)`
+                              : ""}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  )}
 
                   {/* Built-in Live Situation & Logistics Telemetry */}
                   <div className="mt-3.5 rounded-xl border border-slate-200/90 bg-slate-50/80 p-3 space-y-2">

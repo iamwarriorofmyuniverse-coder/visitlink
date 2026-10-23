@@ -1,7 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Building2, Save, MapPin, ShieldAlert, Check, AlertCircle } from "lucide-react";
+import { Building2, Save, MapPin, ShieldAlert, Check, AlertCircle, Sparkles } from "lucide-react";
+import {
+  ALLOWED_INTERACTIVE_ELEMENTS,
+  type InteractiveElement,
+  formatEngagementBadge,
+} from "@/lib/engagement/profile";
 
 export default function IndustryProfilePage() {
   const [name, setName] = useState("Kovai Precision Foundry & Heavy Castings [Demo]");
@@ -29,6 +34,18 @@ export default function IndustryProfilePage() {
   );
   const [curriculumTopics, setCurriculumTopics] = useState(
     "Manufacturing processes, foundry technology, metallurgy, casting defect analysis, nondestructive testing."
+  );
+
+  // Student Engagement Profile State (Phase p1)
+  const [interactiveElements, setInteractiveElements] = useState<InteractiveElement[]>([
+    "live_demo",
+    "q_and_a_engineers",
+    "product_showcase",
+  ]);
+  const [qAndAAvailable, setQAndAAvailable] = useState(true);
+  const [estimatedInteractiveMinutes, setEstimatedInteractiveMinutes] = useState(60);
+  const [engagementNotes, setEngagementNotes] = useState(
+    "Live cupola furnace molten tapping demo and chief metallurgist Q&A session."
   );
 
   const [savedMsg, setSavedMsg] = useState(false);
@@ -335,6 +352,113 @@ export default function IndustryProfilePage() {
               onChange={(e) => setCurriculumTopics(e.target.value)}
               className="mt-1 block w-full rounded-lg border border-slate-300 p-2.5 text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             />
+          </div>
+        </div>
+
+        {/* Student Engagement Profile Section (Phase p1) */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-amber-500" />
+              Student Engagement & Interactive Offerings
+            </h2>
+            <span className="text-[11px] font-semibold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
+              Curricular Engagement
+            </span>
+          </div>
+
+          <p className="text-xs text-slate-500">
+            Declare the interactive engineering and observation components your plant provides to students. These appear as verified badges in facility discovery.
+          </p>
+
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 uppercase mb-2">
+              Available Interactive Elements (Select all that apply)
+            </label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              {ALLOWED_INTERACTIVE_ELEMENTS.map((elem) => {
+                const badge = formatEngagementBadge(elem);
+                const isChecked = interactiveElements.includes(elem);
+                return (
+                  <button
+                    type="button"
+                    key={elem}
+                    onClick={() => {
+                      if (isChecked) {
+                        setInteractiveElements(interactiveElements.filter((e) => e !== elem));
+                      } else {
+                        setInteractiveElements([...interactiveElements, elem]);
+                      }
+                    }}
+                    className={`text-left p-3 rounded-xl border transition ${
+                      isChecked
+                        ? "border-blue-500 bg-blue-50/50 text-blue-900 ring-1 ring-blue-500/20"
+                        : "border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between text-xs font-bold">
+                      <span>{badge.label}</span>
+                      <span className={`text-xs ${isChecked ? "text-blue-600" : "text-slate-400"}`}>
+                        {isChecked ? "✓ Selected" : "+ Add"}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 mt-1 leading-snug">
+                      {badge.description}
+                    </p>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <div>
+              <label htmlFor="estimatedInteractiveMinutes" className="block text-xs font-semibold text-slate-700 uppercase">
+                Estimated Interactive Duration (Minutes, 0-240)
+              </label>
+              <input
+                id="estimatedInteractiveMinutes"
+                type="number"
+                min="0"
+                max="240"
+                value={estimatedInteractiveMinutes}
+                onChange={(e) => setEstimatedInteractiveMinutes(parseInt(e.target.value) || 0)}
+                className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-500"
+              />
+              <span className="text-[11px] text-slate-500 mt-1 block">
+                Time dedicated specifically to hands-on, live demos, or Q&A.
+              </span>
+            </div>
+
+            <div className="flex flex-col justify-center pt-4 sm:pt-0">
+              <label className="flex items-center gap-2.5 text-xs font-semibold text-slate-800 cursor-pointer p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <input
+                  type="checkbox"
+                  checked={qAndAAvailable}
+                  onChange={(e) => setQAndAAvailable(e.target.checked)}
+                  className="h-4 w-4 text-blue-600 rounded focus:ring-blue-500"
+                />
+                <span>Dedicated Q&A with Lead Plant Engineers Available</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="engagementNotes" className="block text-xs font-semibold text-slate-700 uppercase">
+              Engagement Instructions & Technical Context
+            </label>
+            <textarea
+              id="engagementNotes"
+              rows={2}
+              value={engagementNotes}
+              onChange={(e) => setEngagementNotes(e.target.value)}
+              placeholder="e.g. Students will be given demo sand cores to examine before furnace tapping..."
+              className="mt-1 block w-full rounded-lg border border-slate-300 p-2.5 text-sm text-slate-900 focus:border-blue-500"
+            />
+          </div>
+
+          <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-[11px] text-slate-600">
+            <strong>Scope Notice:</strong> VisitLink student engagement tools are designed exclusively to deepen academic understanding. Tourism extras, amusement metrics, or entertainment ratings are not collected or permitted.
           </div>
         </div>
 

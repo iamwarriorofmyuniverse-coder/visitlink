@@ -21,6 +21,9 @@ import {
   BookOpen,
   Award,
   ClipboardCheck,
+  MessageSquare,
+  Coffee,
+  Star,
 } from "lucide-react";
 import VisitReadinessCard from "@/components/logistics/VisitReadinessCard";
 
@@ -46,6 +49,9 @@ export default function IndustryRequestReviewPage() {
   const [engagementRating, setEngagementRating] = useState(5);
   const [purposeObserved, setPurposeObserved] = useState<"educational" | "mixed" | "not_educational">("educational");
   const [postVisitNotes, setPostVisitNotes] = useState("");
+
+  // Student Feedback Aggregates State for Industry Hosts (Phase p4)
+  const [feedbackSimCount, setFeedbackSimCount] = useState<number>(5);
 
   // Logistics Readiness Evaluation for Industry Manager
   const hasLogisticsWarning = requestId.includes("warning") || requestId === "req-cbe-02" || requestId.includes("test");
@@ -396,7 +402,7 @@ export default function IndustryRequestReviewPage() {
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
           <h2 className="text-base font-bold text-slate-900">Visit Parameters & Compliance Docs</h2>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 text-xs">
             <div>
               <span className="text-slate-500 block uppercase text-[10px] font-semibold">Requested Date</span>
               <strong className="text-slate-900 text-sm">Tuesday, Nov 10, 2026</strong>
@@ -412,6 +418,10 @@ export default function IndustryRequestReviewPage() {
             <div>
               <span className="text-slate-500 block uppercase text-[10px] font-semibold">Indemnity Accepted</span>
               <strong className="text-emerald-700 text-sm">Yes (Confirmed)</strong>
+            </div>
+            <div>
+              <span className="text-slate-500 block uppercase text-[10px] font-semibold">Planned Social Break</span>
+              <strong className="text-slate-900 text-sm">15 Mins (0-30m cap)</strong>
             </div>
           </div>
 
@@ -436,6 +446,106 @@ export default function IndustryRequestReviewPage() {
             </button>
           </div>
         </div>
+
+        {/* Anonymous Student Feedback Aggregates for Industry Hosts (Phase p4) */}
+        {(status === "approved" || status === "completed") && (
+          <div className="rounded-2xl border border-teal-200 bg-white p-6 shadow-sm space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <MessageSquare className="h-5 w-5 text-teal-600" />
+                  Anonymous Student Feedback (Educational Evaluation)
+                </h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Aggregate ratings from participating students. Enforces server-side anonymity protection (min 5 responses).
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-semibold text-slate-500">Test Simulation:</span>
+                <button
+                  type="button"
+                  onClick={() => setFeedbackSimCount(4)}
+                  className={`px-2 py-1 rounded text-[11px] font-semibold border ${
+                    feedbackSimCount === 4
+                      ? "bg-amber-100 text-amber-800 border-amber-300"
+                      : "bg-white text-slate-600 border-slate-200"
+                  }`}
+                >
+                  4 Responses (&lt; 5)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFeedbackSimCount(5)}
+                  className={`px-2 py-1 rounded text-[11px] font-semibold border ${
+                    feedbackSimCount === 5
+                      ? "bg-teal-100 text-teal-800 border-teal-300"
+                      : "bg-white text-slate-600 border-slate-200"
+                  }`}
+                >
+                  5 Responses (Threshold Met)
+                </button>
+              </div>
+            </div>
+
+            {feedbackSimCount < 5 ? (
+              <div className="p-4 rounded-xl border border-amber-200 bg-amber-50/70 space-y-2 text-xs text-amber-900">
+                <div className="flex items-center gap-2 font-bold text-amber-800">
+                  <Lock className="h-4 w-4 text-amber-600" />
+                  Server-Enforced Anonymity Shield Active ({feedbackSimCount} of 5 Responses Received)
+                </div>
+                <p className="leading-relaxed">
+                  Aggregates hidden to protect individual student anonymity. Feedback metrics and qualitative suggestions unlock only when at least <strong>5 student responses</strong> have been submitted.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl bg-teal-50/50 border border-teal-200 space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-teal-800">
+                      Student Usefulness Score
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl font-black text-teal-900">4.8</span>
+                      <span className="text-xs font-semibold text-teal-700">/ 5.0 (5 responses)</span>
+                    </div>
+                    <div className="flex text-amber-400 text-xs">★★★★★</div>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-blue-50/50 border border-blue-200 space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-blue-800">
+                      Student Engagement Score
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl font-black text-blue-900">4.7</span>
+                      <span className="text-xs font-semibold text-blue-700">/ 5.0 (5 responses)</span>
+                    </div>
+                    <div className="flex text-amber-400 text-xs">★★★★★</div>
+                  </div>
+                </div>
+
+                <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs">
+                  <span className="font-bold text-slate-800 block">
+                    Verified Technical Highlights from Students:
+                  </span>
+                  <ul className="list-disc pl-4 space-y-1 text-slate-700">
+                    <li>&ldquo;Seeing the automated green sand moulding lines and pouring process in real-time made our textbook foundry concepts completely clear.&rdquo;</li>
+                    <li>&ldquo;The 30-minute technical Q&A with the chief metallurgist on casting shrinkage defects was top notch.&rdquo;</li>
+                  </ul>
+                  <div className="pt-2 border-t border-slate-200 text-slate-600">
+                    <strong>Suggestions for Host:</strong> &ldquo;Would love 15 minutes extra time in the CMM metrology inspection bay.&rdquo;
+                  </div>
+                </div>
+
+                <div className="p-3 bg-slate-100 rounded-xl text-[11px] text-slate-600 border border-slate-200 flex items-start gap-2">
+                  <ShieldCheck className="h-4 w-4 text-slate-500 shrink-0 mt-0.5" />
+                  <span>
+                    <strong>Host Advisory Note:</strong> Student feedback ratings celebrate positive engagement and feed your facility&apos;s educational profile. Feedback is strictly isolated from institution strikes or compliance tiers.
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Post-Visit Verification Modal (Phase m2) */}
         {showPostVisitModal && (

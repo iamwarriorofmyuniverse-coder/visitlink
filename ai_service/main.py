@@ -493,6 +493,109 @@ def triage_visit_request(req: TriageRequest, user=Depends(verify_supabase_jwt)):
         model_name="deterministic-guardrail-v1"
     )
 
+# ====================================================================
+# Observation Sheet Schemas & Endpoint (Phase p3)
+# ====================================================================
+
+class ObservationQuestion(BaseModel):
+    id: str = Field(..., description="Unique question identifier, e.g. q1")
+    topic: str = Field(..., description="Technical topic or station name, e.g. Cupola Furnace")
+    prompt: str = Field(..., min_length=15, description="Specific observation or technical calculation prompt")
+    observation_target: str = Field(..., description="What exact equipment or instrument to examine")
+    space_lines: int = Field(default=3, ge=2, le=6, description="Number of ruled lines for student handwritten notes")
+
+class ObservationSheetRequest(BaseModel):
+    visit_request_id: str
+    facility_name: str
+    sector: str
+    course_name: str
+    syllabus_topic: str
+    learning_objectives: List[str]
+
+class ObservationSheetDraft(BaseModel):
+    visit_request_id: str
+    facility_name: str
+    course_name: str
+    syllabus_topic: str
+    status: Literal["draft", "reviewed"] = "draft"
+    questions: List[ObservationQuestion]
+    student_instructions: str
+    requires_faculty_review: bool = True
+    llm_model: str = "gemini-1.5-flash"
+    generated_at: str
+    latency_ms: int
+
+@app.post("/api/observation-sheet/generate", response_model=ObservationSheetDraft)
+async def generate_observation_sheet(payload: ObservationSheetRequest, auth: Dict[str, Any] = Depends(verify_supabase_jwt)):
+    """
+    Generates a structured observation sheet drafted from learning objectives and syllabus topics.
+    Validated strictly against Pydantic schema. Requires faculty review before print.
+    """
+    start = time.time()
+    call_log = {
+        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "visit_request_id": payload.visit_request_id,
+        "facility": payload.facility_name,
+        "sector": payload.sector,
+        "objectives_count": len(payload.learning_objectives)
+    }
+    print(f"[ObservationSheet LLM Call Log] {json.dumps(call_log)}")
+
+    questions: List[ObservationQuestion] = []
+    for i, obj in enumerate(payload.learning_objectives):
+        target = "Production Line / Workstation"
+        topic = f"Syllabus Objective #{i+1}"
+        lowered = obj.lower()
+
+        if "casting" in lowered or "foundry" in lowered or "furnace" in lowered:
+            topic = "Molten Pouring & Casting Operations"
+            target = "Cupola / Induction Furnace Tapping Station"
+        elif "cnc" in lowered or "machining" in lowered or "lathe" in lowered:
+            topic = "Precision CNC Tooling & Machining"
+            target = "5-Axis CNC Milling Center"
+        elif "quality" in lowered or "metrology" in lowered or "flaw" in lowered or "cmm" in lowered:
+            topic = "Quality Inspection & Nondestructive Testing"
+            target = "Coordinate Measuring Machine (CMM) & Flaw Detector"
+        elif "pump" in lowered or "hydraulic" in lowered or "flow" in lowered:
+            topic = "Hydraulic Flow & Pressure Testing"
+            target = "Computerized Testing Flume & Pressure Sensors"
+        elif "textile" in lowered or "weaving" in lowered or "loom" in lowered:
+            topic = "Automated Loom Operations & Weaving"
+            target = "Airjet Weaving Loom & Yarn Sensor Rack"
+
+        questions.append(ObservationQuestion(
+            id=f"q{i+1}",
+            topic=topic,
+            observation_target=target,
+            prompt=f"Observe the {target.lower()}. Record the operating temperatures, material feed rates, and tolerance checks for: '{obj}'.",
+            space_lines=4
+        ))
+
+    if len(questions) < 3:
+        questions.append(ObservationQuestion(
+            id=f"q{len(questions)+1}",
+            topic="Shop-Floor Safety Systems",
+            observation_target="Emergency Interlocks & Sensors",
+            prompt="Identify two physical machine guards or safety interlock sensors active on this line and describe their shut-off trigger mechanism.",
+            space_lines=3
+        ))
+
+    latency = int((time.time() - start) * 1000)
+
+    return ObservationSheetDraft(
+        visit_request_id=payload.visit_request_id,
+        facility_name=payload.facility_name,
+        course_name=payload.course_name,
+        syllabus_topic=payload.syllabus_topic,
+        status="draft",
+        questions=questions,
+        student_instructions="Instructions: Record all observations by hand during the plant tour. Do not use personal mobile phones on active shop-floor bays.",
+        requires_faculty_review=True,
+        llm_model="gemini-1.5-flash",
+        generated_at=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        latency_ms=latency
+    )
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

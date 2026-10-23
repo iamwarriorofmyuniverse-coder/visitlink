@@ -19,8 +19,31 @@ import {
   ShieldCheck,
   AlertTriangle,
   BookOpen,
+  Sparkles,
+  Link2,
+  Award,
+  Printer,
+  Lock,
+  MessageSquare,
+  Coffee,
+  Check,
+  Edit3,
 } from "lucide-react";
 import VisitReadinessCard from "@/components/logistics/VisitReadinessCard";
+import {
+  draftObservationSheetLocally,
+  validateObservationSheet,
+  canPrintObservationSheet,
+  type ObservationSheetData,
+} from "@/lib/engagement/observation_sheet";
+import {
+  calculateFeedbackAggregates,
+  type StoredFeedbackRecord,
+} from "@/lib/engagement/feedback";
+import {
+  buildCertificateTemplate,
+  validateSocialBreakMinutes,
+} from "@/lib/engagement/certificate";
 
 export default function CoordinatorRequestDetailsPage() {
   const params = useParams();
@@ -31,6 +54,77 @@ export default function CoordinatorRequestDetailsPage() {
   const [reportFile, setReportFile] = useState<string | null>(null);
   const [reportUploaded, setReportUploaded] = useState(false);
   const [uploadMsg, setUploadMsg] = useState<string | null>(null);
+
+  // Student Engagement & Token State (Phase p2)
+  const [briefToken, setBriefToken] = useState("demo-brief-valid-128bit-token-cbe");
+  const [isBriefRevoked, setIsBriefRevoked] = useState(false);
+  const [copyMsg, setCopyMsg] = useState<string | null>(null);
+
+  function handleCopyBriefLink() {
+    const url = `${window.location.origin}/brief/${isBriefRevoked ? "revoked" : briefToken}`;
+    navigator.clipboard.writeText(url);
+    setCopyMsg("Brief link copied to clipboard!");
+    setTimeout(() => setCopyMsg(null), 3000);
+  }
+
+  function handleRevokeBriefToken() {
+    setIsBriefRevoked(true);
+    setCopyMsg("Token revoked. Students accessing the link will now receive a secure 404.");
+    setTimeout(() => setCopyMsg(null), 3000);
+  }
+
+  // Student Feedback & Anonymous Rating State (Phase p4)
+  const [feedbackToken, setFeedbackToken] = useState("demo-feedback-valid-128bit-token-cbe");
+  const [feedbackCopyMsg, setFeedbackCopyMsg] = useState<string | null>(null);
+  const [feedbackSimulationCount, setFeedbackSimulationCount] = useState<number>(5);
+
+  function handleCopyFeedbackLink() {
+    const url = `${window.location.origin}/feedback/student/${feedbackToken}`;
+    navigator.clipboard.writeText(url);
+    setFeedbackCopyMsg("Anonymous feedback link copied!");
+    setTimeout(() => setFeedbackCopyMsg(null), 3000);
+  }
+
+  // Student Observation Sheet State & Faculty Review (Phase p3)
+  const [sheet, setSheet] = useState<ObservationSheetData>(() =>
+    draftObservationSheetLocally({
+      visitRequestId: requestId,
+      facilityName: "Kovai Precision Foundry & Heavy Castings",
+      courseName: "Manufacturing Technology & Machine Tools",
+      syllabusTopic: "Unit 3: Metal Casting Processes & High-Pressure Die Casting",
+      learningObjectives: [
+        "Study automated green sand moulding lines, cupola furnace melting, and non-destructive casting flaw inspections.",
+        "Observe CNC precision machining operations and coordinate measuring machine (CMM) quality metrology workflows.",
+      ],
+      sector: "Foundry & Heavy Castings",
+    })
+  );
+  const [sheetReviewMsg, setSheetReviewMsg] = useState<string | null>(null);
+
+  function handleMarkSheetReviewed() {
+    setSheet((prev) => ({
+      ...prev,
+      status: "reviewed",
+      facultyReviewedBy: "Dr. R. Karthikeyan (Faculty-In-Charge)",
+      facultyReviewedAt: new Date().toISOString(),
+    }));
+    setSheetReviewMsg("Observation sheet reviewed & approved! You can now print student sheets.");
+    setTimeout(() => setSheetReviewMsg(null), 4000);
+  }
+
+  function handlePrintSheet() {
+    const check = canPrintObservationSheet(sheet);
+    if (!check.canPrint) {
+      alert(check.reason);
+      return;
+    }
+    window.print();
+  }
+
+  // Participation Certificate & Social Break State (Phase p5)
+  const [showCertModal, setShowCertModal] = useState(false);
+  const [certStudentName, setCertStudentName] = useState("Arun Kumar R.");
+  const [plannedSocialBreakMinutes, setPlannedSocialBreakMinutes] = useState(15);
 
   // Intent State from session storage if available
   const [intent, setIntent] = useState({
@@ -290,6 +384,360 @@ export default function CoordinatorRequestDetailsPage() {
           </div>
         </div>
 
+        {/* Student Engagement & Tokenised Pre-Visit Brief (Phase p2) */}
+        {(status === "approved" || status === "completed") && (
+          <div className="p-6 rounded-2xl bg-white border border-blue-200 shadow-sm space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-blue-600" />
+                  Pre-Visit Student Brief (Tokenised, No Login Required)
+                </h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Shareable one-page overview with learning goals, PPE dress code, and reflection questions.
+                </p>
+              </div>
+              <span className={`px-2.5 py-1 text-xs font-semibold rounded-full ${
+                isBriefRevoked
+                  ? "bg-red-100 text-red-800"
+                  : "bg-emerald-100 text-emerald-800"
+              }`}>
+                {isBriefRevoked ? "Link Revoked" : "Active (128-Bit Token)"}
+              </span>
+            </div>
+
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <span className="text-xs font-semibold text-slate-700">
+                  Public Shareable URL for Students & Parents:
+                </span>
+                <span className="text-[11px] text-slate-500">
+                  Expires: Nov 17, 2026 (Visit Date + 7d)
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  readOnly
+                  value={`/brief/${isBriefRevoked ? "revoked-token" : briefToken}`}
+                  className="flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-mono text-slate-800 select-all"
+                />
+                <button
+                  type="button"
+                  onClick={handleCopyBriefLink}
+                  className="px-3.5 py-2 rounded-lg bg-blue-600 text-xs font-semibold text-white hover:bg-blue-500 transition shrink-0"
+                >
+                  Copy Link
+                </button>
+                <Link
+                  href={`/brief/${isBriefRevoked ? "revoked" : briefToken}`}
+                  target="_blank"
+                  className="px-3.5 py-2 rounded-lg border border-slate-300 bg-white text-xs font-semibold text-slate-700 hover:bg-slate-50 transition shrink-0 flex items-center gap-1"
+                >
+                  Open Brief
+                </Link>
+                {!isBriefRevoked && (
+                  <button
+                    type="button"
+                    onClick={handleRevokeBriefToken}
+                    className="px-3 py-2 rounded-lg border border-red-200 bg-red-50 text-xs font-semibold text-red-700 hover:bg-red-100 transition shrink-0"
+                  >
+                    Revoke
+                  </button>
+                )}
+              </div>
+
+              {copyMsg && (
+                <p className="text-xs font-medium text-emerald-700">{copyMsg}</p>
+              )}
+
+              <p className="text-[11px] text-slate-500 leading-relaxed">
+                <strong>Privacy Assurance:</strong> This public page contains zero personal student data, zero student names, and zero consent documents. It displays only facility instructions, mandatory PPE, and academic objectives.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Student Observation Sheet & Faculty Review Guardrail (Phase p3) */}
+        {(status === "approved" || status === "completed") && (
+          <div className="p-6 rounded-2xl bg-white border border-indigo-200 shadow-sm space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <FileText className="h-5 w-5 text-indigo-600" />
+                  Student Observation Sheet (AI-Drafted with Ruled Spaces)
+                </h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Technical observation prompts derived from syllabus objectives. Faculty must review questions before printing.
+                </p>
+              </div>
+              <span
+                className={`px-2.5 py-1 text-xs font-semibold rounded-full ${
+                  sheet.status === "draft"
+                    ? "bg-amber-100 text-amber-800"
+                    : "bg-emerald-100 text-emerald-800"
+                }`}
+              >
+                {sheet.status === "draft"
+                  ? "Faculty Review Pending (Print Locked)"
+                  : "Reviewed & Approved by Faculty"}
+              </span>
+            </div>
+
+            {sheet.status === "draft" && (
+              <div className="p-3.5 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 flex items-start gap-2.5">
+                <Lock className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+                <div>
+                  <strong>Faculty Review Guardrail:</strong> Print and export actions are locked until faculty reviews the drafted questions. Inspect the questions below and click <strong>&quot;Mark Reviewed & Authorize Printing&quot;</strong>.
+                </div>
+              </div>
+            )}
+
+            {sheetReviewMsg && (
+              <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-900 flex items-center gap-2">
+                <Check className="h-4 w-4 text-emerald-600" />
+                {sheetReviewMsg}
+              </div>
+            )}
+
+            {/* Questions list */}
+            <div className="space-y-3">
+              {sheet.questions.map((q, idx) => (
+                <div
+                  key={q.id}
+                  className="p-4 rounded-xl border border-slate-200 bg-slate-50/60 space-y-2 text-xs"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-slate-800">
+                      Q{idx + 1}. {q.topic}
+                    </span>
+                    <span className="text-[11px] font-medium text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200">
+                      Target: {q.observation_target}
+                    </span>
+                  </div>
+                  <p className="text-slate-700 leading-relaxed font-medium">
+                    {q.prompt}
+                  </p>
+                  {/* Ruled lines for student handwriting */}
+                  <div className="pt-2 space-y-2">
+                    <span className="text-[10px] uppercase font-bold text-slate-400">
+                      Student Handwritten Notes ({q.space_lines} Ruled Lines):
+                    </span>
+                    {Array.from({ length: q.space_lines }).map((_, lineIdx) => (
+                      <div
+                        key={lineIdx}
+                        className="border-b border-dashed border-slate-300 h-4"
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <span className="text-[11px] text-slate-500">
+                Pydantic-validated AI schema | Never auto-sent to students.
+              </span>
+              <div className="flex items-center gap-2">
+                {sheet.status === "draft" ? (
+                  <button
+                    type="button"
+                    onClick={handleMarkSheetReviewed}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-emerald-600 text-xs font-semibold text-white shadow-sm hover:bg-emerald-500 transition"
+                  >
+                    <Check className="h-3.5 w-3.5" />
+                    Mark Reviewed & Authorize Printing
+                  </button>
+                ) : (
+                  <span className="text-xs text-emerald-700 font-semibold flex items-center gap-1 mr-2">
+                    <CheckCircle2 className="h-4 w-4" />
+                    Reviewed by {sheet.facultyReviewedBy}
+                  </span>
+                )}
+                <button
+                  type="button"
+                  onClick={handlePrintSheet}
+                  disabled={sheet.status === "draft"}
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold transition shadow-sm ${
+                    sheet.status === "draft"
+                      ? "bg-slate-200 text-slate-400 cursor-not-allowed"
+                      : "bg-indigo-600 text-white hover:bg-indigo-500"
+                  }`}
+                >
+                  <Printer className="h-3.5 w-3.5" />
+                  Print Observation Sheets
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Anonymous Student Feedback Aggregates (Phase p4) */}
+        {(status === "approved" || status === "completed") && (
+          <div className="p-6 rounded-2xl bg-white border border-teal-200 shadow-sm space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <MessageSquare className="h-5 w-5 text-teal-600" />
+                  Anonymous Student Post-Visit Feedback (No Accounts)
+                </h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Shareable link for student evaluations. Protected by server-side anonymity thresholds (minimum 5 responses).
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-semibold text-slate-500">Test Simulation:</span>
+                <button
+                  type="button"
+                  onClick={() => setFeedbackSimulationCount(4)}
+                  className={`px-2 py-1 rounded text-[11px] font-semibold border ${
+                    feedbackSimulationCount === 4
+                      ? "bg-amber-100 text-amber-800 border-amber-300"
+                      : "bg-white text-slate-600 border-slate-200"
+                  }`}
+                >
+                  4 Responses (&lt; 5)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFeedbackSimulationCount(5)}
+                  className={`px-2 py-1 rounded text-[11px] font-semibold border ${
+                    feedbackSimulationCount === 5
+                      ? "bg-teal-100 text-teal-800 border-teal-300"
+                      : "bg-white text-slate-600 border-slate-200"
+                  }`}
+                >
+                  5 Responses (Threshold Met)
+                </button>
+              </div>
+            </div>
+
+            {/* Public shareable link */}
+            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <span className="text-xs font-semibold text-slate-700 block">
+                Shareable Student Feedback Form (Unguessable 128-Bit Token):
+              </span>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  readOnly
+                  value={`/feedback/student/${feedbackToken}`}
+                  className="flex-1 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-mono text-slate-800 select-all"
+                />
+                <button
+                  type="button"
+                  onClick={handleCopyFeedbackLink}
+                  className="px-3 py-1.5 rounded-lg bg-teal-600 text-xs font-semibold text-white hover:bg-teal-500 transition shrink-0"
+                >
+                  Copy Link
+                </button>
+                <Link
+                  href={`/feedback/student/${feedbackToken}`}
+                  target="_blank"
+                  className="px-3 py-1.5 rounded-lg border border-slate-300 bg-white text-xs font-semibold text-slate-700 hover:bg-slate-50 transition shrink-0"
+                >
+                  Open Form
+                </Link>
+              </div>
+              {feedbackCopyMsg && (
+                <p className="text-xs font-medium text-emerald-700">{feedbackCopyMsg}</p>
+              )}
+            </div>
+
+            {/* Threshold enforcement condition */}
+            {feedbackSimulationCount < 5 ? (
+              <div className="p-4 rounded-xl border border-amber-200 bg-amber-50/70 space-y-2 text-xs text-amber-900">
+                <div className="flex items-center gap-2 font-bold text-amber-800">
+                  <Lock className="h-4 w-4 text-amber-600" />
+                  Server-Enforced Anonymity Shield Active ({feedbackSimulationCount} of 5 Responses Received)
+                </div>
+                <p className="leading-relaxed">
+                  Aggregate ratings, student quotes, and suggestions remain strictly withheld until at least <strong>5 student responses</strong> have been submitted. This guarantees that individual student responses (especially from minor students) cannot be isolated or identified by faculty or host managers.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl bg-teal-50/50 border border-teal-200 space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-teal-800">
+                      Average Usefulness Rating
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl font-black text-teal-900">4.8</span>
+                      <span className="text-xs font-semibold text-teal-700">/ 5.0 (5 responses)</span>
+                    </div>
+                    <div className="flex text-amber-400 text-xs">★★★★★</div>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-blue-50/50 border border-blue-200 space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-blue-800">
+                      Average Engagement Rating
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl font-black text-blue-900">4.7</span>
+                      <span className="text-xs font-semibold text-blue-700">/ 5.0 (5 responses)</span>
+                    </div>
+                    <div className="flex text-amber-400 text-xs">★★★★★</div>
+                  </div>
+                </div>
+
+                <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs">
+                  <span className="font-bold text-slate-800 block">
+                    Moderated Student Highlights (Automated Content Moderation Approved):
+                  </span>
+                  <ul className="list-disc pl-4 space-y-1 text-slate-700">
+                    <li>&ldquo;Seeing the automated green sand moulding lines and pouring process in real-time made our textbook foundry concepts completely clear.&rdquo;</li>
+                    <li>&ldquo;The 30-minute technical Q&A with the chief metallurgist on casting shrinkage defects was top notch.&rdquo;</li>
+                  </ul>
+                  <div className="pt-2 border-t border-slate-200 text-slate-600">
+                    <strong>Student Suggestions:</strong> &ldquo;Would love 15 minutes extra time in the CMM metrology inspection bay.&rdquo;
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="p-3 rounded-xl bg-slate-100 text-[11px] text-slate-600 border border-slate-200 flex items-start gap-2">
+              <ShieldCheck className="h-4 w-4 text-slate-500 shrink-0 mt-0.5" />
+              <span>
+                <strong>Scope Guardrail:</strong> Student feedback is advisory for host engineers and faculty syllabus refinement. It contributes to host industry ratings but <strong>NEVER</strong> affects institution strikes, trust scores, or tier status.
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Participation Certificate Generator (Phase p5) */}
+        {(status === "approved" || status === "completed") && (
+          <div className="p-6 rounded-2xl bg-white border border-purple-200 shadow-sm space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <Award className="h-5 w-5 text-purple-600" />
+                  Participation Certificates (Client-Side Batch Generator)
+                </h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Generate print-ready industrial visit certificates with official institution and facility details.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowCertModal(true)}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-purple-600 text-xs font-semibold text-white shadow-sm hover:bg-purple-500 transition"
+              >
+                <Award className="h-4 w-4" />
+                Generate Certificate Template
+              </button>
+            </div>
+
+            <div className="p-3.5 bg-purple-50/50 rounded-xl border border-purple-200 text-xs text-purple-900 flex items-start gap-2">
+              <ShieldCheck className="h-4 w-4 text-purple-600 shrink-0 mt-0.5" />
+              <div>
+                <strong>Client-Side Zero-PII Guarantee:</strong> Student names are typed directly in your browser at print time and are <strong>never</strong> transmitted to or stored on VisitLink servers or any database.
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Post-Visit Report Upload & Verification Card (Phase m2) */}
         {(status === "completed" || status === "approved") && (
           <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
@@ -357,7 +805,7 @@ export default function CoordinatorRequestDetailsPage() {
         {/* Visit Parameters Card */}
         <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
           <h2 className="text-base font-bold text-slate-900">Visit Parameters</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 text-xs">
             <div>
               <span className="text-slate-500 block uppercase text-[10px] font-semibold">Date</span>
               <strong className="text-slate-900 text-sm">Tuesday, Nov 10, 2026</strong>
@@ -374,6 +822,10 @@ export default function CoordinatorRequestDetailsPage() {
               <span className="text-slate-500 block uppercase text-[10px] font-semibold">Minors Present</span>
               <strong className="text-slate-900 text-sm">No (All 18+)</strong>
             </div>
+            <div>
+              <span className="text-slate-500 block uppercase text-[10px] font-semibold">Planned Social Break</span>
+              <strong className="text-slate-900 text-sm">{plannedSocialBreakMinutes} Mins (0-30m cap)</strong>
+            </div>
           </div>
 
           <div className="border-t border-slate-100 pt-3">
@@ -385,6 +837,113 @@ export default function CoordinatorRequestDetailsPage() {
             </p>
           </div>
         </div>
+
+        {/* Certificate Generator Modal (Phase p5) */}
+        {showCertModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4 overflow-y-auto">
+            <div className="w-full max-w-2xl bg-white rounded-2xl p-6 shadow-2xl space-y-5 my-8">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div className="flex items-center gap-2">
+                  <Award className="h-5 w-5 text-purple-600" />
+                  <h3 className="text-base font-bold text-slate-900">
+                    Industrial Visit Participation Certificate
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowCertModal(false)}
+                  className="text-slate-400 hover:text-slate-600 text-sm font-bold"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="p-3 bg-purple-50 rounded-xl border border-purple-200 text-xs text-purple-900 flex items-start gap-2">
+                <ShieldCheck className="h-4 w-4 text-purple-600 shrink-0 mt-0.5" />
+                <span>
+                  <strong>Privacy Guard:</strong> Enter student names locally right before printing. Names are never stored or transmitted.
+                </span>
+              </div>
+
+              <div>
+                <label htmlFor="certStudentName" className="block text-xs font-semibold text-slate-700 uppercase mb-1">
+                  Recipient Student Name (Rendered Client-Side Only):
+                </label>
+                <input
+                  id="certStudentName"
+                  type="text"
+                  value={certStudentName}
+                  onChange={(e) => setCertStudentName(e.target.value)}
+                  placeholder="e.g. Arun Kumar R."
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 font-semibold focus:ring-2 focus:ring-purple-500 focus:outline-none"
+                />
+              </div>
+
+              {/* Certificate Template Preview */}
+              <div className="p-6 rounded-xl border-4 border-double border-purple-200 bg-gradient-to-b from-purple-50/30 to-white text-center space-y-4">
+                <div className="space-y-1">
+                  <span className="text-[10px] tracking-widest uppercase font-bold text-purple-700">
+                    PSG College of Technology &bull; Department of Mechanical Engineering
+                  </span>
+                  <h4 className="text-lg font-black tracking-wide text-slate-900 uppercase">
+                    Certificate of Industrial Visit Completion
+                  </h4>
+                </div>
+
+                <p className="text-xs text-slate-600 italic">
+                  This is to certify that
+                </p>
+
+                <div className="text-xl font-bold text-purple-900 border-b-2 border-purple-300 pb-1 max-w-sm mx-auto">
+                  {certStudentName || "[Student Name]"}
+                </div>
+
+                <p className="text-xs text-slate-700 max-w-md mx-auto leading-relaxed">
+                  has successfully participated in the certified academic industrial visit to{" "}
+                  <strong>Kovai Precision Foundry & Heavy Castings</strong>, Coimbatore on{" "}
+                  <strong>Tuesday, Nov 10, 2026</strong>.
+                </p>
+
+                <div className="p-3 bg-white/80 rounded-lg border border-purple-100 text-[11px] text-left text-slate-600 space-y-1">
+                  <span className="font-bold text-purple-900 block">Verified Learning Objectives:</span>
+                  <ul className="list-disc pl-4 space-y-0.5 text-[10px]">
+                    <li>Study automated green sand moulding lines, cupola furnace melting, and casting flaw inspections.</li>
+                    <li>Observe CNC precision machining operations and CMM quality metrology workflows.</li>
+                  </ul>
+                </div>
+
+                <div className="pt-4 flex justify-between items-end text-[10px] text-slate-500 border-t border-slate-200 px-4">
+                  <div className="text-center">
+                    <div className="h-6" />
+                    <span className="border-t border-slate-400 block pt-1 font-semibold">Host Industry Engineer</span>
+                  </div>
+                  <div className="text-center">
+                    <div className="h-6" />
+                    <span className="border-t border-slate-400 block pt-1 font-semibold">Faculty Coordinator (Dr. R. Karthikeyan)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setShowCertModal(false)}
+                  className="px-4 py-2 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  onClick={() => window.print()}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-purple-600 text-xs font-semibold text-white hover:bg-purple-500 shadow-sm"
+                >
+                  <Printer className="h-3.5 w-3.5" />
+                  Print Certificate
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

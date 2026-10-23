@@ -240,6 +240,53 @@ npm run test:e2e
 
 ---
 
+## 4. Student Engagement Architecture (No Student Accounts & Strict Privacy)
+
+Students are the end participants in industrial visits, not platform users. Because most students are minors, VisitLink enforces an absolute architectural guarantee: **zero student accounts, zero student logins, and zero storage of student personal identifiable information (PII)**.
+
+### 1. Zero Student Accounts & Zero PII Guardrail
+- **No Student Logins**: Students never create usernames, passwords, or profiles.
+- **No PII Stored**: No student names, personal emails, phone numbers, or raw IP addresses are ever stored in the database.
+- **Child Privacy Compliance (DPDP)**: Student rosters and parental consent documents remain strictly in private storage buckets, accessible only to authorized faculty and verified host managers via 5-minute ephemeral signed URLs.
+
+### 2. Engagement Profile, Badges & Search Filters (Phase p1)
+- **Declarative Industry Fields**:
+  - `interactive_elements`: Multi-select (`live_demo`, `hands_on_activity`, `q_and_a_engineers`, `product_showcase`).
+  - `q_and_a_available`: Boolean indicating direct interaction with plant engineers.
+  - `estimated_interactive_minutes`: Bounded between 0 and 240 minutes.
+  - `engagement_notes`: Technical description of shop-floor activities.
+- **Exploration UI**: Filter facilities by interactive style (e.g. *"Hands-on Activity"*, *"Live Demonstration"*).
+- **Anti-Leisure Scope Guard**: Strictly prohibits any "fun", "amusement", or "enjoyment" scores.
+
+### 3. Pre-Visit Brief via Unguessable 128-Bit Tokens (Phase p2)
+- **Public Shareable Link**: Generates a clean one-page brief accessible without login.
+- **Unguessable 128-Bit Random Tokens**: 32-character cryptographically secure hex strings generated via `crypto.randomBytes(16)`.
+- **Time-Bounded Expiry**: Set exactly to `visit_date + 7 days` at 23:59:59 UTC.
+- **Database Security**: Token lookups use timing-safe SHA-256 hashes (`token_hash`) with index lookups.
+- **Revocation**: Coordinators can revoke links immediately. Revoked or expired links return a secure 404 with zero data leakage.
+- **Zero PII**: Contains only facility instructions, mandatory PPE checklists, and 3–5 active reflection prompts.
+
+### 4. Student Observation Sheets & Faculty Review Guardrail (Phase p3)
+- **AI-Drafted Technical Prompts**: Questions derived from declared learning objectives and syllabus topics.
+- **Ruled Spaces for Handwriting**: Structured note-taking sections (2 to 6 lines) for clipboards on the active factory floor.
+- **Faculty Review Guardrail**: Observation sheets are drafted in `draft` status. Print and export actions are strictly locked until the faculty coordinator reviews and approves the sheet. Sheets are never auto-sent.
+- **Schema Validation**: Strict Pydantic and TypeScript schema validation ensuring engineering relevance.
+
+### 5. Anonymous Student Feedback & Anonymity Thresholds (Phase p4)
+- **Anonymous Post-Visit Ratings**: Collects usefulness (1–5), engagement (1–5), most interesting machine/process observed ($\le 300$ chars), and suggestions ($\le 300$ chars).
+- **Rate-Limiting Without Raw IPs**: Client IPs are hashed using SHA-256 with a daily rotating server-side salt. Raw IPs are discarded immediately.
+- **Server-Enforced Anonymity Threshold ($N \ge 5$)**:
+  - Aggregate ratings and qualitative comments are strictly withheld until at least **5 student responses** exist.
+  - When $N < 5$, a secure privacy shield message informs coordinators and managers that responses are hidden to protect student anonymity.
+- **Automated Content Moderation**: Comments are scanned for contact numbers, emails, and abusive keywords; flagged submissions are held for human admin review.
+- **Zero Strike Contamination**: Student feedback is advisory for host engineers and faculty. It contributes to host ratings, but is strictly isolated from institution strikes, trust scores, or tier restrictions.
+
+### 6. Participation Certificates & Scheduled Social Break (Phase p5)
+- **Client-Side Certificate Generation**: Coordinators generate official industrial visit completion certificates. Recipient student names are typed directly in the local browser print dialog and **never** transmitted to or stored on VisitLink servers.
+- **Scheduled Social Slot**: Coordinators can specify `planned_social_break_minutes` (0 to 30 mins, default 0) to notify host managers for visit schedule coordination.
+
+---
+
 ## 5. Production Deployment Runbook (Phase k)
 
 ### 1. Supabase Cloud (ap-south-1 Mumbai Region)

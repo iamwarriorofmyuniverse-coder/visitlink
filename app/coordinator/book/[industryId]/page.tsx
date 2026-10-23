@@ -77,6 +77,9 @@ export default function BookVisitPage() {
   const [busesCount, setBusesCount] = useState(1);
   const [carsCount, setCarsCount] = useState(1);
 
+  // Scheduled Social Slot (Phase p5)
+  const [plannedSocialBreakMinutes, setPlannedSocialBreakMinutes] = useState(0);
+
   // Mandatory Educational Intent Fields (Phase m1)
   const [objective1, setObjective1] = useState(
     "Study automated green sand moulding lines, cupola furnace melting, and non-destructive casting flaw inspections."
@@ -474,6 +477,32 @@ export default function BookVisitPage() {
                 onChange={(e) => setHasMinors(e.target.checked)}
                 className="h-4 w-4 text-blue-600 rounded focus:ring-blue-500"
               />
+            </div>
+
+            {/* Optional Planned Social Break (Phase p5) */}
+            <div className="mt-3 p-3 rounded-xl bg-slate-50 border border-slate-200">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <label htmlFor="socialBreak" className="text-xs font-bold text-slate-800 block">
+                    Planned Informal / Social Break (Optional, 0-30 min)
+                  </label>
+                  <p className="text-[11px] text-slate-500">
+                    Brief informal period for students to network or eat refreshments. Displayed to host industry for scheduling.
+                  </p>
+                </div>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <input
+                    id="socialBreak"
+                    type="number"
+                    min="0"
+                    max="30"
+                    value={plannedSocialBreakMinutes}
+                    onChange={(e) => setPlannedSocialBreakMinutes(Math.max(0, Math.min(30, parseInt(e.target.value) || 0)))}
+                    className="w-16 rounded-lg border border-slate-300 p-1.5 text-xs text-slate-900 text-center font-bold"
+                  />
+                  <span className="text-xs font-semibold text-slate-600">mins</span>
+                </div>
+              </div>
             </div>
           </div>
 
