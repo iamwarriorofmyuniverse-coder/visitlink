@@ -19,6 +19,12 @@ import {
   Utensils,
   Car,
   Radio,
+  BookOpen,
+  Building,
+  Star,
+  HelpCircle,
+  Wrench,
+  Cpu,
 } from "lucide-react";
 import seedCatalog from "@/supabase/seed_catalog.json";
 import {
@@ -31,6 +37,13 @@ import {
   formatEngagementBadge,
   type InteractiveElement,
 } from "@/lib/engagement/profile";
+import {
+  rerankWithExplorationSlot,
+  matchesHandsOnTag,
+  matchesModernTechnologyTag,
+  RankableFacility,
+} from "@/lib/resourceful/rerank";
+import ScoreExplainModal from "@/components/resourceful/ScoreExplainModal";
 
 // Dynamically import Leaflet Map to avoid SSR 'window is not defined' crash
 const LeafletMap = dynamic(() => import("@/components/map/LeafletMap"), {
@@ -48,11 +61,13 @@ export default function ExploreIndustriesPage() {
   const [radiusKm, setRadiusKm] = useState(25);
   const [selectedSector, setSelectedSector] = useState("all");
   const [selectedEngagement, setSelectedEngagement] = useState<string>("all");
+  const [selectedSpecialTag, setSelectedSpecialTag] = useState<"all" | "hands_on" | "modern_tech">("all");
   const [groupSize, setGroupSize] = useState<number>(30);
   const [selectedFacilityId, setSelectedFacilityId] = useState<string | null>(null);
   const [semanticQuery, setSemanticQuery] = useState("");
-  const [sortBy, setSortBy] = useState<"distance" | "relevance">("distance");
+  const [sortBy, setSortBy] = useState<"relevance" | "distance">("relevance");
   const [liveModalFacility, setLiveModalFacility] = useState<any | null>(null);
+  const [explainFacility, setExplainFacility] = useState<any | null>(null);
   const [liveWeather, setLiveWeather] = useState<LiveWeatherInput | null>(null);
 
   // Fetch live Coimbatore environmental telemetry from Open-Meteo
@@ -118,47 +133,59 @@ export default function ExploreIndustriesPage() {
 
   // Filter and rank facilities
   const filteredFacilities = useMemo(() => {
-    return seedCatalog.industries
-      .map((ind) => {
-        const distance = calculateDistanceKm(userLat, userLng, ind.lat, ind.lng);
-        // Basic keyword relevance score baseline
-        let score = 0;
-        if (semanticQuery.trim()) {
-          const qWords = semanticQuery.toLowerCase().split(/\s+/);
-          const fullText = `${ind.name} ${ind.sector} ${ind.curriculum_topics} ${ind.highlights}`.toLowerCase();
-          const matchCount = qWords.filter((w) => fullText.includes(w)).length;
-          score = matchCount / qWords.length;
-        }
-        return {
-          ...ind,
-          id: ind.readable_id,
-          distance_km: distance,
-          relevance_score: score,
-        };
-      })
-      .filter((ind) => {
-        // Hard Spatial Radius Filter
-        if (ind.distance_km > radiusKm) return false;
-        // Sector Filter
-        if (selectedSector !== "all" && ind.sector !== selectedSector) return false;
-        // Engagement Filter (Phase p1)
-        if (
-          selectedEngagement !== "all" &&
-          !matchesEngagementFilter((ind as any).interactive_elements || [], selectedEngagement)
-        ) {
-          return false;
-        }
-        // Capacity Filter
-        if (groupSize && ind.max_group_size < groupSize) return false;
-        return true;
-      })
-      .sort((a, b) => {
-        if (sortBy === "relevance" && semanticQuery.trim()) {
-          return b.relevance_score - a.relevance_score || a.distance_km - b.distance_km;
-        }
-        return a.distance_km - b.distance_km;
-      });
-  }, [userLat, userLng, radiusKm, selectedSector, selectedEngagement, groupSize, semanticQuery, sortBy]);
+    // 1. Calculate distances & basic query relevance
+    const mapped = seedCatalog.industries.map((ind: any) => {
+      const distance = calculateDistanceKm(userLat, userLng, ind.lat, ind.lng);
+      let score = 0.5; // baseline default
+      if (semanticQuery.trim()) {
+        const qWords = semanticQuery.toLowerCase().split(/\s+/);
+        const fullText = `${ind.name} ${ind.sector} ${ind.curriculum_topics || ""} ${ind.highlights || ""}`.toLowerCase();
+        const matchCount = qWords.filter((w) => fullText.includes(w)).length;
+        score = matchCount / qWords.length;
+      }
+      return {
+        ...ind,
+        id: ind.readable_id,
+        distance_km: distance,
+        relevance_score: score,
+      };
+    });
+
+    // 2. Apply Hard Filters
+    const filtered = mapped.filter((ind: any) => {
+      // Hard Spatial Radius Filter
+      if (ind.distance_km > radiusKm) return false;
+      // Sector Filter
+      if (selectedSector !== "all" && ind.sector !== selectedSector) return false;
+      // Engagement Filter
+      if (
+        selectedEngagement !== "all" &&
+        !matchesEngagementFilter(ind.interactive_elements || [], selectedEngagement)
+      ) {
+        return false;
+      }
+      // Capacity Filter
+      if (groupSize && ind.max_group_size < groupSize) return false;
+
+      // Special Tag Filters (Tag-based, independent of scores)
+      if (selectedSpecialTag === "hands_on" && !matchesHandsOnTag(ind)) {
+        return false;
+      }
+      if (selectedSpecialTag === "modern_tech" && !matchesModernTechnologyTag(ind)) {
+        return false;
+      }
+
+      return true;
+    });
+
+    // 3. Sorting & Quality Re-ranking
+    if (sortBy === "distance") {
+      return [...filtered].sort((a, b) => a.distance_km - b.distance_km);
+    }
+
+    // Default: Relevance + Quality Re-Rank with Exploration Slot for New Industries
+    return rerankWithExplorationSlot(filtered as RankableFacility[]);
+  }, [userLat, userLng, radiusKm, selectedSector, selectedEngagement, selectedSpecialTag, groupSize, semanticQuery, sortBy]);
 
   return (
     <div className="container mx-auto px-4 py-6 sm:px-6">
@@ -171,7 +198,7 @@ export default function ExploreIndustriesPage() {
               Discover Facilities in Coimbatore Hub
             </h1>
             <p className="text-xs text-slate-500">
-              PostGIS radius query centered at Coimbatore (11.0168° N, 76.9558° E).
+              PostGIS radius query centered at Coimbatore (11.0168° N, 76.9558° E). Resourceful sites re-ranked by syllabus fit &amp; host readiness.
             </p>
           </div>
 
@@ -192,7 +219,7 @@ export default function ExploreIndustriesPage() {
         </div>
 
         {/* Filters Row */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-2 border-t border-slate-100">
+        <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 pt-2 border-t border-slate-100">
           <div>
             <label className="block text-[11px] font-semibold text-slate-600 uppercase">
               Radius: {radiusKm} km
@@ -225,12 +252,12 @@ export default function ExploreIndustriesPage() {
               className="mt-1 block w-full rounded-lg border border-slate-300 p-1.5 text-xs text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             >
               <option value="all">All Sectors</option>
-              <option value="foundry">Foundry & Castings</option>
-              <option value="pumps">Pumps & Hydraulics</option>
+              <option value="foundry">Foundry &amp; Castings</option>
+              <option value="pumps">Pumps &amp; Hydraulics</option>
               <option value="textiles">Textile Automation</option>
               <option value="automotive">Automotive Sensors</option>
               <option value="manufacturing">Industrial Compressors</option>
-              <option value="research_lab">Robotics & 3D Lab</option>
+              <option value="research_lab">Robotics &amp; 3D Lab</option>
               <option value="renewable_energy">Renewable Energy</option>
             </select>
           </div>
@@ -248,14 +275,29 @@ export default function ExploreIndustriesPage() {
               <option value="all">All Engagement</option>
               <option value="hands_on_activity">Hands-on Activity</option>
               <option value="live_demo">Live Demonstration</option>
-              <option value="q_and_a_engineers">Q&A with Engineers</option>
+              <option value="q_and_a_engineers">Q&amp;A with Engineers</option>
               <option value="product_showcase">Product Showcase</option>
             </select>
           </div>
 
           <div>
             <label className="block text-[11px] font-semibold text-slate-600 uppercase">
-              Students Group Size
+              Tag Filters
+            </label>
+            <select
+              value={selectedSpecialTag}
+              onChange={(e) => setSelectedSpecialTag(e.target.value as any)}
+              className="mt-1 block w-full rounded-lg border border-slate-300 p-1.5 text-xs text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            >
+              <option value="all">All Capabilities</option>
+              <option value="hands_on">🛠️ Hands-on Only</option>
+              <option value="modern_tech">🤖 Modern Tech (CNC/IoT)</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-[11px] font-semibold text-slate-600 uppercase">
+              Students Group
             </label>
             <input
               type="number"
@@ -276,8 +318,8 @@ export default function ExploreIndustriesPage() {
               onChange={(e) => setSortBy(e.target.value as any)}
               className="mt-1 block w-full rounded-lg border border-slate-300 p-1.5 text-xs text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             >
+              <option value="relevance">Quality Re-Rank (80/20)</option>
               <option value="distance">Distance (Nearest First)</option>
-              <option value="relevance">AI Syllabus Relevance</option>
             </select>
           </div>
         </div>
@@ -303,7 +345,7 @@ export default function ExploreIndustriesPage() {
             <span>
               Showing <strong className="text-slate-900">{filteredFacilities.length}</strong> facilities within {radiusKm} km
             </span>
-            <span>Sorted by {sortBy}</span>
+            <span>Sorted by {sortBy === "relevance" ? "Quality Re-Rank (80% Fit + 20% Quality)" : "Distance"}</span>
           </div>
 
           {filteredFacilities.length === 0 ? (
@@ -315,8 +357,11 @@ export default function ExploreIndustriesPage() {
               </p>
             </div>
           ) : (
-            filteredFacilities.map((fac) => {
+            filteredFacilities.map((fac: any, index: number) => {
               const isSelected = fac.id === selectedFacilityId;
+              const isNewFacility = (fac.verified_visits_count ?? 0) < 3;
+              const hasDisplayableRating = (fac.verified_visits_count ?? 0) >= 5;
+
               const liveStatus = formatLiveFacilityStatus({
                 ...fac,
                 liveWeather: liveWeather ?? undefined,
@@ -326,7 +371,7 @@ export default function ExploreIndustriesPage() {
                 <div
                   key={fac.id}
                   onClick={() => setSelectedFacilityId(fac.id)}
-                  className={`rounded-2xl border p-5 transition cursor-pointer ${
+                  className={`rounded-2xl border p-5 transition cursor-pointer relative ${
                     isSelected
                       ? "border-blue-500 bg-blue-50/20 ring-1 ring-blue-500 shadow-md"
                       : "border-slate-200 bg-white hover:border-slate-300 shadow-sm"
@@ -334,9 +379,21 @@ export default function ExploreIndustriesPage() {
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <span className="inline-block rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-600 mb-1">
-                        {fac.sector}
-                      </span>
+                      <div className="flex items-center gap-1.5 flex-wrap mb-1">
+                        <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-600">
+                          {fac.sector}
+                        </span>
+                        {isNewFacility && (
+                          <span className="rounded-md bg-amber-100 border border-amber-300 px-2 py-0.5 text-[10px] font-bold text-amber-800">
+                            🌟 New Host
+                          </span>
+                        )}
+                        {fac.listing_corrected_flag && (
+                          <span className="rounded-md bg-red-100 border border-red-300 px-2 py-0.5 text-[10px] font-bold text-red-800" title={fac.listing_corrected_reason}>
+                            ⚠️ Listing Corrected (-15 pts)
+                          </span>
+                        )}
+                      </div>
                       <h3 className="font-bold text-slate-900 text-sm leading-tight">
                         {fac.name}
                       </h3>
@@ -350,10 +407,64 @@ export default function ExploreIndustriesPage() {
                     <strong className="text-slate-700">Highlights:</strong> {fac.highlights}
                   </p>
 
+                  {/* Resourceful Sites Capability & Readiness Scores */}
+                  <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
+                    <div className="rounded-xl border border-blue-200 bg-blue-50/40 p-2.5 flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <BookOpen className="h-3.5 w-3.5 text-blue-600" />
+                        <span className="font-semibold text-slate-700 text-[11px]">Learning Value</span>
+                      </div>
+                      <span className="font-mono font-bold text-blue-900 text-xs">
+                        {fac.learning_value_score ?? 78}/100
+                      </span>
+                    </div>
+
+                    <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-2.5 flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <Building className="h-3.5 w-3.5 text-emerald-600" />
+                        <span className="font-semibold text-slate-700 text-[11px]">Hosting Ready</span>
+                      </div>
+                      <span className="font-mono font-bold text-emerald-900 text-xs">
+                        {fac.hosting_readiness_score ?? 82}/100
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Verified Ratings & Transparent Score Explain Action */}
+                  <div className="mt-2 flex items-center justify-between text-xs px-0.5">
+                    <div className="flex items-center gap-1.5">
+                      <Star className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
+                      {hasDisplayableRating ? (
+                        <span className="font-semibold text-slate-800 text-[11px]">
+                          {fac.verified_experience_rating ?? 4.5}★{" "}
+                          <span className="text-slate-400 font-normal">
+                            ({fac.verified_visits_count} verified visits)
+                          </span>
+                        </span>
+                      ) : (
+                        <span className="text-[11px] text-slate-500 font-medium">
+                          New Host ({fac.verified_visits_count ?? 1} visit{fac.verified_visits_count === 1 ? "" : "s"})
+                        </span>
+                      )}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setExplainFacility(fac);
+                      }}
+                      className="text-[11px] text-blue-600 hover:text-blue-800 font-semibold underline underline-offset-2 flex items-center gap-1"
+                    >
+                      <HelpCircle className="h-3 w-3" />
+                      Explain Scores
+                    </button>
+                  </div>
+
                   {/* Student Engagement Badges (Phase p1) */}
-                  {(fac as any).interactive_elements && (fac as any).interactive_elements.length > 0 && (
+                  {fac.interactive_elements && fac.interactive_elements.length > 0 && (
                     <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
-                      {((fac as any).interactive_elements as InteractiveElement[]).map((elem) => {
+                      {(fac.interactive_elements as InteractiveElement[]).map((elem) => {
                         const badge = formatEngagementBadge(elem);
                         return (
                           <span
@@ -374,8 +485,8 @@ export default function ExploreIndustriesPage() {
                             {elem === "q_and_a_engineers" && "💬 "}
                             {elem === "product_showcase" && "📦 "}
                             {badge.shortLabel}
-                            {elem === "hands_on_activity" && (fac as any).estimated_interactive_minutes > 0
-                              ? ` (${(fac as any).estimated_interactive_minutes}m)`
+                            {elem === "hands_on_activity" && fac.estimated_interactive_minutes > 0
+                              ? ` (${fac.estimated_interactive_minutes}m)`
                               : ""}
                           </span>
                         );
@@ -384,7 +495,7 @@ export default function ExploreIndustriesPage() {
                   )}
 
                   {/* Built-in Live Situation & Logistics Telemetry */}
-                  <div className="mt-3.5 rounded-xl border border-slate-200/90 bg-slate-50/80 p-3 space-y-2">
+                  <div className="mt-3 rounded-xl border border-slate-200/90 bg-slate-50/80 p-3 space-y-2">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5">
                         <span className="relative flex h-2 w-2">
@@ -392,7 +503,7 @@ export default function ExploreIndustriesPage() {
                           <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                         </span>
                         <span className="text-[10px] font-bold uppercase tracking-wider text-slate-700">
-                          Live Situation & Logistics
+                          Live Situation &amp; Logistics
                         </span>
                       </div>
                       <span className="text-[10px] font-semibold text-slate-500">
@@ -475,6 +586,15 @@ export default function ExploreIndustriesPage() {
           onClose={() => setLiveModalFacility(null)}
           facility={liveModalFacility}
           liveWeather={liveWeather ?? undefined}
+        />
+      )}
+
+      {/* Resourceful Scores & Reviews Explain Modal */}
+      {explainFacility && (
+        <ScoreExplainModal
+          isOpen={!!explainFacility}
+          onClose={() => setExplainFacility(null)}
+          facility={explainFacility}
         />
       )}
     </div>

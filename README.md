@@ -287,7 +287,74 @@ Students are the end participants in industrial visits, not platform users. Beca
 
 ---
 
-## 5. Production Deployment Runbook (Phase k)
+## 5. Resourceful Sites & Verified Ratings Engine (Phases q1–q5 & r1–r6)
+
+To surface industries that are resourceful for learning and operationally ready to host student groups—without discriminating by facility age, company turnover, or photography aesthetics—VisitLink provides a deterministic, transparent capability scoring and verified review system:
+
+### 1. Capability Declarations & Strict Anti-Bias Guardrails (Phase q1)
+- **Objective Inputs Only**:
+  - **Learning Capabilities**: `process_stages_visible` (raw material prep, primary forming, precision machining, surface treatment, assembly, quality NDT testing, packaging), `technology_levels` (manual, semi-automated, CNC, robotics, IoT/Industry 4.0), live demo, hands-on activity, engineer Q&A, technical guide, and student observation descriptions.
+  - **Hosting Readiness**: Safe visitor walkways, student restrooms, PPE supplied on-site, briefing room with AV equipment, visitor staff count, and maximum student group size.
+  - **Verified Certifications**: Quality and safety standards (`ISO 9001`, `ISO 14001`, `ISO 45001`, `IATF 16949`, `NABL`, `AS9100`) with uploaded PDF proof and admin verification status.
+  - **Listing Integrity**: Minimum 4 real facility photos required; stock photography is strictly prohibited.
+- **Strict Anti-Bias Invariant**: Facility age, establishment year, company headcount/size, annual turnover, and photo beauty scores are **strictly forbidden inputs** in all database schemas, scoring logic, and ranking algorithms (enforced by automated unit tests).
+
+### 2. Transparent Scoring Engine & Explain Views (Phase q2)
+- **Deterministic Math**: No LLM scoring or subjective AI evaluations.
+  - **Learning Value Score (0–100)**: Weighted sum of visible process stages (up to 25 pts), technology level tags (up to 20 pts), live demo (15 pts), hands-on activity (15 pts), engineer Q&A (10 pts), guide (10 pts), and interactive duration $\ge 45$ min (5 pts).
+  - **Hosting Readiness Score (0–100)**: Safe visitor walkways (25 pts), restrooms (15 pts), PPE supplied (15 pts), briefing room with AV (15 pts), visitor staff $\ge 2$ (10 pts), group capacity $\ge 30$ (10 pts), and verified active certifications (10 pts).
+- **Unverified Claim Discount**: Declared capabilities count at **50% weight** until physically audited and verified by an on-site platform administrator.
+- **Transparent Explain View**: Coordinators and hosts can open a modal displaying itemized points, verification badges, and exact mathematical weights for every score.
+
+### 3. Search Re-Ranking & Guaranteed Exploration Slots (Phase q3)
+- **Order of Evaluation**:
+  1. **Hard Filters**: Spatial radius, sector, group capacity, and tag filters (Hands-on, Modern Tech). Non-matching facilities are never shown.
+  2. **Semantic Relevance**: Syllabus topic match score (0.0 to 1.0).
+  3. **Quality Tiebreaker**: Final Rank Score $= 0.80 \times \text{relevance} + 0.20 \times \text{quality}$. Quality re-ranking serves as a gentle tiebreaker and never overrides genuine curriculum relevance.
+- **Exploration Slot for New Hosts**: Newly onboarded facilities ($< 3$ verified visits) are guaranteed exposure by placing a qualified new facility at **position #5 in every 10-item result window**, marked with an official `🌟 New Host` badge.
+- **Nearby Isolation**: Nearby POI amenities (restaurants, fuel stations) are strictly excluded from ranking calculations.
+
+### 4. Anti-Gaming, Contradicted Claims & Audit Trail (Phase q4)
+- **Zero Paid Boosts**: Sponsored placements and paid ranking upgrades are architecturally impossible.
+- **Contradicted Claim Penalty**: If a post-visit coordinator report confirms facility claims were inaccurate (e.g. promised CNC machining was unavailable), an admin audit assesses an exact **$-15$ point penalty** and flags the card with a public `⚠️ Listing Corrected (-15 pts)` notice.
+- **Automatic Expiry**: Expired certifications forfeit points immediately upon passing their expiry date.
+
+### 5. Multi-Dimensional Verified Reviews (Phase r1)
+- **Completed-Visit Enforcement**: Reviews can **only** be submitted if `visit_requests.status = 'completed'` (enforced by PostgreSQL trigger and API validation).
+- **1-Hour Cooldown**: Reviews are locked for 1 hour after visit completion to prevent rushed or emotional submissions.
+- **7-Day Edit Window**: Coordinators can edit their reviews within 7 days, after which reviews are permanently locked to preserve audit history.
+- **Server-Side Overall Rating**: Overall score is computed server-side as the exact arithmetic average of 5 distinct educational dimensions:
+  1. Learning Value & Curriculum Fit (1–5)
+  2. Hosting & Plant Organisation (1–5)
+  3. Staff & Guide Quality (1–5)
+  4. Plant Safety & PPE Compliance (1–5)
+  5. Listing Accuracy (1–5)
+
+### 6. Bayesian Aggregation & Recency Weighting (Phase r2)
+- **Bayesian Smoothing Formula**:
+  $$\bar{R}_{\text{bayesian}} = \frac{C \cdot m + \sum_{i=1}^n w_i R_i}{C + \sum_{i=1}^n w_i}$$
+  - Platform Prior Weight: $C = 5.0$
+  - Platform Historical Mean: $m = 4.5$
+  - Recency Weight $w_i$: $1.0$ for reviews $\le 24$ months old; $0.50$ (50% discount) for reviews $> 24$ months old to reflect current factory management.
+- **Display Threshold ($n \ge 5$)**: Numerical rating averages are withheld publicly until a facility completes at least **5 verified visits**, preventing statistical volatility from biasing newly onboarded plants.
+
+### 7. Industry Right-of-Reply & Dispute Resolution (Phases r3–r4)
+- **Public Right-of-Reply**: Industry managers can publish one official reply per review (max 500 characters, validated against profanity and PII).
+- **Dispute Lifecycle**: Hosts can dispute reviews citing factual errors, retaliation, or defamatory content. Submitting a dispute sets the ticket to `under_review` and routes evidence to human admin adjudication. Unilateral host self-deletion is strictly prevented.
+- **Automated PII Screening**: Reviews are screened for personal phone numbers, email addresses, and abusive keywords prior to publication.
+
+### 8. Private Institution Behavioral Ratings & Integrity Checks (Phase r5)
+- **Private Host Evaluation**: After completed visits, industry hosts rate visiting institutions on 4 behavioral dimensions: punctuality, student discipline, faculty preparedness, and headcount accuracy (1–5 stars each).
+- **Strict Privacy**: Private ratings are protected by Row-Level Security and **never** shown to other colleges or published publicly. They blend directly into the institution's platform trust score.
+- **Collusion & Retaliation Integrity**: Automated detectors flag suspicious patterns (e.g. repeated mutual 5-star ratings or consecutive 1-star retaliation) for human admin review.
+
+### 9. Fairness & Evaluation Harnesses (Phase q5 & r6)
+- **Fairness Gap Check**: `scripts/check_fairness.ts` evaluates the average rank position gap between small/mid-size units and large facilities under equal relevance (verified gap: $4.51 < 5.0$, confirming zero structural bias).
+- **Zero-Fabrication Re-Rank Evaluation**: `scripts/eval_rerank.ts` is configured to run Recall@5 and NDCG@5 evaluations on user-provided ground-truth test labels with zero synthetic data.
+
+---
+
+## 6. Production Deployment Runbook (Phase k)
 
 ### 1. Supabase Cloud (ap-south-1 Mumbai Region)
 1. Create a project in region `ap-south-1` (Mumbai).

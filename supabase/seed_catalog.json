@@ -35,7 +35,67 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 60,
-      "engagement_notes": "Live cupola furnace molten tapping demo and chief metallurgist Q&A."
+      "engagement_notes": "Live cupola furnace molten tapping demo and chief metallurgist Q&A.",
+      "process_stages_visible": [
+        "raw_material_prep",
+        "primary_forming",
+        "surface_treatment",
+        "quality_ndt_testing"
+      ],
+      "technology_levels": [
+        "semi_automated",
+        "manual"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": false,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": true,
+      "briefing_room": true,
+      "av_equipment": false,
+      "visitor_staff_count": 2,
+      "photos": [
+        "/images/facilities/foundry-cbe-01-1.jpg",
+        "/images/facilities/foundry-cbe-01-2.jpg",
+        "/images/facilities/foundry-cbe-01-3.jpg",
+        "/images/facilities/foundry-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "ISO 9001",
+          "cert_file_path": "/storage/certs/foundry-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": true,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": false
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 1,
+      "learning_value_score": 45,
+      "hosting_readiness_score": 83,
+      "verified_experience_rating": 4.5,
+      "ratings": [
+        {
+          "id": "rev-foundry-cbe-01-0",
+          "overall_rating": 4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-01-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "pumps-cbe-01",
@@ -70,7 +130,117 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 90,
-      "engagement_notes": "Hands-on impeller assembly and hydraulic flume testing."
+      "engagement_notes": "Hands-on impeller assembly and hydraulic flume testing.",
+      "process_stages_visible": [
+        "raw_material_prep",
+        "precision_machining",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": true,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": true,
+      "briefing_room": true,
+      "av_equipment": true,
+      "visitor_staff_count": 3,
+      "photos": [
+        "/images/facilities/pumps-cbe-01-1.jpg",
+        "/images/facilities/pumps-cbe-01-2.jpg",
+        "/images/facilities/pumps-cbe-01-3.jpg",
+        "/images/facilities/pumps-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "IATF 16949",
+          "cert_file_path": "/storage/certs/pumps-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": true,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": true
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 6,
+      "learning_value_score": 63,
+      "hosting_readiness_score": 90,
+      "verified_experience_rating": 4.44,
+      "ratings": [
+        {
+          "id": "rev-pumps-cbe-01-0",
+          "overall_rating": 4.1,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-pumps-cbe-01-1",
+          "overall_rating": 4.8,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-pumps-cbe-01-2",
+          "overall_rating": 4.4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-pumps-cbe-01-3",
+          "overall_rating": 4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-pumps-cbe-01-4",
+          "overall_rating": 4.7,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-05-15T10:00:00Z"
+        },
+        {
+          "id": "rev-pumps-cbe-01-5",
+          "overall_rating": 4.3,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-06-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "textiles-cbe-01",
@@ -106,7 +276,127 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 45,
-      "engagement_notes": "High-speed airjet loom live demo and yarn tensile strength tests."
+      "engagement_notes": "High-speed airjet loom live demo and yarn tensile strength tests.",
+      "process_stages_visible": [
+        "raw_material_prep",
+        "precision_machining",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": false,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": true,
+      "briefing_room": true,
+      "av_equipment": true,
+      "visitor_staff_count": 4,
+      "photos": [
+        "/images/facilities/textiles-cbe-01-1.jpg",
+        "/images/facilities/textiles-cbe-01-2.jpg",
+        "/images/facilities/textiles-cbe-01-3.jpg",
+        "/images/facilities/textiles-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "ISO 14001",
+          "cert_file_path": "/storage/certs/textiles-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": true,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": false
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 7,
+      "learning_value_score": 48,
+      "hosting_readiness_score": 90,
+      "verified_experience_rating": 4.45,
+      "ratings": [
+        {
+          "id": "rev-textiles-cbe-01-0",
+          "overall_rating": 4.2,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-textiles-cbe-01-1",
+          "overall_rating": 4.9,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-textiles-cbe-01-2",
+          "overall_rating": 4.5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-textiles-cbe-01-3",
+          "overall_rating": 4.1,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-textiles-cbe-01-4",
+          "overall_rating": 4.8,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-05-15T10:00:00Z"
+        },
+        {
+          "id": "rev-textiles-cbe-01-5",
+          "overall_rating": 4.4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-06-15T10:00:00Z"
+        },
+        {
+          "id": "rev-textiles-cbe-01-6",
+          "overall_rating": 4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-07-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "automotive-cbe-01",
@@ -142,7 +432,137 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 75,
-      "engagement_notes": "Hands-on torque wrench calibration and robotic welding cell demo."
+      "engagement_notes": "Hands-on torque wrench calibration and robotic welding cell demo.",
+      "process_stages_visible": [
+        "assembly_integration",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "iot_industry_4_0",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": true,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": false,
+      "briefing_room": true,
+      "av_equipment": true,
+      "visitor_staff_count": 2,
+      "photos": [
+        "/images/facilities/automotive-cbe-01-1.jpg",
+        "/images/facilities/automotive-cbe-01-2.jpg",
+        "/images/facilities/automotive-cbe-01-3.jpg",
+        "/images/facilities/automotive-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "ISO 9001",
+          "cert_file_path": "/storage/certs/automotive-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": false,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": true
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 8,
+      "learning_value_score": 62,
+      "hosting_readiness_score": 75,
+      "verified_experience_rating": 4.53,
+      "ratings": [
+        {
+          "id": "rev-automotive-cbe-01-0",
+          "overall_rating": 4.3,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-automotive-cbe-01-1",
+          "overall_rating": 5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-automotive-cbe-01-2",
+          "overall_rating": 4.6,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-automotive-cbe-01-3",
+          "overall_rating": 4.2,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-automotive-cbe-01-4",
+          "overall_rating": 4.9,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-05-15T10:00:00Z"
+        },
+        {
+          "id": "rev-automotive-cbe-01-5",
+          "overall_rating": 4.5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-06-15T10:00:00Z"
+        },
+        {
+          "id": "rev-automotive-cbe-01-6",
+          "overall_rating": 4.1,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-07-15T10:00:00Z"
+        },
+        {
+          "id": "rev-automotive-cbe-01-7",
+          "overall_rating": 4.8,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-08-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "compressors-cbe-01",
@@ -178,7 +598,77 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 60,
-      "engagement_notes": "400Hz solid-state power converter live test and aviation hydraulic demo."
+      "engagement_notes": "400Hz solid-state power converter live test and aviation hydraulic demo.",
+      "process_stages_visible": [
+        "raw_material_prep",
+        "precision_machining",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": false,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": true,
+      "briefing_room": true,
+      "av_equipment": true,
+      "visitor_staff_count": 3,
+      "photos": [
+        "/images/facilities/compressors-cbe-01-1.jpg",
+        "/images/facilities/compressors-cbe-01-2.jpg",
+        "/images/facilities/compressors-cbe-01-3.jpg",
+        "/images/facilities/compressors-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "IATF 16949",
+          "cert_file_path": "/storage/certs/compressors-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": true,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": false
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 2,
+      "learning_value_score": 48,
+      "hosting_readiness_score": 90,
+      "verified_experience_rating": 4.5,
+      "ratings": [
+        {
+          "id": "rev-compressors-cbe-01-0",
+          "overall_rating": 4.4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-compressors-cbe-01-1",
+          "overall_rating": 4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-02-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "precision-cbe-01",
@@ -211,7 +701,157 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 75,
-      "engagement_notes": "Hands-on torque wrench calibration and robotic welding cell demo."
+      "engagement_notes": "Hands-on torque wrench calibration and robotic welding cell demo.",
+      "process_stages_visible": [
+        "assembly_integration",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "iot_industry_4_0",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": true,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": true,
+      "briefing_room": true,
+      "av_equipment": false,
+      "visitor_staff_count": 4,
+      "photos": [
+        "/images/facilities/precision-cbe-01-1.jpg",
+        "/images/facilities/precision-cbe-01-2.jpg",
+        "/images/facilities/precision-cbe-01-3.jpg",
+        "/images/facilities/precision-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "ISO 14001",
+          "cert_file_path": "/storage/certs/precision-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": true,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": true
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 10,
+      "learning_value_score": 62,
+      "hosting_readiness_score": 83,
+      "verified_experience_rating": 4.47,
+      "ratings": [
+        {
+          "id": "rev-precision-cbe-01-0",
+          "overall_rating": 4.5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-precision-cbe-01-1",
+          "overall_rating": 4.1,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-precision-cbe-01-2",
+          "overall_rating": 4.8,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-precision-cbe-01-3",
+          "overall_rating": 4.4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-precision-cbe-01-4",
+          "overall_rating": 4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-05-15T10:00:00Z"
+        },
+        {
+          "id": "rev-precision-cbe-01-5",
+          "overall_rating": 4.7,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-06-15T10:00:00Z"
+        },
+        {
+          "id": "rev-precision-cbe-01-6",
+          "overall_rating": 4.3,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-07-15T10:00:00Z"
+        },
+        {
+          "id": "rev-precision-cbe-01-7",
+          "overall_rating": 5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-08-15T10:00:00Z"
+        },
+        {
+          "id": "rev-precision-cbe-01-8",
+          "overall_rating": 4.6,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-09-15T10:00:00Z"
+        },
+        {
+          "id": "rev-precision-cbe-01-9",
+          "overall_rating": 4.2,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "electrical-cbe-01",
@@ -246,7 +886,167 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 45,
-      "engagement_notes": "Engineering walk-through with lead facility technician."
+      "engagement_notes": "Engineering walk-through with lead facility technician.",
+      "process_stages_visible": [
+        "raw_material_prep",
+        "precision_machining",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": false,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": false,
+      "briefing_room": true,
+      "av_equipment": true,
+      "visitor_staff_count": 2,
+      "photos": [
+        "/images/facilities/electrical-cbe-01-1.jpg",
+        "/images/facilities/electrical-cbe-01-2.jpg",
+        "/images/facilities/electrical-cbe-01-3.jpg",
+        "/images/facilities/electrical-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "ISO 9001",
+          "cert_file_path": "/storage/certs/electrical-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": false,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": false
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 11,
+      "learning_value_score": 48,
+      "hosting_readiness_score": 75,
+      "verified_experience_rating": 4.5,
+      "ratings": [
+        {
+          "id": "rev-electrical-cbe-01-0",
+          "overall_rating": 4.6,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-electrical-cbe-01-1",
+          "overall_rating": 4.2,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-electrical-cbe-01-2",
+          "overall_rating": 4.9,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-electrical-cbe-01-3",
+          "overall_rating": 4.5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-electrical-cbe-01-4",
+          "overall_rating": 4.1,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-05-15T10:00:00Z"
+        },
+        {
+          "id": "rev-electrical-cbe-01-5",
+          "overall_rating": 4.8,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-06-15T10:00:00Z"
+        },
+        {
+          "id": "rev-electrical-cbe-01-6",
+          "overall_rating": 4.4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-07-15T10:00:00Z"
+        },
+        {
+          "id": "rev-electrical-cbe-01-7",
+          "overall_rating": 4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-08-15T10:00:00Z"
+        },
+        {
+          "id": "rev-electrical-cbe-01-8",
+          "overall_rating": 4.7,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-09-15T10:00:00Z"
+        },
+        {
+          "id": "rev-electrical-cbe-01-9",
+          "overall_rating": 4.3,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-electrical-cbe-01-10",
+          "overall_rating": 5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "agritech-cbe-01",
@@ -280,7 +1080,178 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 45,
-      "engagement_notes": "Engineering walk-through with lead facility technician."
+      "engagement_notes": "Engineering walk-through with lead facility technician.",
+      "process_stages_visible": [
+        "raw_material_prep",
+        "precision_machining",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": false,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": true,
+      "briefing_room": true,
+      "av_equipment": true,
+      "visitor_staff_count": 3,
+      "photos": [
+        "/images/facilities/agritech-cbe-01-1.jpg",
+        "/images/facilities/agritech-cbe-01-2.jpg",
+        "/images/facilities/agritech-cbe-01-3.jpg",
+        "/images/facilities/agritech-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "IATF 16949",
+          "cert_file_path": "/storage/certs/agritech-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": true,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": false
+      },
+      "listing_corrected_flag": true,
+      "listing_corrected_reason": "Post-visit report indicated CNC milling cell was undergoing maintenance during visit.",
+      "verified_visits_count": 12,
+      "learning_value_score": 33,
+      "hosting_readiness_score": 90,
+      "verified_experience_rating": 4.51,
+      "ratings": [
+        {
+          "id": "rev-agritech-cbe-01-0",
+          "overall_rating": 4.7,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-agritech-cbe-01-1",
+          "overall_rating": 4.3,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-agritech-cbe-01-2",
+          "overall_rating": 5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-agritech-cbe-01-3",
+          "overall_rating": 4.6,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-agritech-cbe-01-4",
+          "overall_rating": 4.2,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-05-15T10:00:00Z"
+        },
+        {
+          "id": "rev-agritech-cbe-01-5",
+          "overall_rating": 4.9,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-06-15T10:00:00Z"
+        },
+        {
+          "id": "rev-agritech-cbe-01-6",
+          "overall_rating": 4.5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-07-15T10:00:00Z"
+        },
+        {
+          "id": "rev-agritech-cbe-01-7",
+          "overall_rating": 4.1,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-08-15T10:00:00Z"
+        },
+        {
+          "id": "rev-agritech-cbe-01-8",
+          "overall_rating": 4.8,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-09-15T10:00:00Z"
+        },
+        {
+          "id": "rev-agritech-cbe-01-9",
+          "overall_rating": 4.4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-agritech-cbe-01-10",
+          "overall_rating": 4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-agritech-cbe-01-11",
+          "overall_rating": 4.7,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "spinning-cbe-01",
@@ -315,7 +1286,77 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 45,
-      "engagement_notes": "High-speed airjet loom live demo and yarn tensile strength tests."
+      "engagement_notes": "High-speed airjet loom live demo and yarn tensile strength tests.",
+      "process_stages_visible": [
+        "raw_material_prep",
+        "precision_machining",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": false,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": true,
+      "briefing_room": true,
+      "av_equipment": true,
+      "visitor_staff_count": 4,
+      "photos": [
+        "/images/facilities/spinning-cbe-01-1.jpg",
+        "/images/facilities/spinning-cbe-01-2.jpg",
+        "/images/facilities/spinning-cbe-01-3.jpg",
+        "/images/facilities/spinning-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "ISO 14001",
+          "cert_file_path": "/storage/certs/spinning-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": true,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": false
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 2,
+      "learning_value_score": 48,
+      "hosting_readiness_score": 90,
+      "verified_experience_rating": 4.5,
+      "ratings": [
+        {
+          "id": "rev-spinning-cbe-01-0",
+          "overall_rating": 4.8,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-spinning-cbe-01-1",
+          "overall_rating": 4.4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "bioenergy-cbe-01",
@@ -349,7 +1390,197 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 45,
-      "engagement_notes": "Engineering walk-through with lead facility technician."
+      "engagement_notes": "Engineering walk-through with lead facility technician.",
+      "process_stages_visible": [
+        "raw_material_prep",
+        "precision_machining",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": false,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": false,
+      "briefing_room": true,
+      "av_equipment": true,
+      "visitor_staff_count": 2,
+      "photos": [
+        "/images/facilities/bioenergy-cbe-01-1.jpg",
+        "/images/facilities/bioenergy-cbe-01-2.jpg",
+        "/images/facilities/bioenergy-cbe-01-3.jpg",
+        "/images/facilities/bioenergy-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "ISO 9001",
+          "cert_file_path": "/storage/certs/bioenergy-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": false,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": false
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 14,
+      "learning_value_score": 48,
+      "hosting_readiness_score": 75,
+      "verified_experience_rating": 4.5,
+      "ratings": [
+        {
+          "id": "rev-bioenergy-cbe-01-0",
+          "overall_rating": 4.9,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-bioenergy-cbe-01-1",
+          "overall_rating": 4.5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-bioenergy-cbe-01-2",
+          "overall_rating": 4.1,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-bioenergy-cbe-01-3",
+          "overall_rating": 4.8,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-bioenergy-cbe-01-4",
+          "overall_rating": 4.4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-05-15T10:00:00Z"
+        },
+        {
+          "id": "rev-bioenergy-cbe-01-5",
+          "overall_rating": 4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-06-15T10:00:00Z"
+        },
+        {
+          "id": "rev-bioenergy-cbe-01-6",
+          "overall_rating": 4.7,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-07-15T10:00:00Z"
+        },
+        {
+          "id": "rev-bioenergy-cbe-01-7",
+          "overall_rating": 4.3,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-08-15T10:00:00Z"
+        },
+        {
+          "id": "rev-bioenergy-cbe-01-8",
+          "overall_rating": 5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-09-15T10:00:00Z"
+        },
+        {
+          "id": "rev-bioenergy-cbe-01-9",
+          "overall_rating": 4.6,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-bioenergy-cbe-01-10",
+          "overall_rating": 4.2,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-bioenergy-cbe-01-11",
+          "overall_rating": 4.9,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-bioenergy-cbe-01-12",
+          "overall_rating": 4.5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-bioenergy-cbe-01-13",
+          "overall_rating": 4.1,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-05-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "robotics-cbe-01",
@@ -385,7 +1616,106 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 45,
-      "engagement_notes": "Engineering walk-through with lead facility technician."
+      "engagement_notes": "Engineering walk-through with lead facility technician.",
+      "process_stages_visible": [
+        "assembly_integration",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "robotics",
+        "iot_industry_4_0"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": false,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": true,
+      "briefing_room": true,
+      "av_equipment": false,
+      "visitor_staff_count": 3,
+      "photos": [
+        "/images/facilities/robotics-cbe-01-1.jpg",
+        "/images/facilities/robotics-cbe-01-2.jpg",
+        "/images/facilities/robotics-cbe-01-3.jpg",
+        "/images/facilities/robotics-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "IATF 16949",
+          "cert_file_path": "/storage/certs/robotics-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": true,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": false
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 5,
+      "learning_value_score": 47,
+      "hosting_readiness_score": 83,
+      "verified_experience_rating": 4.57,
+      "ratings": [
+        {
+          "id": "rev-robotics-cbe-01-0",
+          "overall_rating": 5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-robotics-cbe-01-1",
+          "overall_rating": 4.6,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-robotics-cbe-01-2",
+          "overall_rating": 4.2,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-robotics-cbe-01-3",
+          "overall_rating": 4.9,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-robotics-cbe-01-4",
+          "overall_rating": 4.5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-05-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "diecasting-cbe-01",
@@ -421,7 +1751,117 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 75,
-      "engagement_notes": "Hands-on torque wrench calibration and robotic welding cell demo."
+      "engagement_notes": "Hands-on torque wrench calibration and robotic welding cell demo.",
+      "process_stages_visible": [
+        "assembly_integration",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "iot_industry_4_0",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": true,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": true,
+      "briefing_room": true,
+      "av_equipment": true,
+      "visitor_staff_count": 4,
+      "photos": [
+        "/images/facilities/diecasting-cbe-01-1.jpg",
+        "/images/facilities/diecasting-cbe-01-2.jpg",
+        "/images/facilities/diecasting-cbe-01-3.jpg",
+        "/images/facilities/diecasting-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "ISO 14001",
+          "cert_file_path": "/storage/certs/diecasting-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": true,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": true
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 6,
+      "learning_value_score": 62,
+      "hosting_readiness_score": 90,
+      "verified_experience_rating": 4.48,
+      "ratings": [
+        {
+          "id": "rev-diecasting-cbe-01-0",
+          "overall_rating": 4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-diecasting-cbe-01-1",
+          "overall_rating": 4.7,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-diecasting-cbe-01-2",
+          "overall_rating": 4.3,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-diecasting-cbe-01-3",
+          "overall_rating": 5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-diecasting-cbe-01-4",
+          "overall_rating": 4.6,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-05-15T10:00:00Z"
+        },
+        {
+          "id": "rev-diecasting-cbe-01-5",
+          "overall_rating": 4.2,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-06-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "motors-cbe-01",
@@ -456,7 +1896,67 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 60,
-      "engagement_notes": "400Hz solid-state power converter live test and aviation hydraulic demo."
+      "engagement_notes": "400Hz solid-state power converter live test and aviation hydraulic demo.",
+      "process_stages_visible": [
+        "raw_material_prep",
+        "precision_machining",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": false,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": true,
+      "briefing_room": true,
+      "av_equipment": true,
+      "visitor_staff_count": 2,
+      "photos": [
+        "/images/facilities/motors-cbe-01-1.jpg",
+        "/images/facilities/motors-cbe-01-2.jpg",
+        "/images/facilities/motors-cbe-01-3.jpg",
+        "/images/facilities/motors-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "ISO 9001",
+          "cert_file_path": "/storage/certs/motors-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": true,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": false
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 1,
+      "learning_value_score": 48,
+      "hosting_readiness_score": 90,
+      "verified_experience_rating": 4.5,
+      "ratings": [
+        {
+          "id": "rev-motors-cbe-01-0",
+          "overall_rating": 4.1,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-01-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "appliances-cbe-01",
@@ -492,7 +1992,137 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 60,
-      "engagement_notes": "400Hz solid-state power converter live test and aviation hydraulic demo."
+      "engagement_notes": "400Hz solid-state power converter live test and aviation hydraulic demo.",
+      "process_stages_visible": [
+        "raw_material_prep",
+        "precision_machining",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": false,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": true,
+      "briefing_room": true,
+      "av_equipment": true,
+      "visitor_staff_count": 3,
+      "photos": [
+        "/images/facilities/appliances-cbe-01-1.jpg",
+        "/images/facilities/appliances-cbe-01-2.jpg",
+        "/images/facilities/appliances-cbe-01-3.jpg",
+        "/images/facilities/appliances-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "IATF 16949",
+          "cert_file_path": "/storage/certs/appliances-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": true,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": false
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 8,
+      "learning_value_score": 48,
+      "hosting_readiness_score": 90,
+      "verified_experience_rating": 4.47,
+      "ratings": [
+        {
+          "id": "rev-appliances-cbe-01-0",
+          "overall_rating": 4.2,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-appliances-cbe-01-1",
+          "overall_rating": 4.9,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-appliances-cbe-01-2",
+          "overall_rating": 4.5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-appliances-cbe-01-3",
+          "overall_rating": 4.1,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-appliances-cbe-01-4",
+          "overall_rating": 4.8,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-05-15T10:00:00Z"
+        },
+        {
+          "id": "rev-appliances-cbe-01-5",
+          "overall_rating": 4.4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-06-15T10:00:00Z"
+        },
+        {
+          "id": "rev-appliances-cbe-01-6",
+          "overall_rating": 4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-07-15T10:00:00Z"
+        },
+        {
+          "id": "rev-appliances-cbe-01-7",
+          "overall_rating": 4.7,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-08-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "biomedical-cbe-01",
@@ -527,7 +2157,147 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 45,
-      "engagement_notes": "Engineering walk-through with lead facility technician."
+      "engagement_notes": "Engineering walk-through with lead facility technician.",
+      "process_stages_visible": [
+        "raw_material_prep",
+        "precision_machining",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": false,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": true,
+      "briefing_room": true,
+      "av_equipment": true,
+      "visitor_staff_count": 4,
+      "photos": [
+        "/images/facilities/biomedical-cbe-01-1.jpg",
+        "/images/facilities/biomedical-cbe-01-2.jpg",
+        "/images/facilities/biomedical-cbe-01-3.jpg",
+        "/images/facilities/biomedical-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "ISO 14001",
+          "cert_file_path": "/storage/certs/biomedical-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": true,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": false
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 9,
+      "learning_value_score": 48,
+      "hosting_readiness_score": 90,
+      "verified_experience_rating": 4.52,
+      "ratings": [
+        {
+          "id": "rev-biomedical-cbe-01-0",
+          "overall_rating": 4.3,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biomedical-cbe-01-1",
+          "overall_rating": 5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biomedical-cbe-01-2",
+          "overall_rating": 4.6,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biomedical-cbe-01-3",
+          "overall_rating": 4.2,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biomedical-cbe-01-4",
+          "overall_rating": 4.9,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-05-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biomedical-cbe-01-5",
+          "overall_rating": 4.5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-06-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biomedical-cbe-01-6",
+          "overall_rating": 4.1,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-07-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biomedical-cbe-01-7",
+          "overall_rating": 4.8,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-08-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biomedical-cbe-01-8",
+          "overall_rating": 4.4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-09-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "biotech-cbe-01",
@@ -561,7 +2331,156 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 45,
-      "engagement_notes": "Engineering walk-through with lead facility technician."
+      "engagement_notes": "Engineering walk-through with lead facility technician.",
+      "process_stages_visible": [
+        "assembly_integration",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "robotics",
+        "iot_industry_4_0"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": false,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": false,
+      "briefing_room": true,
+      "av_equipment": false,
+      "visitor_staff_count": 2,
+      "photos": [
+        "/images/facilities/biotech-cbe-01-1.jpg",
+        "/images/facilities/biotech-cbe-01-2.jpg",
+        "/images/facilities/biotech-cbe-01-3.jpg",
+        "/images/facilities/biotech-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "ISO 9001",
+          "cert_file_path": "/storage/certs/biotech-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": false,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": false
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 10,
+      "learning_value_score": 47,
+      "hosting_readiness_score": 68,
+      "verified_experience_rating": 4.48,
+      "ratings": [
+        {
+          "id": "rev-biotech-cbe-01-0",
+          "overall_rating": 4.4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biotech-cbe-01-1",
+          "overall_rating": 4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biotech-cbe-01-2",
+          "overall_rating": 4.7,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biotech-cbe-01-3",
+          "overall_rating": 4.3,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biotech-cbe-01-4",
+          "overall_rating": 5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-05-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biotech-cbe-01-5",
+          "overall_rating": 4.6,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-06-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biotech-cbe-01-6",
+          "overall_rating": 4.2,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-07-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biotech-cbe-01-7",
+          "overall_rating": 4.9,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-08-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biotech-cbe-01-8",
+          "overall_rating": 4.5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-09-15T10:00:00Z"
+        },
+        {
+          "id": "rev-biotech-cbe-01-9",
+          "overall_rating": 4.1,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 4,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-01-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "gears-cbe-01",
@@ -597,7 +2516,77 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 60,
-      "engagement_notes": "400Hz solid-state power converter live test and aviation hydraulic demo."
+      "engagement_notes": "400Hz solid-state power converter live test and aviation hydraulic demo.",
+      "process_stages_visible": [
+        "raw_material_prep",
+        "precision_machining",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": false,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": true,
+      "briefing_room": true,
+      "av_equipment": true,
+      "visitor_staff_count": 3,
+      "photos": [
+        "/images/facilities/gears-cbe-01-1.jpg",
+        "/images/facilities/gears-cbe-01-2.jpg",
+        "/images/facilities/gears-cbe-01-3.jpg",
+        "/images/facilities/gears-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "IATF 16949",
+          "cert_file_path": "/storage/certs/gears-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": true,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": false
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 2,
+      "learning_value_score": 48,
+      "hosting_readiness_score": 90,
+      "verified_experience_rating": 4.5,
+      "ratings": [
+        {
+          "id": "rev-gears-cbe-01-0",
+          "overall_rating": 4.5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-gears-cbe-01-1",
+          "overall_rating": 4.1,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-02-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "windenergy-cbe-01",
@@ -631,7 +2620,177 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 45,
-      "engagement_notes": "Engineering walk-through with lead facility technician."
+      "engagement_notes": "Engineering walk-through with lead facility technician.",
+      "process_stages_visible": [
+        "raw_material_prep",
+        "precision_machining",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": false,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": true,
+      "briefing_room": true,
+      "av_equipment": true,
+      "visitor_staff_count": 4,
+      "photos": [
+        "/images/facilities/windenergy-cbe-01-1.jpg",
+        "/images/facilities/windenergy-cbe-01-2.jpg",
+        "/images/facilities/windenergy-cbe-01-3.jpg",
+        "/images/facilities/windenergy-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "ISO 14001",
+          "cert_file_path": "/storage/certs/windenergy-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": true,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": false
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 12,
+      "learning_value_score": 48,
+      "hosting_readiness_score": 90,
+      "verified_experience_rating": 4.51,
+      "ratings": [
+        {
+          "id": "rev-windenergy-cbe-01-0",
+          "overall_rating": 4.6,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-windenergy-cbe-01-1",
+          "overall_rating": 4.2,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-windenergy-cbe-01-2",
+          "overall_rating": 4.9,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-windenergy-cbe-01-3",
+          "overall_rating": 4.5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-windenergy-cbe-01-4",
+          "overall_rating": 4.1,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-05-15T10:00:00Z"
+        },
+        {
+          "id": "rev-windenergy-cbe-01-5",
+          "overall_rating": 4.8,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-06-15T10:00:00Z"
+        },
+        {
+          "id": "rev-windenergy-cbe-01-6",
+          "overall_rating": 4.4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-07-15T10:00:00Z"
+        },
+        {
+          "id": "rev-windenergy-cbe-01-7",
+          "overall_rating": 4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-08-15T10:00:00Z"
+        },
+        {
+          "id": "rev-windenergy-cbe-01-8",
+          "overall_rating": 4.7,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-09-15T10:00:00Z"
+        },
+        {
+          "id": "rev-windenergy-cbe-01-9",
+          "overall_rating": 4.3,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-windenergy-cbe-01-10",
+          "overall_rating": 5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-windenergy-cbe-01-11",
+          "overall_rating": 4.6,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "aerospace-cbe-01",
@@ -668,7 +2827,187 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 60,
-      "engagement_notes": "400Hz solid-state power converter live test and aviation hydraulic demo."
+      "engagement_notes": "400Hz solid-state power converter live test and aviation hydraulic demo.",
+      "process_stages_visible": [
+        "raw_material_prep",
+        "precision_machining",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": false,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": true,
+      "briefing_room": true,
+      "av_equipment": true,
+      "visitor_staff_count": 2,
+      "photos": [
+        "/images/facilities/aerospace-cbe-01-1.jpg",
+        "/images/facilities/aerospace-cbe-01-2.jpg",
+        "/images/facilities/aerospace-cbe-01-3.jpg",
+        "/images/facilities/aerospace-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "ISO 9001",
+          "cert_file_path": "/storage/certs/aerospace-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": true,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": false
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 13,
+      "learning_value_score": 48,
+      "hosting_readiness_score": 90,
+      "verified_experience_rating": 4.5,
+      "ratings": [
+        {
+          "id": "rev-aerospace-cbe-01-0",
+          "overall_rating": 4.7,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-aerospace-cbe-01-1",
+          "overall_rating": 4.3,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-aerospace-cbe-01-2",
+          "overall_rating": 5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-aerospace-cbe-01-3",
+          "overall_rating": 4.6,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-aerospace-cbe-01-4",
+          "overall_rating": 4.2,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-05-15T10:00:00Z"
+        },
+        {
+          "id": "rev-aerospace-cbe-01-5",
+          "overall_rating": 4.9,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-06-15T10:00:00Z"
+        },
+        {
+          "id": "rev-aerospace-cbe-01-6",
+          "overall_rating": 4.5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-07-15T10:00:00Z"
+        },
+        {
+          "id": "rev-aerospace-cbe-01-7",
+          "overall_rating": 4.1,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-08-15T10:00:00Z"
+        },
+        {
+          "id": "rev-aerospace-cbe-01-8",
+          "overall_rating": 4.8,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-09-15T10:00:00Z"
+        },
+        {
+          "id": "rev-aerospace-cbe-01-9",
+          "overall_rating": 4.4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-aerospace-cbe-01-10",
+          "overall_rating": 4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-aerospace-cbe-01-11",
+          "overall_rating": 4.7,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-aerospace-cbe-01-12",
+          "overall_rating": 4.3,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-04-15T10:00:00Z"
+        }
+      ]
     },
     {
       "readable_id": "datacenter-cbe-01",
@@ -705,7 +3044,197 @@
       ],
       "q_and_a_available": true,
       "estimated_interactive_minutes": 45,
-      "engagement_notes": "Tier-3 cold-aisle server walkthrough and NOC cybersecurity telemetry demo."
+      "engagement_notes": "Tier-3 cold-aisle server walkthrough and NOC cybersecurity telemetry demo.",
+      "process_stages_visible": [
+        "raw_material_prep",
+        "precision_machining",
+        "quality_ndt_testing",
+        "packaging_dispatch"
+      ],
+      "technology_levels": [
+        "cnc",
+        "semi_automated"
+      ],
+      "live_demo_available": true,
+      "hands_on_available": false,
+      "engineer_qa_available": true,
+      "guide_available": true,
+      "safe_visitor_walkway": true,
+      "restrooms_available": true,
+      "ppe_supplied": true,
+      "briefing_room": true,
+      "av_equipment": true,
+      "visitor_staff_count": 3,
+      "photos": [
+        "/images/facilities/datacenter-cbe-01-1.jpg",
+        "/images/facilities/datacenter-cbe-01-2.jpg",
+        "/images/facilities/datacenter-cbe-01-3.jpg",
+        "/images/facilities/datacenter-cbe-01-4.jpg"
+      ],
+      "certifications": [
+        {
+          "cert_type": "IATF 16949",
+          "cert_file_path": "/storage/certs/datacenter-cbe-01.pdf",
+          "expiry_date": "2027-12-31",
+          "admin_verification_status": "verified",
+          "verified_at": "2026-01-15T10:00:00Z"
+        }
+      ],
+      "admin_verified_claims": {
+        "safe_visitor_walkway": true,
+        "restrooms_available": true,
+        "ppe_supplied": true,
+        "briefing_room": true,
+        "live_demo_available": true,
+        "hands_on_available": false
+      },
+      "listing_corrected_flag": false,
+      "verified_visits_count": 14,
+      "learning_value_score": 48,
+      "hosting_readiness_score": 90,
+      "verified_experience_rating": 4.48,
+      "ratings": [
+        {
+          "id": "rev-datacenter-cbe-01-0",
+          "overall_rating": 4.8,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-datacenter-cbe-01-1",
+          "overall_rating": 4.4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-datacenter-cbe-01-2",
+          "overall_rating": 4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-datacenter-cbe-01-3",
+          "overall_rating": 4.7,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-datacenter-cbe-01-4",
+          "overall_rating": 4.3,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-05-15T10:00:00Z"
+        },
+        {
+          "id": "rev-datacenter-cbe-01-5",
+          "overall_rating": 5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-06-15T10:00:00Z"
+        },
+        {
+          "id": "rev-datacenter-cbe-01-6",
+          "overall_rating": 4.6,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-07-15T10:00:00Z"
+        },
+        {
+          "id": "rev-datacenter-cbe-01-7",
+          "overall_rating": 4.2,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-08-15T10:00:00Z"
+        },
+        {
+          "id": "rev-datacenter-cbe-01-8",
+          "overall_rating": 4.9,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-09-15T10:00:00Z"
+        },
+        {
+          "id": "rev-datacenter-cbe-01-9",
+          "overall_rating": 4.5,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-01-15T10:00:00Z"
+        },
+        {
+          "id": "rev-datacenter-cbe-01-10",
+          "overall_rating": 4.1,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-02-15T10:00:00Z"
+        },
+        {
+          "id": "rev-datacenter-cbe-01-11",
+          "overall_rating": 4.8,
+          "learning_value_rating": 5,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-03-15T10:00:00Z"
+        },
+        {
+          "id": "rev-datacenter-cbe-01-12",
+          "overall_rating": 4.4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 5,
+          "created_at": "2026-04-15T10:00:00Z"
+        },
+        {
+          "id": "rev-datacenter-cbe-01-13",
+          "overall_rating": 4,
+          "learning_value_rating": 4,
+          "hosting_organisation_rating": 5,
+          "staff_guide_quality_rating": 5,
+          "safety_rating": 5,
+          "listing_accuracy_rating": 4,
+          "created_at": "2026-05-15T10:00:00Z"
+        }
+      ]
     }
   ],
   "institutions": [

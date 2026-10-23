@@ -51,7 +51,7 @@ export async function updateSession(request: NextRequest) {
       const dest =
         demoRole === "coordinator"
           ? "/coordinator"
-          : demoRole === "industry_manager"
+          : demoRole === "industry_manager" || demoRole === "industry"
           ? "/industry"
           : "/admin";
       return NextResponse.redirect(new URL(dest, request.url));
@@ -59,7 +59,12 @@ export async function updateSession(request: NextRequest) {
     if (isCoordinatorRoute && demoRole !== "coordinator" && demoRole !== "admin") {
       return NextResponse.redirect(new URL("/industry", request.url));
     }
-    if (isIndustryRoute && demoRole !== "industry_manager" && demoRole !== "admin") {
+    if (
+      isIndustryRoute &&
+      demoRole !== "industry_manager" &&
+      demoRole !== "industry" &&
+      demoRole !== "admin"
+    ) {
       return NextResponse.redirect(new URL("/coordinator", request.url));
     }
     if (isAdminRoute && demoRole !== "admin") {

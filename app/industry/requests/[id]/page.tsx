@@ -26,13 +26,20 @@ import {
   Star,
 } from "lucide-react";
 import VisitReadinessCard from "@/components/logistics/VisitReadinessCard";
+import { validateReviewReply } from "@/lib/ratings/disputes";
+import {
+  validatePrivateInstitutionRatingInput,
+  calculatePrivateInstitutionOverallRating,
+} from "@/lib/ratings/reviews";
 
 export default function IndustryRequestReviewPage() {
   const params = useParams();
   const router = useRouter();
   const requestId = params.id as string;
 
-  const [status, setStatus] = useState<"pending" | "approved" | "rejected" | "reschedule_proposed" | "completed" | "no_show">("pending");
+  const [status, setStatus] = useState<"pending" | "approved" | "rejected" | "reschedule_proposed" | "completed" | "no_show">(
+    requestId?.includes("completed") ? "completed" : "pending"
+  );
   const [managerNotes, setManagerNotes] = useState("");
   const [draftReply, setDraftReply] = useState(
     "Dear Coordinator, We are pleased to approve your visit request for 40 students from Mechanical Engineering. Please ensure all students arrive wearing safety shoes and safety glasses. Report to Gate 2 at 9:45 AM for the safety induction briefing."
@@ -52,6 +59,24 @@ export default function IndustryRequestReviewPage() {
 
   // Student Feedback Aggregates State for Industry Hosts (Phase p4)
   const [feedbackSimCount, setFeedbackSimCount] = useState<number>(5);
+
+  // Private Institution Rating State (Phase r5)
+  const [showPrivateRatingModal, setShowPrivateRatingModal] = useState(false);
+  const [punctualityRating, setPunctualityRating] = useState(5);
+  const [disciplineRating, setDisciplineRating] = useState(5);
+  const [preparednessRating, setPreparednessRating] = useState(5);
+  const [headcountRating, setHeadcountRating] = useState(5);
+  const [privateRatingNotes, setPrivateRatingNotes] = useState("");
+  const [privateRatingSubmitted, setPrivateRatingSubmitted] = useState(false);
+
+  // Coordinator Review & Host Reply / Dispute State (Phase r3-r4)
+  const [showReplyModal, setShowReplyModal] = useState(false);
+  const [replyText, setReplyText] = useState("");
+  const [publishedReply, setPublishedReply] = useState<string | null>(null);
+  const [showDisputeModal, setShowDisputeModal] = useState(false);
+  const [disputeReason, setDisputeReason] = useState("factual_error");
+  const [disputeNotes, setDisputeNotes] = useState("");
+  const [disputeStatus, setDisputeStatus] = useState<"none" | "under_review" | "resolved_kept" | "resolved_hidden">("none");
 
   // Logistics Readiness Evaluation for Industry Manager
   const hasLogisticsWarning = requestId.includes("warning") || requestId === "req-cbe-02" || requestId.includes("test");
@@ -547,6 +572,156 @@ export default function IndustryRequestReviewPage() {
           </div>
         )}
 
+        {/* Coordinator Verified Review & Host Right-of-Reply (Phase r3-r4) */}
+        {(status === "completed" || requestId.includes("completed")) && (
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <Star className="h-5 w-5 text-amber-500 fill-amber-500" />
+                    Coordinator Verified Post-Visit Review
+                  </h2>
+                  {disputeStatus === "under_review" ? (
+                    <span className="rounded-full bg-amber-100 border border-amber-300 px-2.5 py-0.5 text-[10px] font-bold text-amber-800">
+                      Dispute Under Admin Review
+                    </span>
+                  ) : (
+                    <span className="rounded-full bg-emerald-100 border border-emerald-300 px-2.5 py-0.5 text-[10px] font-bold text-emerald-800">
+                      Published Verified Review
+                    </span>
+                  )}
+                </div>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Submitted by Dr. R. Karthikeyan (PSG College of Tech) • Constrained to verified completed visits.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowReplyModal(true)}
+                  className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition shadow-2xs"
+                >
+                  {publishedReply ? "Edit Public Reply" : "Public Reply (Max 500 chars)"}
+                </button>
+                {disputeStatus === "none" && (
+                  <button
+                    type="button"
+                    onClick={() => setShowDisputeModal(true)}
+                    className="rounded-lg border border-red-200 bg-red-50/50 px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-100 transition shadow-2xs"
+                  >
+                    Dispute Review
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Dimensional Ratings Summary */}
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-2xl font-black text-slate-900">4.8</span>
+                  <span className="text-xs text-slate-500 font-medium">/ 5.0 Overall Rating</span>
+                </div>
+                <span className="text-xs text-slate-500 font-medium">7-Day Coordinator Edit Window Open</span>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs">
+                <div className="p-2 bg-white rounded-lg border border-slate-200">
+                  <span className="text-[10px] font-semibold text-slate-500 uppercase block">Learning Value</span>
+                  <strong className="text-slate-900 font-bold">5 / 5★</strong>
+                </div>
+                <div className="p-2 bg-white rounded-lg border border-slate-200">
+                  <span className="text-[10px] font-semibold text-slate-500 uppercase block">Hosting Org</span>
+                  <strong className="text-slate-900 font-bold">5 / 5★</strong>
+                </div>
+                <div className="p-2 bg-white rounded-lg border border-slate-200">
+                  <span className="text-[10px] font-semibold text-slate-500 uppercase block">Staff Guide</span>
+                  <strong className="text-slate-900 font-bold">5 / 5★</strong>
+                </div>
+                <div className="p-2 bg-white rounded-lg border border-slate-200">
+                  <span className="text-[10px] font-semibold text-slate-500 uppercase block">Safety / Walkway</span>
+                  <strong className="text-slate-900 font-bold">5 / 5★</strong>
+                </div>
+                <div className="p-2 bg-white rounded-lg border border-slate-200">
+                  <span className="text-[10px] font-semibold text-slate-500 uppercase block">Listing Accuracy</span>
+                  <strong className="text-slate-900 font-bold">4 / 5★</strong>
+                </div>
+              </div>
+
+              <p className="text-xs text-slate-700 italic border-t border-slate-200/80 pt-2.5">
+                &ldquo;Exceptional cupola furnace tapping demonstration. Students engaged directly with the senior metallurgy team and had all their thermal engineering questions answered. Metrology inspection lab was pristine.&rdquo;
+              </p>
+            </div>
+
+            {/* Published Industry Reply Card */}
+            {publishedReply && (
+              <div className="p-4 rounded-xl border border-blue-200 bg-blue-50/40 space-y-1.5 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-blue-900 uppercase text-[10px] tracking-wider">
+                    Official Host Reply (Published)
+                  </span>
+                  <span className="text-[10px] text-slate-400">Just now</span>
+                </div>
+                <p className="text-slate-800">{publishedReply}</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Private Institution Rating (Phase r5) */}
+        {(status === "completed" || requestId.includes("completed")) && (
+          <div className="rounded-2xl border border-indigo-200 bg-indigo-50/20 p-6 shadow-sm space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <Lock className="h-5 w-5 text-indigo-600" />
+                  Private Institution Behavioral Rating
+                </h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Rate the visiting college on student discipline and punctuality. Feeds into their institutional trust score.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowPrivateRatingModal(true)}
+                className="rounded-lg bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-indigo-500 transition shadow-sm"
+              >
+                {privateRatingSubmitted ? "Update Private Rating" : "Submit Private Rating"}
+              </button>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+              <div className="p-3 bg-white rounded-xl border border-indigo-100">
+                <span className="text-[10px] uppercase font-bold text-slate-500 block">Punctuality</span>
+                <strong className="text-sm font-black text-indigo-950">{punctualityRating} / 5★</strong>
+              </div>
+              <div className="p-3 bg-white rounded-xl border border-indigo-100">
+                <span className="text-[10px] uppercase font-bold text-slate-500 block">Student Discipline</span>
+                <strong className="text-sm font-black text-indigo-950">{disciplineRating} / 5★</strong>
+              </div>
+              <div className="p-3 bg-white rounded-xl border border-indigo-100">
+                <span className="text-[10px] uppercase font-bold text-slate-500 block">Faculty Preparedness</span>
+                <strong className="text-sm font-black text-indigo-950">{preparednessRating} / 5★</strong>
+              </div>
+              <div className="p-3 bg-white rounded-xl border border-indigo-100">
+                <span className="text-[10px] uppercase font-bold text-slate-500 block">Headcount Accuracy</span>
+                <strong className="text-sm font-black text-indigo-950">{headcountRating} / 5★</strong>
+              </div>
+            </div>
+
+            <div className="p-3 bg-white rounded-xl border border-indigo-100 text-[11px] text-slate-600 flex items-start gap-2">
+              <ShieldCheck className="h-4 w-4 text-indigo-600 shrink-0 mt-0.5" />
+              <span>
+                <strong>Confidential Safeguard:</strong> This evaluation is strictly private. It is never shown to other institutions or published publicly, protecting colleges from reputation tampering while rewarding verified discipline.
+              </span>
+            </div>
+          </div>
+        )}
+
+
         {/* Post-Visit Verification Modal (Phase m2) */}
         {showPostVisitModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
@@ -788,6 +963,303 @@ export default function IndustryRequestReviewPage() {
                     className="px-4 py-2 rounded-lg bg-blue-600 text-xs font-semibold text-white hover:bg-blue-500 shadow-sm"
                   >
                     Send Reschedule Proposal
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Private Institution Rating Modal (Phase r5) */}
+        {showPrivateRatingModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+            <div className="w-full max-w-lg bg-white rounded-2xl p-6 shadow-xl space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                  <Lock className="h-5 w-5 text-indigo-600" />
+                  Private Institution Behavioral Rating
+                </h3>
+                <button
+                  type="button"
+                  onClick={() => setShowPrivateRatingModal(false)}
+                  className="text-slate-400 hover:text-slate-600 text-sm"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <p className="text-xs text-slate-500">
+                Rate PSG College of Technology on behavioral metrics. These ratings feed their institutional trust score and are never made public.
+              </p>
+
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const validation = validatePrivateInstitutionRatingInput({
+                    visit_request_id: requestId,
+                    visit_status: "completed",
+                    punctuality_rating: punctualityRating,
+                    discipline_rating: disciplineRating,
+                    preparedness_rating: preparednessRating,
+                    headcount_accuracy_rating: headcountRating,
+                    confidential_feedback: privateRatingNotes,
+                  });
+                  if (!validation.isValid) {
+                    alert(validation.errors[0]);
+                    return;
+                  }
+                  setPrivateRatingSubmitted(true);
+                  setShowPrivateRatingModal(false);
+                  setActionMsg({
+                    type: "success",
+                    text: "Private institution behavioral rating saved successfully! Score blended into institution trust tier.",
+                  });
+                }}
+                className="space-y-3"
+              >
+                <div className="grid grid-cols-2 gap-3 text-xs">
+                  <div>
+                    <label className="block font-semibold text-slate-700 uppercase text-[10px]">Punctuality (1-5)</label>
+                    <select
+                      value={punctualityRating}
+                      onChange={(e) => setPunctualityRating(parseInt(e.target.value))}
+                      className="mt-1 block w-full rounded-lg border border-slate-300 p-2 text-xs"
+                    >
+                      {[5, 4, 3, 2, 1].map((s) => (
+                        <option key={s} value={s}>{s} Stars</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-slate-700 uppercase text-[10px]">Student Discipline (1-5)</label>
+                    <select
+                      value={disciplineRating}
+                      onChange={(e) => setDisciplineRating(parseInt(e.target.value))}
+                      className="mt-1 block w-full rounded-lg border border-slate-300 p-2 text-xs"
+                    >
+                      {[5, 4, 3, 2, 1].map((s) => (
+                        <option key={s} value={s}>{s} Stars</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-slate-700 uppercase text-[10px]">Faculty Preparedness (1-5)</label>
+                    <select
+                      value={preparednessRating}
+                      onChange={(e) => setPreparednessRating(parseInt(e.target.value))}
+                      className="mt-1 block w-full rounded-lg border border-slate-300 p-2 text-xs"
+                    >
+                      {[5, 4, 3, 2, 1].map((s) => (
+                        <option key={s} value={s}>{s} Stars</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-slate-700 uppercase text-[10px]">Headcount Accuracy (1-5)</label>
+                    <select
+                      value={headcountRating}
+                      onChange={(e) => setHeadcountRating(parseInt(e.target.value))}
+                      className="mt-1 block w-full rounded-lg border border-slate-300 p-2 text-xs"
+                    >
+                      {[5, 4, 3, 2, 1].map((s) => (
+                        <option key={s} value={s}>{s} Stars</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 uppercase">
+                    Confidential Notes (Optional)
+                  </label>
+                  <textarea
+                    rows={2}
+                    value={privateRatingNotes}
+                    onChange={(e) => setPrivateRatingNotes(e.target.value)}
+                    placeholder="e.g. Students were attentive and faculty maintained excellent group order throughout the foundry tour."
+                    className="mt-1 block w-full rounded-lg border border-slate-300 p-2 text-xs"
+                  />
+                </div>
+
+                <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                  <button
+                    type="button"
+                    onClick={() => setShowPrivateRatingModal(false)}
+                    className="px-3.5 py-2 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 rounded-lg bg-indigo-600 text-xs font-semibold text-white hover:bg-indigo-500 shadow-sm"
+                  >
+                    Save Confidential Rating
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Public Reply Modal (Phase r3) */}
+        {showReplyModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+            <div className="w-full max-w-lg bg-white rounded-2xl p-6 shadow-xl space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 className="text-lg font-bold text-slate-900">
+                  Public Host Reply
+                </h3>
+                <button
+                  type="button"
+                  onClick={() => setShowReplyModal(false)}
+                  className="text-slate-400 hover:text-slate-600 text-sm"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <p className="text-xs text-slate-500">
+                Post an official public response to the coordinator&apos;s review. Replies are limited to 500 characters and displayed directly below the review on your profile.
+              </p>
+
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const validation = validateReviewReply({
+                    review_id: "rev-psg-01",
+                    industry_profile_id: "foundry-cbe-01",
+                    reply_text: replyText,
+                  });
+                  if (!validation.isValid) {
+                    alert(validation.error);
+                    return;
+                  }
+                  setPublishedReply(replyText);
+                  setShowReplyModal(false);
+                  setActionMsg({
+                    type: "success",
+                    text: "Official host response published successfully!",
+                  });
+                }}
+                className="space-y-3"
+              >
+                <div>
+                  <div className="flex justify-between items-center text-[11px] font-semibold text-slate-600 mb-1">
+                    <span>Reply Content (Max 500 characters)</span>
+                    <span className={replyText.length > 500 ? "text-red-600" : "text-slate-400"}>
+                      {replyText.length}/500
+                    </span>
+                  </div>
+                  <textarea
+                    rows={4}
+                    required
+                    maxLength={500}
+                    value={replyText}
+                    onChange={(e) => setReplyText(e.target.value)}
+                    placeholder="Thank the faculty, address suggestions, or clarify operational context..."
+                    className="block w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900"
+                  />
+                </div>
+
+                <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                  <button
+                    type="button"
+                    onClick={() => setShowReplyModal(false)}
+                    className="px-3.5 py-2 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={replyText.trim().length === 0 || replyText.length > 500}
+                    className="px-4 py-2 rounded-lg bg-blue-600 text-xs font-semibold text-white hover:bg-blue-500 shadow-sm disabled:opacity-50"
+                  >
+                    Publish Official Reply
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Dispute Review Modal (Phase r4) */}
+        {showDisputeModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+            <div className="w-full max-w-lg bg-white rounded-2xl p-6 shadow-xl space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 className="text-lg font-bold text-slate-900 text-red-600 flex items-center gap-2">
+                  <AlertTriangle className="h-5 w-5" />
+                  Dispute Coordinator Review
+                </h3>
+                <button
+                  type="button"
+                  onClick={() => setShowDisputeModal(false)}
+                  className="text-slate-400 hover:text-slate-600 text-sm"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <p className="text-xs text-slate-500">
+                Submitting a dispute sets this review to &quot;Under Admin Review&quot; and routes your claim to the independent platform adjudication queue. Self-deletion is strictly prohibited.
+              </p>
+
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setDisputeStatus("under_review");
+                  setShowDisputeModal(false);
+                  setActionMsg({
+                    type: "warning",
+                    text: "Review dispute submitted. Ticket #DSP-2026-04 created and placed in Admin Adjudication Queue. Review marked 'Under Review'.",
+                  });
+                }}
+                className="space-y-3"
+              >
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">
+                    Dispute Reason *
+                  </label>
+                  <select
+                    value={disputeReason}
+                    onChange={(e) => setDisputeReason(e.target.value)}
+                    className="block w-full rounded-lg border border-slate-300 p-2 text-xs"
+                  >
+                    <option value="factual_error">Factual Error: Mischaracterizes plant equipment or schedule</option>
+                    <option value="retaliatory_rating">Retaliatory Rating: Retaliation for attendance/discipline reporting</option>
+                    <option value="defamatory_content">Defamatory Content: Abusive or non-educational commentary</option>
+                    <option value="wrong_facility">Wrong Facility: Review refers to a different site</option>
+                    <option value="unfulfilled_quid_pro_quo">Unfulfilled Demand: Demanded academic perks or gifts</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">
+                    Evidence &amp; Operational Explanation *
+                  </label>
+                  <textarea
+                    rows={3}
+                    required
+                    value={disputeNotes}
+                    onChange={(e) => setDisputeNotes(e.target.value)}
+                    placeholder="Provide detailed facts and reference plant CCTV, visitor register, or safety logs..."
+                    className="block w-full rounded-lg border border-slate-300 p-2 text-xs"
+                  />
+                </div>
+
+                <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                  <button
+                    type="button"
+                    onClick={() => setShowDisputeModal(false)}
+                    className="px-3.5 py-2 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 rounded-lg bg-red-600 text-xs font-semibold text-white hover:bg-red-500 shadow-sm"
+                  >
+                    Submit Dispute for Admin Review
                   </button>
                 </div>
               </form>

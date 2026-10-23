@@ -43,3 +43,5 @@ Thumbs.db
 cloudflared.exe
 
 .vercel
+
+*.tsbuildinfo
