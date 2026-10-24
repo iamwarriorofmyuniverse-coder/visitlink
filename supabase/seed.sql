@@ -12,7 +12,23 @@ INSERT INTO profiles (id, role, full_name, email, phone) VALUES ('00000000-0000-
 INSERT INTO profiles (id, role, full_name, email, phone) VALUES ('00000000-0000-0000-0000-000000000002', 'coordinator', 'Prof. R. Soundararajan [Demo]', 'coordinator@visitlink.local', '+91 98400 22222') ON CONFLICT (id) DO NOTHING;
 INSERT INTO profiles (id, role, full_name, email, phone) VALUES ('00000000-0000-0000-0000-000000000003', 'industry_manager', 'K. Murugesan [Demo Facility Head]', 'manager@visitlink.local', '+91 98400 33333') ON CONFLICT (id) DO NOTHING;
 
--- 2. Seed 10 Educational Institutions
+-- 2. Seed Educational Institutions (including CIET)
+
+INSERT INTO institutions (readable_id, profile_id, name, institution_type, affiliation_number, location, address, city, state, pincode, verification_status)
+VALUES (
+    'inst-ciet',
+    '00000000-0000-0000-0000-000000000002',
+    'Coimbatore Institute of Engineering and Technology (CIET) [Demo]',
+    'college',
+    'Anna University / Autonomous, AICTE Approved',
+    ST_SetSRID(ST_MakePoint(76.7972, 10.9635), 4326)::geography,
+    'Vellimalai Pattinam, Narasipuram Post, Thondamuthur',
+    'Coimbatore',
+    'Tamil Nadu',
+    '641109',
+    'verified'
+) ON CONFLICT (readable_id) DO UPDATE SET name = EXCLUDED.name, location = EXCLUDED.location;
+
 
 INSERT INTO institutions (readable_id, profile_id, name, institution_type, affiliation_number, location, address, city, state, pincode, verification_status)
 VALUES (

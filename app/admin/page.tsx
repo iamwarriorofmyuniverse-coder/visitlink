@@ -40,6 +40,15 @@ export default function AdminDashboardPage() {
       allowFreemail: false,
     },
     {
+      id: "inst-ciet",
+      name: "Coimbatore Institute of Engineering and Technology (CIET)",
+      tier: "trusted",
+      score: 92.5,
+      completedVisits: 11,
+      strikes: 0,
+      allowFreemail: false,
+    },
+    {
       id: "inst-cit",
       name: "Coimbatore Institute of Technology (CIT)",
       tier: "trusted",

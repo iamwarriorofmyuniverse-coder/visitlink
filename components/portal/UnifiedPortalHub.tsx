@@ -49,6 +49,57 @@ function UnifiedPortalHubContent({ initialTab = "coordinator" }: UnifiedPortalHu
   const [liveModalFacility, setLiveModalFacility] = useState<any | null>(null);
   const [liveWeather, setLiveWeather] = useState<any | null>(null);
 
+  const institutionList = [
+    {
+      id: "ciet",
+      name: "Coimbatore Institute of Engineering and Technology (CIET) [Demo]",
+      short: "CIET",
+      location: "Narasipuram, Thondamuthur (West Coimbatore Hub)",
+      department: "4th Sem B.E. Mechanical & Robotics Engineering",
+      lat: 10.9635,
+      lng: 76.7972,
+    },
+    {
+      id: "psg-tech",
+      name: "PSG College of Technology [Demo]",
+      short: "PSG Tech",
+      location: "Peelamedu, Coimbatore (Central-East Hub)",
+      department: "4th Sem B.E. Mechanical Engineering",
+      lat: 11.0245,
+      lng: 77.003,
+    },
+    {
+      id: "cit",
+      name: "Coimbatore Institute of Technology (CIT)",
+      short: "CIT",
+      location: "Civil Aerodrome Post, Avinashi Road",
+      department: "5th Sem Mechanical Engineering",
+      lat: 11.028,
+      lng: 77.027,
+    },
+    {
+      id: "gct",
+      name: "Government College of Technology (GCT)",
+      short: "GCT",
+      location: "Thadagam Road, Coimbatore",
+      department: "4th Sem Production Engineering",
+      lat: 11.0185,
+      lng: 76.934,
+    },
+    {
+      id: "skcet",
+      name: "Sri Krishna College of Engineering & Technology",
+      short: "SKCET",
+      location: "Kuniyamuthur, Palakkad Main Road",
+      department: "6th Sem Mechatronics Engineering",
+      lat: 10.938,
+      lng: 76.956,
+    },
+  ];
+
+  const [selectedInstitutionId, setSelectedInstitutionId] = useState<string>("ciet");
+  const selectedInstitution = institutionList.find((i) => i.id === selectedInstitutionId) || institutionList[0];
+
   // Sync tab with URL search parameter if it changes
   useEffect(() => {
     if (tabParam && ["coordinator", "industry", "logistics"].includes(tabParam)) {
@@ -237,23 +288,41 @@ function UnifiedPortalHubContent({ initialTab = "coordinator" }: UnifiedPortalHu
           <div className="space-y-6 animate-fadeIn">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2">
               <div>
-                <div className="flex items-center gap-2">
-                  <span className="rounded-md bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-transparent dark:border-blue-800 px-2 py-0.5 text-xs font-semibold">
-                    PSG College of Technology [Demo]
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200/80 dark:border-blue-800 px-2.5 py-1 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
+                    <School className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+                    {selectedInstitution.name}
                   </span>
-                  <span className="text-xs text-slate-500 dark:text-slate-400">Coimbatore Central Hub</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                    {selectedInstitution.location}
+                  </span>
                 </div>
                 <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100 mt-1">
                   Coordinator Visit Management
                 </h2>
                 <p className="text-sm text-slate-600 dark:text-slate-300">
-                  Search nearby industries, coordinate visit schedules, and monitor student compliance rosters.
+                  Search nearby Coimbatore plants from <strong className="text-slate-800 dark:text-slate-200">{selectedInstitution.short}</strong>, coordinate visit schedules, and monitor student compliance rosters.
                 </p>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-1.5 text-xs">
+                  <span className="text-slate-500 dark:text-slate-400 font-medium">College:</span>
+                  <select
+                    value={selectedInstitutionId}
+                    onChange={(e) => setSelectedInstitutionId(e.target.value)}
+                    className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-2xs focus:border-blue-500 focus:outline-none"
+                  >
+                    {institutionList.map((inst) => (
+                      <option key={inst.id} value={inst.id}>
+                        {inst.short} — {inst.location.split("(")[0]}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
                 <Link
-                  href="/coordinator/explore"
+                  href={`/coordinator/explore?origin=${selectedInstitutionId}`}
                   className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 transition"
                 >
                   <Compass className="h-4 w-4" />

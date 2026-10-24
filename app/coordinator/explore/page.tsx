@@ -63,8 +63,44 @@ const LeafletMap = dynamic(() => import("@/components/map/LeafletMap"), {
 });
 
 export default function ExploreIndustriesPage() {
-  const [userLat] = useState(11.0168); // Coimbatore Central
-  const [userLng] = useState(76.9558);
+  const campusOrigins: Record<string, { name: string; short: string; lat: number; lng: number }> = {
+    ciet: {
+      name: "Coimbatore Institute of Engineering and Technology (CIET)",
+      short: "CIET (Narasipuram, Thondamuthur)",
+      lat: 10.9635,
+      lng: 76.7972,
+    },
+    central: {
+      name: "Coimbatore Central (Gandhipuram Hub)",
+      short: "Central Coimbatore (Gandhipuram)",
+      lat: 11.0168,
+      lng: 76.9558,
+    },
+    psg: {
+      name: "PSG College of Technology (Peelamedu)",
+      short: "PSG Tech (Peelamedu)",
+      lat: 11.0245,
+      lng: 77.003,
+    },
+    cit: {
+      name: "Coimbatore Institute of Technology (CIT)",
+      short: "CIT (Avinashi Road)",
+      lat: 11.028,
+      lng: 77.027,
+    },
+    skcet: {
+      name: "Sri Krishna College of Engineering & Technology",
+      short: "SKCET (Kuniyamuthur)",
+      lat: 10.938,
+      lng: 76.956,
+    },
+  };
+
+  const [originId, setOriginId] = useState<string>("central"); // default central for baseline compatibility
+  const currentOrigin = campusOrigins[originId] || campusOrigins.central;
+  const userLat = currentOrigin.lat;
+  const userLng = currentOrigin.lng;
+
   const [radiusKm, setRadiusKm] = useState(25);
   const [selectedSector, setSelectedSector] = useState("all");
   const [selectedEngagement, setSelectedEngagement] = useState<string>("all");
@@ -76,6 +112,17 @@ export default function ExploreIndustriesPage() {
   const [liveModalFacility, setLiveModalFacility] = useState<any | null>(null);
   const [explainFacility, setExplainFacility] = useState<any | null>(null);
   const [liveWeather, setLiveWeather] = useState<LiveWeatherInput | null>(null);
+
+  // Read URL query parameter for origin (e.g. from CIET portal shortcut)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const originParam = params.get("origin");
+      if (originParam && campusOrigins[originParam]) {
+        setOriginId(originParam);
+      }
+    }
+  }, []);
 
   // Fetch live Coimbatore environmental telemetry from Open-Meteo
   useEffect(() => {
@@ -200,19 +247,38 @@ export default function ExploreIndustriesPage() {
         {/* Page Hero & Header */}
         <div className="mb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-800/60 text-blue-700 dark:text-blue-300 text-xs font-semibold mb-2">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-              </span>
-              Coimbatore Industrial Hub · Real-Time PostGIS Radius
+            <div className="flex flex-wrap items-center gap-2 mb-2">
+              <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-800/60 text-blue-700 dark:text-blue-300 text-xs font-semibold">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                </span>
+                Coimbatore Industrial Hub · Real-Time PostGIS Radius
+              </div>
+
+              {/* Campus Origin Badge & Switcher */}
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200/60 dark:border-emerald-800/60 text-emerald-800 dark:text-emerald-300 text-xs font-semibold">
+                <span>Campus Origin:</span>
+                <select
+                  value={originId}
+                  onChange={(e) => setOriginId(e.target.value)}
+                  className="bg-transparent font-bold text-emerald-900 dark:text-emerald-200 focus:outline-none cursor-pointer"
+                >
+                  <option value="ciet">CIET (Narasipuram, Thondamuthur)</option>
+                  <option value="central">Central Coimbatore (Gandhipuram)</option>
+                  <option value="psg">PSG Tech (Peelamedu)</option>
+                  <option value="cit">CIT (Avinashi Road)</option>
+                  <option value="skcet">SKCET (Kuniyamuthur)</option>
+                </select>
+              </div>
             </div>
+
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 flex items-center gap-2.5">
               <Compass className="h-7 w-7 text-blue-600 dark:text-blue-400" />
               Discover Facilities in Coimbatore Hub
             </h1>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400 max-w-2xl">
-              Curriculum-aligned industrial learning plants vetted for safety, student engagement, and host readiness.
+              Distances &amp; routes measured from <strong className="text-slate-700 dark:text-slate-200">{currentOrigin.short}</strong> ({userLat.toFixed(4)}° N, {userLng.toFixed(4)}° E).
             </p>
           </div>
 

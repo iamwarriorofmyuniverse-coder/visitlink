@@ -3239,6 +3239,17 @@
   ],
   "institutions": [
     {
+      "readable_id": "inst-ciet",
+      "name": "Coimbatore Institute of Engineering and Technology (CIET) [Demo]",
+      "type": "college",
+      "affiliation": "Anna University / Autonomous, AICTE Approved",
+      "lat": 10.9635,
+      "lng": 76.7972,
+      "address": "Vellimalai Pattinam, Narasipuram Post, Thondamuthur",
+      "city": "Coimbatore",
+      "pincode": "641109"
+    },
+    {
       "readable_id": "inst-psg-tech",
       "name": "PSG College of Technology [Demo]",
       "type": "college",
